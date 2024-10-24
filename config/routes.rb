@@ -1,19 +1,20 @@
 Rails.application.routes.draw do
   devise_for :users
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-  devise_for :clients, class_name: 'User', only: [:sessions, :registrations], controllers: {
-    sessions: 'clients/sessions'
-  }
 
-  devise_for :admins, class_name: 'User', only: [:sessions], controllers: {
-    sessions: 'admins/sessions'
-  }
+  namespace :admin do
+    resources :home, only: [:index]
+  end
 
-  get 'clients', to: 'clients#index'
+  namespace :client do
+    resources :home, only: [:index]
+  end
 
-  get 'admins', to: 'admins#index'
+  authenticated :user, ->(role) { role.client? } do
+    root to: 'client/home#index', as: :client_root
+  end
 
-  root to: 'home#index'
-  # Defines the root path route ("/")
-  # root "articles#index"
+  authenticated :user, ->(role) { role.admin? } do
+    root to: 'admin/home#index', as: :admin_root
+  end
 end
