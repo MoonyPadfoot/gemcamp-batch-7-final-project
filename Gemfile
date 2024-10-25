@@ -47,6 +47,8 @@ gem "bootsnap", require: false
 
 gem 'devise'
 
+gem 'faker'
+
 gem 'phonelib'
 
 # Use Sass to process CSS
