@@ -2,12 +2,16 @@ Rails.application.routes.draw do
   devise_for :users, controllers: { sessions: 'users/sessions' }
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
-  namespace :admin do
-    resources :home, only: [:index]
+  constraints(ClientDomainConstraint.new) do
+    namespace :admin do
+      resources :home, only: [:index]
+    end
   end
 
-  namespace :client do
-    resources :home, only: [:index]
+  constraints(AdminDomainConstraint.new) do
+    namespace :client do
+      resources :home, only: [:index]
+    end
   end
 
   authenticated :user, ->(role) { role.client? } do
