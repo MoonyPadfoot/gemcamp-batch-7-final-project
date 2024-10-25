@@ -9,6 +9,6 @@ class Client::HomeController < ApplicationController
   private
 
   def authorize_client
-    redirect_to admin_root_path unless current_user.admin?
+    raise ActionController::RoutingError.new('Not Found') if current_user.admin?
   end
 end
