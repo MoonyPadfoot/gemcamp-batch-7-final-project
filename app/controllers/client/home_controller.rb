@@ -1,5 +1,5 @@
 class Client::HomeController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_client!
   before_action :authorize_client
 
   def index
@@ -10,5 +10,9 @@ class Client::HomeController < ApplicationController
 
   def authorize_client
     raise ActionController::RoutingError.new('Not Found') if current_user.admin?
+  end
+
+  def current_user
+    warden.authenticate(scope: :client)
   end
 end

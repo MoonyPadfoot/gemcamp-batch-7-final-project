@@ -14,4 +14,8 @@ class Client::SessionsController < Devise::SessionsController
       client_root_path
     end
   end
+
+  def current_user
+    warden.authenticate(scope: :client)
+  end
 end
