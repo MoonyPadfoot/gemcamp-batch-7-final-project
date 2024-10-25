@@ -9,10 +9,6 @@ class Admin::HomeController < ApplicationController
   private
 
   def authorize_admin
-    raise ActionController::RoutingError.new('Not Found') if current_user.client?
-  end
-
-  def current_user
-    warden.authenticate(scope: :admin)
+    raise ActionController::RoutingError.new('Not Found') if current_admin.client?
   end
 end

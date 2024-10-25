@@ -8,14 +8,10 @@ class Client::SessionsController < Devise::SessionsController
   private
 
   def custom_redirect_path
-    if current_user.admin?
+    if current_client.admin?
       admin_root_path
     else
       client_root_path
     end
-  end
-
-  def current_user
-    warden.authenticate(scope: :client)
   end
 end
