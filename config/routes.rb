@@ -9,6 +9,9 @@ Rails.application.routes.draw do
     namespace :admin do
       resources :home, only: [:index]
     end
+
+    root to: 'client/home#index', as: :client_root
+
   end
 
   constraints(AdminDomainConstraint.new) do
@@ -19,13 +22,8 @@ Rails.application.routes.draw do
     namespace :client do
       resources :home, only: [:index]
     end
-  end
 
-  authenticated :user, ->(role) { role.client? } do
-    root to: 'client/home#index', as: :client_root
-  end
-
-  authenticated :user, ->(role) { role.admin? } do
     root to: 'admin/home#index', as: :admin_root
+
   end
 end
