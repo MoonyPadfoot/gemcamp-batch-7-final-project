@@ -1,0 +1,9 @@
+<div class="d-flex justify-content-evenly mb-3">
+  <% if current_page?(new_client_session_path) %>
+    <a class="btn btn-outline-primary pe-none w-50 rounded-0">Login</a>
+    <%= link_to "Register", new_client_registration_path, class: "btn btn-primary rounded-0 w-50 text-center text-decoration-none" %>
+  <% else %>
+    <%= link_to "Login", new_client_session_path, class: "btn btn-primary rounded-0 w-50 text-center text-decoration-none" %>
+    <a class="btn btn-outline-primary pe-none w-50 rounded-0">Register</a>
+  <% end %>
+</div>
