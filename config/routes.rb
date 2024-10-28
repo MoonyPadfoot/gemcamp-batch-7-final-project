@@ -7,8 +7,9 @@ Rails.application.routes.draw do
       sessions: 'client/sessions'
     }, path_names: { sign_in: 'sign_in' }, path: ''
 
-    namespace :admin do
-      resources :home, only: [:index]
+    scope module: 'client' do
+      resources :home, only: [:index], path: 'home'
+      resources :me, only: [:index], path: 'me'
     end
 
     root to: 'client/home#index', as: :client_root
@@ -20,8 +21,8 @@ Rails.application.routes.draw do
       sessions: 'admin/sessions'
     }, path_names: { sign_in: 'sign_in' }, path: ''
 
-    namespace :client do
-      resources :home, only: [:index]
+    scope module: 'admin' do
+      resources :home, only: [:index], path: 'home'
     end
 
     root to: 'admin/home#index', as: :admin_root
