@@ -1,17 +1,24 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>App</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+<head>
+  <title>App</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
-  </head>
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
+</head>
 
-  <body>
-    <%= button_to 'Logout', destroy_user_session_path, method: :delete, form: { data: { turbo_confirm: 'Are you sure?' } }, class: "btn btn-danger" %>
-    <%= yield %>
-  </body>
+<body>
+<% if flash[:alert] %>
+  <div class="alert alert-danger mb-0" role="alert"><%= alert %></div>
+<% end %>
+<% if flash[:notice] %>
+  <div class="alert alert-success mb-0" role="alert"><%= notice %></div>
+<% end %>
+<%= render 'client/shared/nav' if request.host == 'client.com' %>
+<%= yield %>
+</body>
+<%= render 'client/shared/footer' if request.host == 'client.com' %>
 </html>
