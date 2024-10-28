@@ -9,7 +9,6 @@
           <li class="nav-item">
             <a href="#" class="nav-link align-middle px-0">
               <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline">Homepage</span>
-              <%= button_to 'Logout', destroy_admin_session_path, method: :delete, form: { data: { turbo_confirm: 'Are you sure?' } }, class: "btn btn-danger" %>
             </a>
           </li>
           <li>
@@ -43,22 +42,27 @@
         </ul>
       </div>
     </div>
-    <div class="col">
-      <nav class="navbar navbar-light bg-dark">
-        <div class="btn-group ms-auto me-3">
-          <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-            Action
+
+    <div class="col p-0">
+      <nav class="navbar navbar-light bg-dark d-flex justify-content-end p-0">
+        <div>
+          <button class="btn btn-secondary rounded-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">Change
+            language
           </button>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Separated link</a></li>
+        </div>
+        <div class="btn-group">
+          <button class="btn btn-secondary rounded-0 dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <%= current_admin.username %>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><a class="dropdown-item" href="#">Profile</a></li>
+            <li><%= button_to 'Logout', destroy_admin_session_path, method: :delete, form: { data: { turbo_confirm: 'Are you sure?' } }, class: "btn btn-danger dropdown-item" %></li>
           </ul>
         </div>
       </nav>
-      <div class="container">
+
+      <div class="container mx-0">
+        <h1>Hi, <%= current_admin.username %></h1>
       </div>
     </div>
   </div>
