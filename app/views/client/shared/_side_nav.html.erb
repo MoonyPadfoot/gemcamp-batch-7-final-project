@@ -5,12 +5,11 @@
 
   <div class="px-3">
     <img src="https://loremflickr.com/50/50" class="w-25" alt="...">
-    <div>Username: <span class="fw-bold"><%= current_client.username %></span></div>
-    <div>Email: <span class="fw-bold"><%= current_client.email %></span></div>
-    <div>Coins: <span class="fw-bold"><%= current_client.coins %></span></div>
+    <div>Username: <span class="fw-bold"><%= current_client&.username %></span></div>
+    <div>Email: <span class="fw-bold"><%= current_client&.email %></span></div>
+    <div>Coins: <span class="fw-bold"><%= current_client&.coins %></span></div>
     <button class="btn btn-primary w-100 mt-2">Cash In Now</button>
   </div>
-
 
   <div class="offcanvas-body px-0">
     <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-start" id="menu">
