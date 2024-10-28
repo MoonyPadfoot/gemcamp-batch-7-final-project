@@ -1,0 +1,33 @@
+<div class="offcanvas offcanvas-start w-25" tabindex="-1" id="offcanvas" data-bs-keyboard="false" data-bs-backdrop="false">
+  <div class="offcanvas-header">
+    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+
+  <div class="px-3">
+    <img src="https://loremflickr.com/50/50" class="w-25" alt="...">
+    <div>Username: <span class="fw-bold"><%= current_client.username %></span></div>
+    <div>Email: <span class="fw-bold"><%= current_client.email %></span></div>
+    <div>Coins: <span class="fw-bold"><%= current_client.coins %></span></div>
+    <button class="btn btn-primary w-100 mt-2">Cash In Now</button>
+  </div>
+
+
+  <div class="offcanvas-body px-0">
+    <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-start" id="menu">
+      <li class="nav-item">
+        <a href="#" class="nav-link text-truncate">
+          <span class="ms-1 d-none d-sm-inline">Contact Us</span>
+        </a>
+      </li>
+      <li>
+        <a href="#submenu1" data-bs-toggle="collapse" class="nav-link text-truncate">
+          <span class="ms-1 d-none d-sm-inline">My Profile</span>
+        </a>
+      </li>
+      <li>
+        <%= button_to 'Logout', destroy_admin_session_path, method: :delete, form: { data: { turbo_confirm: 'Are you sure?' } }, class: "nav-link text-truncate ms-1" %>
+      </li>
+    </ul>
+  </div>
+
+</div>

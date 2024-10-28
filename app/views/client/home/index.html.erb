@@ -1,1 +1,68 @@
-test
+<div class="container mb-2">
+  <%= render 'client/shared/side_nav' %>
+
+  <div id="carouselExample" class="carousel slide w-100">
+    <div class="carousel-inner">
+      <div class="carousel-item active" style="height: 300px;">
+        <img src="https://loremflickr.com/300/300" class="d-block w-100" alt="...">
+      </div>
+      <div class="carousel-item" style="height: 300px;">
+        <img src="https://loremflickr.com/300/300" class="d-block w-100" alt="...">
+      </div>
+      <div class="carousel-item" style="height: 300px;">
+        <img src="https://loremflickr.com/300/300" class="d-block w-100" alt="...">
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+
+  <div class="bg-dark p-2">
+    <h5 class="text-white mb-0">Announcement:</h5>
+  </div>
+
+  <div class="mt-2">
+    <h3><span class="badge text-bg-secondary">Winners Feedback</span></h3>
+    <div class="row gap-2 mx-1">
+      <div class="card p-4 w-30 col">
+        <img src="https://loremflickr.com/300/300" class="d-block w-100" alt="...">
+      </div>
+      <div class="card p-4 w-30 col">
+        <img src="https://loremflickr.com/300/300" class="d-block w-100" alt="...">
+      </div>
+      <div class="card p-4 w-30 col">
+        <img src="https://loremflickr.com/300/300" class="d-block w-100" alt="...">
+      </div>
+      <%= link_to "More..", class: "col" do %>
+        <div class="card p-4 w-30 h-100">
+          <span>More...</span>
+        </div>
+      <% end %>
+    </div>
+
+    <h3><span class="badge text-bg-secondary mt-2">Coming Soon</span></h3>
+    <div class="row gap-2 mx-1">
+      <div class="card p-4 w-30 col">
+        <img src="https://loremflickr.com/300/300" class="d-block w-100" alt="...">
+      </div>
+      <div class="card p-4 w-30 col">
+        <img src="https://loremflickr.com/300/300" class="d-block w-100" alt="...">
+      </div>
+      <div class="card p-4 w-30 col">
+        <img src="https://loremflickr.com/300/300" class="d-block w-100" alt="...">
+      </div>
+      <%= link_to "More..", class: "col" do %>
+        <div class="card p-4 w-30 h-100">
+          <span>More...</span>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+</div>
