@@ -7,31 +7,49 @@
         <div class="field">
           <%= f.label :username %>
           <%= f.text_field :username, autofocus: true, autocomplete: "username" %>
+          <% resource.errors.full_messages_for(:username).each do |message| %>
+            <div class="text-danger"><%= message %></div>
+          <% end %>
         </div>
 
         <div class="field">
           <%= f.label :image %>
           <%= f.file_field :image %>
+          <% resource.errors.full_messages_for(:image).each do |message| %>
+            <div class="text-danger"><%= message %></div>
+          <% end %>
         </div>
 
         <div class="field">
           <%= f.label :phone_number %>
           <%= f.text_field :phone_number, autocomplete: "phone number" %>
+          <% resource.errors.full_messages_for(:phone_number).each do |message| %>
+            <div class="text-danger"><%= message %></div>
+          <% end %>
         </div>
 
         <div class="field">
           <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br/>
           <%= f.password_field :password, autocomplete: "new-password" %>
+          <% resource.errors.full_messages_for(:password).each do |message| %>
+            <div class="text-danger"><%= message %></div>
+          <% end %>
         </div>
 
         <div class="field">
           <%= f.label :password_confirmation %><br/>
           <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+          <% resource.errors.full_messages_for(:password_confirmation).each do |message| %>
+            <div class="text-danger"><%= message %></div>
+          <% end %>
         </div>
 
         <div class="field">
           <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br/>
           <%= f.password_field :current_password, autocomplete: "current-password" %>
+          <% resource.errors.full_messages_for(:current_password).each do |message| %>
+            <div class="text-danger"><%= message %></div>
+          <% end %>
         </div>
 
         <div class="actions">
