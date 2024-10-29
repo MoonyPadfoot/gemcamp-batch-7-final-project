@@ -2,7 +2,8 @@ Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   constraints(ClientDomainConstraint.new) do
-    devise_for :client, class_name: 'User', only: :registrations, path_names: { sign_up: 'sign_up' }, path: ''
+    devise_for :client, class_name: 'User', only: :registrations, controllers: { registrations: 'users/registrations' },
+               path_names: { sign_up: 'sign_up' }, path: ''
     devise_for :client, class_name: 'User', only: [:sessions], controllers: {
       sessions: 'client/sessions'
     }, path_names: { sign_in: 'sign_in' }, path: ''
