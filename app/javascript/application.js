@@ -2,4 +2,8 @@
 import "@hotwired/turbo-rails"
 import "./controllers"
 import * as bootstrap from "bootstrap"
+import jQuery from "jquery"
+
+window.jQuery = jQuery
+window.$ = jQuery
 Turbo.session.drive = false
