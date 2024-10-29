@@ -1,26 +1,41 @@
 <div class="container d-flex justify-content-center pt-3">
   <div class="w-100">
-    <%= render 'client/shared/sign_in_up' %>
+    <div class="d-flex justify-content-evenly mb-3">
+      <%= link_to "Login", new_client_session_path, class: "btn btn-primary rounded-0 w-50 text-center text-decoration-none" %>
+      <a class="btn btn-outline-primary pe-none w-50 rounded-0">Register</a>
+    </div>
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
 
       <div class="form-floating field mb-3">
         <%= f.text_field :username, class: "form-control", autofocus: true, autocomplete: "username", placeholder: "Promoter Name" %>
-        <%= f.label "Promoter Name", class: "form-label" %>
+        <%= f.label "Promoter Name", class: "form-label" unless resource.errors[:username].present? %>
+        <% resource.errors.full_messages_for(:username).each do |message| %>
+          <div class="text-danger"><%= message %></div>
+        <% end %>
       </div>
 
       <div class="form-floating field mb-3">
         <%= f.email_field :email, class: "form-control", autocomplete: "email", placeholder: "Email" %>
-        <%= f.label :email, class: "form-label" %>
+        <%= f.label :email, class: "form-label" unless resource.errors[:email].present? %>
+        <% resource.errors.full_messages_for(:email).each do |message| %>
+          <div class="text-danger"><%= message %></div>
+        <% end %>
       </div>
 
       <div class="form-floating field mb-3">
         <%= f.password_field :password, class: "form-control", autocomplete: "new-password", placeholder: "Password" %>
-        <%= f.label :password, class: "form-label" %>
+        <%= f.label :password, class: "form-label" unless resource.errors[:password].present? %>
+        <% resource.errors.full_messages_for(:password).each do |message| %>
+          <div class="text-danger"><%= message %></div>
+        <% end %>
       </div>
 
       <div class="form-floating field mb-3">
         <%= f.password_field :password_confirmation, class: "form-control", autocomplete: "new-password", placeholder: "Confirm Password" %>
-        <%= f.label "Confirm Password", class: "form-label" %>
+        <%= f.label "Confirm Password", class: "form-label" unless resource.errors[:password_confirmation].present? %>
+        <% resource.errors.full_messages_for(:password_confirmation).each do |message| %>
+          <div class="text-danger"><%= message %></div>
+        <% end %>
       </div>
 
       <div class="actions text-center my-2">
