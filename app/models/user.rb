@@ -13,8 +13,7 @@ class User < ApplicationRecord
     types: %i[voip mobile],
     countries: [:ph]
   }
-  validates :coins, numericality: { only_integer: true, greater_than: 0 }
-  validates :total_deposit, numericality: { greater_than: -1 }
-  validates :children_members, numericality: { greater_than: -1 }
-
+  validates :coins, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+  validates :total_deposit, presence: true
+  validates :children_members, presence: true, numericality: { greater_than_or_equal_to: 0 }
 end
