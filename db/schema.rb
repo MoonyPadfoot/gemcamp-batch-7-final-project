@@ -10,15 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_10_23_074002) do
+ActiveRecord::Schema[7.0].define(version: 2024_10_29_035852) do
   create_table "users", charset: "utf8mb4", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "username"
     t.integer "role", default: 0
     t.string "phone_number"
-    t.integer "coins"
-    t.decimal "total_deposit", precision: 10
-    t.integer "children_members"
+    t.integer "coins", default: 0
+    t.decimal "total_deposit", precision: 18, scale: 2, default: "0.0"
+    t.integer "children_members", default: 0
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
