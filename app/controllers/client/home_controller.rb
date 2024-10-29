@@ -1,8 +1,5 @@
-class Client::HomeController < ApplicationController
-  before_action :authenticate_client!
-  before_action :authorize_client
-
-  def index
+class Client::HomeController < ClientsController
+  def index #refactor
     render template: 'client/home/index'
   end
 
