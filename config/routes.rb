@@ -2,11 +2,9 @@ Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   constraints(ClientDomainConstraint.new) do
-    devise_for :client, class_name: 'User', only: :registrations, controllers: { registrations: 'users/registrations' },
-               path_names: { sign_up: 'sign_up' }, path: ''
-    devise_for :client, class_name: 'User', only: [:sessions], controllers: {
-      sessions: 'client/sessions'
-    }, path_names: { sign_in: 'sign_in' }, path: ''
+    devise_for :client, class_name: 'User',
+               only: [:registrations, :sessions],
+               controllers: { registrations: 'users/registrations', sessions: 'client/sessions' }, path: ''
 
     scope module: 'client' do
       resources :home, only: [:index], path: 'home'
@@ -18,9 +16,9 @@ Rails.application.routes.draw do
   end
 
   constraints(AdminDomainConstraint.new) do
-    devise_for :admin, class_name: 'User', only: [:sessions], controllers: {
-      sessions: 'admin/sessions'
-    }, path_names: { sign_in: 'sign_in' }, path: ''
+    devise_for :admin, class_name: 'User',
+               only: [:sessions],
+               controllers: { sessions: 'admin/sessions' }, path: ''
 
     scope module: 'admin' do
       resources :home, only: [:index], path: 'home'
