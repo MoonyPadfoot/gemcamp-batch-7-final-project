@@ -1,6 +1,9 @@
 <div class="container d-flex justify-content-center pt-3">
   <div class="w-100">
-    <%= render 'client/shared/sign_in_up' %>
+    <div class="d-flex justify-content-evenly mb-3">
+      <a class="btn btn-outline-primary pe-none w-50 rounded-0">Login</a>
+      <%= link_to "Register", new_client_registration_path, class: "btn btn-primary rounded-0 w-50 text-center text-decoration-none" %>
+    </div>
     <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
 
       <div class="form-floating field mb-3">
