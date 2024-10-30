@@ -1,12 +1,13 @@
 class User < ApplicationRecord
   mount_uploader :image, ImageUploader
-  before_save :normalize_phone_number
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
   enum role: { client: 0, admin: 1 }
+
+  has_many :addresses, class_name: "Client::Address"
 
   validates :username, presence: true, uniqueness: true
   validates :phone_number, phone: {
@@ -21,7 +22,7 @@ class User < ApplicationRecord
   validates :children_members, presence: true, numericality: { greater_than_or_equal_to: 0 }
   validates :image, allow_blank: true, format: { with: %r{.(gif|jpg|png)\Z}i, message: 'must be a URL for GIF, JPG or PNG image.' }
 
-  has_many :addresses
+  before_save :normalize_phone_number
 
   private
 
