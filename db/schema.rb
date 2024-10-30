@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_10_29_101654) do
+ActiveRecord::Schema[7.0].define(version: 2024_10_30_023122) do
   create_table "address_barangays", charset: "utf8mb4", force: :cascade do |t|
     t.bigint "city_id"
     t.string "code"
@@ -43,6 +43,27 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_29_101654) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "client_addresses", charset: "utf8mb4", force: :cascade do |t|
+    t.integer "genre", default: 0
+    t.string "name", default: ""
+    t.text "street_address", null: false
+    t.string "phone_number", null: false
+    t.text "remark", default: ""
+    t.boolean "is_default", default: false
+    t.bigint "user_id"
+    t.bigint "region_id"
+    t.bigint "province_id"
+    t.bigint "city_id"
+    t.bigint "barangay_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["barangay_id"], name: "index_client_addresses_on_barangay_id"
+    t.index ["city_id"], name: "index_client_addresses_on_city_id"
+    t.index ["province_id"], name: "index_client_addresses_on_province_id"
+    t.index ["region_id"], name: "index_client_addresses_on_region_id"
+    t.index ["user_id"], name: "index_client_addresses_on_user_id"
   end
 
   create_table "users", charset: "utf8mb4", force: :cascade do |t|
