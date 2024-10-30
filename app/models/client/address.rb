@@ -9,8 +9,8 @@ class Client::Address < ApplicationRecord
   }
 
   belongs_to :user
-  belongs_to :region
-  belongs_to :province
-  belongs_to :city
-  belongs_to :barangay
+  belongs_to :region, class_name: "Address::Region"
+  belongs_to :province, class_name: "Address::Province"
+  belongs_to :city, class_name: "Address::City"
+  belongs_to :barangay, class_name: "Address::Barangay"
 end

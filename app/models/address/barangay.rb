@@ -3,5 +3,5 @@ class Address::Barangay < ApplicationRecord
   validates :code, uniqueness: true
 
   belongs_to :city
-  has_many :addresses
+  has_many :addresses, class_name: "Client::Address"
 end

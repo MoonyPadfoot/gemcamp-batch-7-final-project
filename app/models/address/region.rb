@@ -3,5 +3,5 @@ class Address::Region < ApplicationRecord
   validates :code, uniqueness: true
 
   has_many :provinces
-  has_many :addresses
+  has_many :addresses, class_name: "Client::Address"
 end
