@@ -55,6 +55,8 @@ gem 'phonelib'
 
 gem 'rest-client'
 
+gem "rqrcode", "~> 2.0"
+
 # Use Sass to process CSS
 # gem "sassc-rails"
 
