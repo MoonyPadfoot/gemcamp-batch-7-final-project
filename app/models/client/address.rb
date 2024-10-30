@@ -1,4 +1,6 @@
 class Client::Address < ApplicationRecord
+  enum genre: { home: 0, work: 1 }
+
   validates :name, uniqueness: true
   validates :street_address, presence: true
   validates :phone_number, phone: {
