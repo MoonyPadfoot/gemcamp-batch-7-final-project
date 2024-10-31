@@ -1,5 +1,5 @@
 class AddDefaultToUsernameInUsers < ActiveRecord::Migration[7.0]
-  def change
-    change_column :users, :username, :string, :default => ""
+  def up
+    change_column_default(:users, :username, nil)
   end
 end
