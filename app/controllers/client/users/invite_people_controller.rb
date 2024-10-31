@@ -5,11 +5,11 @@ class Client::Users::InvitePeopleController < ClientsController
 
     qrcode = RQRCode::QRCode.new(@invite_url)
     @svg = qrcode.as_svg(
-      offset: 0,
       color: "000",
       shape_rendering: "crispEdges",
-      module_size: 6,
-      standalone: true
+      module_size: 7,
+      standalone: true,
+      use_path: true
     )
   end
 end
