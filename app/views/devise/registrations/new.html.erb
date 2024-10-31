@@ -7,11 +7,9 @@
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
 
       <div class="form-floating field mb-3">
-        <%= f.text_field :username, class: "form-control", autofocus: true, autocomplete: "username", placeholder: "Promoter Name" %>
-        <%= f.label "Promoter Name", class: "form-label" unless resource.errors[:username].present? %>
-        <% resource.errors.full_messages_for(:username).each do |message| %>
-          <div class="text-danger"><%= message %></div>
-        <% end %>
+        <%= f.text_field :promoter_name, value: cookies[:promoter_name], :readonly => true, class: "form-control",
+                         autofocus: true, autocomplete: "promoter_name", placeholder: "Promoter Name" %>
+        <%= f.label "Promoter Name", class: "form-label" unless resource.errors[:promoter_name].present? %>
       </div>
 
       <div class="form-floating field mb-3">

@@ -3,6 +3,33 @@
 class Users::RegistrationsController < Devise::RegistrationsController
   before_action :configure_permitted_parameters, only: [:create, :update]
 
+  def new
+    # cookies.delete :promoter
+    if params[:promoter].present?
+      cookies[:promoter] = params[:promoter]
+      @promoter = User.find_by(email: cookies[:promote])
+    else
+      cookies[:promoter] = ''
+    end
+
+    super
+  end
+
+  def create
+    super do |resource|
+      @promoter = cookies[:promoter]
+      @promoter = User.find_by(email: @promoter)
+      resource.parent_id = @promoter.id
+
+      if resource.save
+        cookies.delete :promoter
+      else
+        flash.now[:alert] = resource.errors.full_messages
+        render :new and return
+      end
+    end
+  end
+
   protected
 
   def configure_permitted_parameters
