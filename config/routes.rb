@@ -4,13 +4,16 @@ Rails.application.routes.draw do
   constraints(ClientDomainConstraint.new) do
     devise_for :client, class_name: 'User',
                only: [:registrations, :sessions],
-               controllers: { registrations: 'users/registrations', sessions: 'client/sessions' }, path: 'users'
+               controllers: { registrations: 'users/registrations', sessions: 'client/users/sessions' }, path: 'users'
 
     scope module: 'client' do
       resources :home, only: [:index], path: 'home'
-      resources :me, only: [:index], path: 'me'
       namespace :users do
-        resources :invite_people, only: [:index]
+        resources :invite_people, only: [:index], path: 'invite-people'
+      end
+
+      scope module: 'users' do
+        resources :me, only: [:index], path: 'me'
       end
     end
 
