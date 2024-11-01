@@ -7,7 +7,7 @@
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
 
       <div class="form-floating field mb-3">
-        <%= f.text_field :promoter_name, value: cookies[:promoter_name], :readonly => true, class: "form-control",
+        <%= f.text_field :promoter_name, value: cookies[:promoter], :readonly => true, class: "form-control",
                          autofocus: true, autocomplete: "promoter_name", placeholder: "Promoter Name" %>
         <%= f.label "Promoter Name", class: "form-label" unless resource.errors[:promoter_name].present? %>
       </div>
