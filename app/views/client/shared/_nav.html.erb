@@ -1,6 +1,8 @@
 <nav class="navbar bg-dark navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
   <div class="container mx-auto d-flex">
-    <a class="navbar-brand justify-content-start" href="#"><i class="bi bi-bootstrap-fill"></i></a>
+    <%= link_to client_root_path, class: "text-decoration-none" do %>
+      <i class="bi bi-bootstrap"></i>
+    <% end %>
     <div class="navbar-nav">
       <a class="nav-link" href="#">Coins</a>
       <a class="nav-link" href="#">Claim</a>
