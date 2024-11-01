@@ -5,29 +5,34 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   def new
     cookies.delete :promoter
+
     if params[:promoter].present?
       cookies[:promoter] = params[:promoter]
-      @promoter = User.find_by(email: cookies[:promote])
-    else
-      cookies[:promoter] = ''
     end
 
     super
   end
 
   def create
-    super do |resource|
-      @promoter = cookies[:promoter]
-      @promoter = User.find_by(email: @promoter)
-      resource.parent_id = @promoter.id
+    super and return unless cookies[:promoter].present?
 
-      if resource.save
-        cookies.delete :promoter
+    super do |resource|
+      if User.exists?(email: cookies[:promoter])
+        @promoter = User.find_by(email: cookies[:promoter])
+        resource.parent_id = @promoter.id if @promoter
+
+        if resource.save
+          cookies.delete :promoter
+        else
+          flash.now[:alert] = resource.errors.full_messages.join(',')
+          render :new and return
+        end
       else
-        flash.now[:alert] = resource.errors.full_messages
-        render :new and return
+        flash.now[:alert] = 'Promoter is non existing'
+        super and return
       end
     end
+
   end
 
   protected
