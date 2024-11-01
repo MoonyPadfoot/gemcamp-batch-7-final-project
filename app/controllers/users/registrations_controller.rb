@@ -4,7 +4,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   before_action :configure_permitted_parameters, only: [:create, :update]
 
   def new
-    # cookies.delete :promoter
+    cookies.delete :promoter
     if params[:promoter].present?
       cookies[:promoter] = params[:promoter]
       @promoter = User.find_by(email: cookies[:promote])
