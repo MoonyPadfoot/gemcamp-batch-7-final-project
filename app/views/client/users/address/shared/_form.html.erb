@@ -1,0 +1,83 @@
+<%= form_with model: @address, url: path, data: { controller: :location } do |f| %>
+  <div class="col-12 field my-2">
+    <%= f.label :genre, "Label As:", class: "form-label me-2" %>
+    <% Client::Address.genres.each_key do |genre| %>
+      <%= f.radio_button :genre, genre %>
+      <%= f.label :genre, genre.humanize, value: genre %>
+    <% end %>
+  </div>
+
+  <div class="col-12 field my-2">
+    <%= f.label :is_default, "Is Default?", class: "form-label me-2" %>
+
+    <%= f.radio_button :is_default, true %>
+    <%= f.label :is_default, "Yes", value: true %>
+
+    <%= f.radio_button :is_default, false %>
+    <%= f.label :is_default, "No", value: false %>
+  </div>
+
+  <div class="col-12 field my-2">
+    <%= f.text_field :name, placeholder: "Contact Name", class: "form-control" %>
+    <% @address.errors.full_messages_for(:name).each do |message| %>
+      <div class="text-danger"><%= message %></div>
+    <% end %>
+  </div>
+
+  <div class="col-12 field my-2">
+    <%= f.text_field :phone_number, autocomplete: "phone_number", placeholder: "Phone Number e.g.(09XXXXXXXXX)", class: "form-control" %>
+    <% @address.errors.full_messages_for(:phone_number).each do |message| %>
+      <div class="text-danger"><%= message %></div>
+    <% end %>
+  </div>
+
+  <div class="col-12 field my-2">
+    <%= f.text_field :street_address, autocomplete: "street_address", placeholder: "Street Name, Building, House No.", class: "form-control" %>
+    <% @address.errors.full_messages_for(:street_address).each do |message| %>
+      <div class="text-danger"><%= message %></div>
+    <% end %>
+  </div>
+
+  <div class="col-12 field my-2">
+    <%= f.text_area :remark, class: "form-control", style: "height: 150px;", placeholder: "Add a landmark or any other remark" %>
+    <% @address.errors.full_messages_for(:remark).each do |message| %>
+      <div class="text-danger"><%= message %></div>
+    <% end %>
+  </div>
+
+  <div class="col-12 field my-2">
+    <%= f.collection_select :region_id,
+                            Address::Region.all, :id, :name,
+                            { prompt: 'Please select region' },
+                            data: { location_target: 'selectedRegionId', action: 'change->location#fetchProvinces', selected: @model.your_attribute_id },
+                            autocomplete: "address", class: "form-control", required: true %>
+  </div>
+
+  <div class="col-12 field my-2">
+    <%= f.collection_select :province_id,
+                            [], nil, nil,
+                            { prompt: 'Please select province' },
+                            data: { location_target: 'selectedProvinceId', action: 'change->location#fetchCities' },
+                            autocomplete: "province", class: "form-control", required: true %>
+  </div>
+
+  <div class="col-12 field my-2">
+    <%= f.collection_select :city_id,
+                            [], nil, nil,
+                            { prompt: 'Please select city' },
+                            data: { location_target: 'selectedCityId', action: 'change->location#fetchBarangays' },
+                            autocomplete: "city", class: "form-control", required: true %>
+  </div>
+
+  <div class="col-12 field my-2">
+    <%= f.collection_select :barangay_id,
+                            [], nil, nil,
+                            { prompt: 'Please select barangay' },
+                            data: { location_target: 'selectBarangayId' },
+                            autocomplete: "barangay", class: "form-control", required: true %>
+  </div>
+
+  <div class="col-12 actions text-center my-2">
+    <%= f.submit "Save Address", class: 'btn btn-md btn-success w-100' %>
+  </div>
+<% end %>

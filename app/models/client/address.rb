@@ -1,5 +1,5 @@
 class Client::Address < ApplicationRecord
-  enum genre: { home: 0, work: 1 }
+  enum genre: { home: 0, office: 1 }
 
   belongs_to :user
   belongs_to :region, class_name: "Address::Region"
@@ -7,7 +7,7 @@ class Client::Address < ApplicationRecord
   belongs_to :city, class_name: "Address::City"
   belongs_to :barangay, class_name: "Address::Barangay"
 
-  validates :name, uniqueness: true
+  validates :name, uniqueness: true, presence: true
   validates :street_address, presence: true
   validates :phone_number, phone: {
     possible: true,
@@ -15,6 +15,10 @@ class Client::Address < ApplicationRecord
     types: %i[voip mobile],
     countries: [:ph]
   }
+  validates :region_id, presence: true
+  validates :province_id, presence: true
+  validates :city_id, presence: true
+  validates :barangay_id, presence: true
 
   validate :user_address_max
 

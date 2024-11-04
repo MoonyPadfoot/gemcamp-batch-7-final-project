@@ -1,6 +1,10 @@
+<%= render 'client/shared/nav' %>
 <div class="container d-flex justify-content-center pt-3">
   <div class="w-100">
+    <h1>Add New Address</h1>
     <div class="card shadow p-4">
+      <%= render partial: 'client/users/address/shared/form', locals: { path: address_index_path } %>
     </div>
   </div>
 </div>
+<%= render 'client/shared/footer' %>
