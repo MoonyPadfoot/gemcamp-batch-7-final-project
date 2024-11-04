@@ -2,6 +2,10 @@ class AdminsController < ApplicationController
   before_action :authenticate_admin!
   before_action :authorize_admin
 
+  def after_sign_out_path_for(resource_or_scope)
+    new_admin_session_path
+  end
+
   private
 
   def authorize_admin

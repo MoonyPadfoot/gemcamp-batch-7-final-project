@@ -2,6 +2,10 @@ class ClientsController < ApplicationController
   before_action :authenticate_client!
   before_action :authorize_client
 
+  def after_sign_out_path_for(resource_or_scope)
+    new_client_session_path
+  end
+
   private
 
   def authorize_client
