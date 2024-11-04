@@ -28,6 +28,11 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   protected
 
+  def after_update_path_for(resource)
+    flash[:notice] = "Account successfully updated!"
+    me_index_path
+  end
+
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys: [:promoter_name, :phone_number, :coins, :total_deposit, :children_members, :username, :email, :password])
     devise_parameter_sanitizer.permit(:account_update, keys: [:phone_number, :username, :password, :image])
