@@ -17,8 +17,6 @@
 <% if flash[:notice] %>
   <div class="alert alert-success mb-0" role="alert"><%= notice %></div>
 <% end %>
-<%= render 'client/shared/nav' if request.host == 'client.com' %>
 <%= yield %>
-<%= render 'client/shared/footer' if request.host == 'client.com' %>
 </body>
 </html>
