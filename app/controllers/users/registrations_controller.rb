@@ -6,8 +6,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def new
     cookies.delete :promoter
 
-    if params[:promoter].present?
+    if User.exists?(email: params[:promoter]) || params[:promoter].blank?
       cookies[:promoter] = params[:promoter]
+    else
+      raise ActionController::RoutingError.new('Promoter is non existing. Sumbong mama ;)')
     end
 
     super
@@ -17,28 +19,17 @@ class Users::RegistrationsController < Devise::RegistrationsController
     super and return unless cookies[:promoter].present?
 
     super do |resource|
-      if User.exists?(email: cookies[:promoter])
-        @promoter = User.find_by(email: cookies[:promoter])
-        resource.parent_id = @promoter.id if @promoter
+      @promoter = User.find_by(email: cookies[:promoter])
+      resource.parent_id = @promoter.id
 
-        if resource.save
-          cookies.delete :promoter
-        else
-          flash.now[:alert] = resource.errors.full_messages.join(',')
-          render :new and return
-        end
-      else
-        flash.now[:alert] = 'Promoter is non existing'
-        super and return
-      end
+      cookies.delete :promoter if resource.save
     end
-
   end
 
   protected
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:phone_number, :coins, :total_deposit, :children_members, :username, :email, :password])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:promoter_name, :phone_number, :coins, :total_deposit, :children_members, :username, :email, :password])
     devise_parameter_sanitizer.permit(:account_update, keys: [:phone_number, :username, :password, :image])
   end
 end
