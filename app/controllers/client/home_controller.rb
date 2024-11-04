@@ -1,5 +1,4 @@
 class Client::HomeController < ClientsController
-  def index #refactor
-
+  def index
   end
 end
