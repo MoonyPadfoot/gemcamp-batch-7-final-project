@@ -1,7 +1,7 @@
 <footer class="navbar bg-dark footer fixed-bottom py-2" data-bs-theme="dark">
   <div class="navbar-nav container d-flex flex-row justify-content-evenly">
     <a class="nav-link" href="#">Share</a>
-    <a class="nav-link" href="#">Invite</a>
+    <%= link_to "Invite", users_invite_people_path, class: "nav-link" %>
     <a class="nav-link" href="#">Lottery</a>
     <a class="nav-link" href="#">Shop</a>
     <%= link_to "Me", me_index_path, class: "nav-link" %>

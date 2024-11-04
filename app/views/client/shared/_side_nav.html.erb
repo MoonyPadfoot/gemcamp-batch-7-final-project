@@ -19,9 +19,7 @@
         </a>
       </li>
       <li>
-        <a href="#submenu1" data-bs-toggle="collapse" class="nav-link text-truncate">
-          <span class="ms-1 d-none d-sm-inline">My Profile</span>
-        </a>
+        <%= link_to "My Profile", users_invite_people_path, class: "nav-link text-truncate ms-1 d-none d-sm-inline" %>
       </li>
       <li>
         <%= button_to 'Logout', destroy_client_session_path, method: :delete, form: { data: { turbo_confirm: 'Are you sure?' } }, class: "nav-link text-truncate ms-1" %>
