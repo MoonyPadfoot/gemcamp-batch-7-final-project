@@ -13,6 +13,9 @@ class Item < ApplicationRecord
   validates :start_at, presence: true
   validates :batch_count, presence: true
 
+  has_many :item_category_ships
+  has_many :categories, through: :item_category_ships
+
   default_scope { where(deleted_at: nil) }
 
   def destroy
