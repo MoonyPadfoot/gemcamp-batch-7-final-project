@@ -6,6 +6,10 @@
       <%= render 'admin/shared/nav' %>
 
       <div class="container-fluid mt-4">
+        <div class="d-flex justify-content-between">
+          <h1>All Items</h1>
+          <%= link_to "Create New Item", new_item_path, class: "btn btn-success h-100" %>
+        </div>
         <table class="table table-bordered mt-2">
           <thead>
           <tr>
@@ -33,9 +37,9 @@
               <td class="text-nowrap"><%= item.offline_at.strftime("%Y/%m/%d %I:%M %p") %></td>
               <td class="text-nowrap"><%= item.start_at.strftime("%Y/%m/%d %I:%M %p") %></td>
               <td class="text-nowrap"><%= item.status %></td>
-              <td class="text-nowrap p-2">
-                <div class="d-flex justify-content-evenly">
-                  <%= link_to "Edit", edit_item_path(item), class: "btn btn-sm btn-warning" %>
+              <td class="text-nowrap">
+                <div class="d-flex justify-content-start">
+                  <%= link_to "Edit", edit_item_path(item), class: "btn btn-sm btn-warning me-2" %>
                   <%= button_to "Delete", item_path(item), method: :delete, class: "btn btn-sm btn-danger" %>
                 </div>
               </td>
