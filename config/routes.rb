@@ -30,6 +30,7 @@ Rails.application.routes.draw do
     scope module: 'admin' do
       resources :home, only: [:index], path: 'home'
       resources :item, path: 'item'
+      resources :category, path: 'category'
     end
 
     root to: 'admin/home#index', as: :admin_root
