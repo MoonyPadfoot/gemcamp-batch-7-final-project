@@ -38,24 +38,14 @@ export default class extends Controller {
         let target = this.selectedProvinceIdTarget
         let city = this.selectedCityIdTarget
         let barangay = this.selectBarangayIdTarget
+
         $(target).empty();
         $(city).empty();
         $(barangay).empty();
 
-        let promptOption = document.createElement('option');
-        promptOption.value = "";
-        promptOption.text = "Please select province";
-        target.appendChild(promptOption);
-
-        let promptOption2 = document.createElement('option');
-        promptOption2.value = "";
-        promptOption2.text = "Please select city";
-        city.appendChild(promptOption2);
-
-        let promptOption3 = document.createElement('option');
-        promptOption3.value = "";
-        promptOption3.text = "Please select barangay";
-        barangay.appendChild(promptOption3);
+        target.appendChild(new Option("Please select province", ""));
+        city.appendChild(new Option("Please select city", ""));
+        barangay.appendChild(new Option("Please select barangay", ""));
 
         $.ajax({
             type: 'GET',
@@ -76,18 +66,12 @@ export default class extends Controller {
     fetchCities() {
         let target = this.selectedCityIdTarget
         let barangay = this.selectBarangayIdTarget
+
         $(target).empty();
         $(barangay).empty()
 
-        let promptOption = document.createElement('option');
-        promptOption.value = "";
-        promptOption.text = "Please select city";
-        target.appendChild(promptOption);
-
-        let promptOption2 = document.createElement('option');
-        promptOption2.value = "";
-        promptOption2.text = "Please select barangay";
-        barangay.appendChild(promptOption2);
+        target.appendChild(new Option("Please select city", ""));
+        barangay.appendChild(new Option("Please select barangay", ""));
 
         $.ajax({
             type: 'GET',
@@ -107,12 +91,10 @@ export default class extends Controller {
 
     fetchBarangays() {
         let target = this.selectBarangayIdTarget
+
         $(target).empty();
 
-        let promptOption = document.createElement('option');
-        promptOption.value = "";
-        promptOption.text = "Please select barangay";
-        target.appendChild(promptOption);
+        target.appendChild(new Option("Please select barangay", ""));
 
         $.ajax({
             type: 'GET',

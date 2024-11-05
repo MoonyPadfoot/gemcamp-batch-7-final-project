@@ -49,31 +49,28 @@
     <%= f.collection_select :region_id,
                             Address::Region.all, :id, :name,
                             { prompt: 'Please select region' },
-                            data: { location_target: 'selectedRegionId', action: 'change->location#fetchProvinces', selected: @model.your_attribute_id },
+                            data: { location_target: 'selectedRegionId', action: 'change->location#fetchProvinces', selected: @address.region_id },
                             autocomplete: "address", class: "form-control", required: true %>
   </div>
 
   <div class="col-12 field my-2">
-    <%= f.collection_select :province_id,
-                            [], nil, nil,
+    <%= f.collection_select :province_id, @provinces || [], :id || nil, :name || nil,
                             { prompt: 'Please select province' },
-                            data: { location_target: 'selectedProvinceId', action: 'change->location#fetchCities' },
+                            data: { location_target: 'selectedProvinceId', action: 'change->location#fetchCities', selected: @address.province_id },
                             autocomplete: "province", class: "form-control", required: true %>
   </div>
 
   <div class="col-12 field my-2">
-    <%= f.collection_select :city_id,
-                            [], nil, nil,
+    <%= f.collection_select :city_id, @cities || [], :id || nil, :name || nil,
                             { prompt: 'Please select city' },
-                            data: { location_target: 'selectedCityId', action: 'change->location#fetchBarangays' },
+                            data: { location_target: 'selectedCityId', action: 'change->location#fetchBarangays', selected: @address.city_id },
                             autocomplete: "city", class: "form-control", required: true %>
   </div>
 
   <div class="col-12 field my-2">
-    <%= f.collection_select :barangay_id,
-                            [], nil, nil,
+    <%= f.collection_select :barangay_id, @barangays || [], :id || nil, :name || nil,
                             { prompt: 'Please select barangay' },
-                            data: { location_target: 'selectBarangayId' },
+                            data: { location_target: 'selectBarangayId', selected: @address.barangay_id },
                             autocomplete: "barangay", class: "form-control", required: true %>
   </div>
 

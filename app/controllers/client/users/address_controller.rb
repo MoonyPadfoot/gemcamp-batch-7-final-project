@@ -1,5 +1,4 @@
 class Client::Users::AddressController < ClientsController
-  # before_action :set_movie, only: [:show, :edit, :update, :destroy]
 
   def index
 
@@ -17,7 +16,11 @@ class Client::Users::AddressController < ClientsController
       flash[:notice] = 'Address created successfully!'
       redirect_to address_index_path
     else
-      flash.now[:alert] = @address.errors.full_messages.join(', ')
+      @regions = Address::Region.all
+      @provinces = @address.region.provinces if @address.region
+      @cities = @address.province.cities if @address.province
+      @barangays = @address.city.barangays if @address.city
+
       render :new, status: :unprocessable_entity
     end
   end
