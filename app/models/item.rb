@@ -11,4 +11,5 @@ class Item < ApplicationRecord
   validates :online_at, presence: true, comparison: { less_than: :offline_at }
   validates :offline_at, presence: true, comparison: { greater_than: :online_at }
   validates :start_at, presence: true
+  validates :batch_count, presence: true
 end
