@@ -12,4 +12,10 @@ class Item < ApplicationRecord
   validates :offline_at, presence: true, comparison: { greater_than: :online_at }
   validates :start_at, presence: true
   validates :batch_count, presence: true
+
+  default_scope { where(deleted_at: nil) }
+
+  def destroy
+    update(deleted_at: Time.current)
+  end
 end
