@@ -2,7 +2,7 @@ class Client::Users::AddressController < ClientsController
   before_action :set_address, only: [:edit, :update, :destroy]
 
   def index
-    @addresses = Client::Address.all
+    @addresses = Client::Address.order(is_default: :desc)
   end
 
   def new
