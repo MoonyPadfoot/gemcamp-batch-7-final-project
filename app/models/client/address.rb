@@ -19,10 +19,15 @@ class Client::Address < ApplicationRecord
   validates :province_id, presence: true
   validates :city_id, presence: true
   validates :barangay_id, presence: true
-
   validate :user_address_max
 
+  before_save :unset_other_defaults, if: :is_default?
+
   private
+
+  def unset_other_defaults
+    self.class.where(is_default: true).update_all(is_default: false)
+  end
 
   def user_address_max
     if user && user.addresses.count >= 5

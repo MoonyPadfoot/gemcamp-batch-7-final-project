@@ -1,0 +1,11 @@
+<%= render 'client/shared/nav' %>
+<div class="container d-flex justify-content-center pt-3">
+  <div class="w-100">
+    <h1>Edit Address</h1>
+    <div class="card shadow p-4">
+      <%= render partial: 'client/users/address/shared/form', locals: { path: address_path } %>
+      <%= button_to 'Delete Address', address_path(@address), method: :delete, class: 'btn btn-md btn-danger w-100' %>
+    </div>
+  </div>
+</div>
+<%= render 'client/shared/footer' %>

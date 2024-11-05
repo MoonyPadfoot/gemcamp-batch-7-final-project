@@ -47,7 +47,7 @@
 
   <div class="col-12 field my-2">
     <%= f.collection_select :region_id,
-                            Address::Region.all, :id, :name,
+                            @regions, :id, :name,
                             { prompt: 'Please select region' },
                             data: { location_target: 'selectedRegionId', action: 'change->location#fetchProvinces', selected: @address.region_id },
                             autocomplete: "address", class: "form-control", required: true %>

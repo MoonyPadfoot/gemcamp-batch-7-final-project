@@ -14,7 +14,7 @@ Rails.application.routes.draw do
 
       scope module: 'users' do
         resources :me, only: [:index], path: 'me'
-        resources :address, only: [:index, :new, :create], path: 'address'
+        resources :address, except: :show, path: 'address'
       end
     end
 

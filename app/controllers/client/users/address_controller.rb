@@ -1,7 +1,8 @@
 class Client::Users::AddressController < ClientsController
+  before_action :set_address, only: [:edit, :update, :destroy]
 
   def index
-
+    @addresses = Client::Address.all
   end
 
   def new
@@ -21,8 +22,45 @@ class Client::Users::AddressController < ClientsController
       @cities = @address.province.cities if @address.province
       @barangays = @address.city.barangays if @address.city
 
+      flash.now[:alert] = 'Address creation failed'
+
       render :new, status: :unprocessable_entity
     end
+  end
+
+  def edit
+    @regions = Address::Region.all
+    @provinces = @address.region.provinces if @address.region
+    @cities = @address.province.cities if @address.province
+    @barangays = @address.city.barangays if @address.city
+  end
+
+  def update
+    if @address.update(address_params)
+      flash[:notice] = 'Address updated successfully!'
+      redirect_to address_index_path
+    else
+      @regions = Address::Region.all
+      @provinces = @address.region.provinces if @address.region
+      @cities = @address.province.cities if @address.province
+      @barangays = @address.city.barangays if @address.city
+
+      flash.now[:alert] = 'Address update failed'
+
+      render :new, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    @address.destroy
+    flash[:notice] = 'Address deleted successfully!'
+    redirect_to address_index_path
+  end
+
+  private
+
+  def set_address
+    @address = Client::Address.find(params[:id])
   end
 
   def address_params

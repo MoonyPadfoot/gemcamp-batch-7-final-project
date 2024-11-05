@@ -1,0 +1,39 @@
+<%= render 'client/shared/nav' %>
+<div class="container d-flex justify-content-center pt-3">
+  <div class="w-100">
+    <div class="d-flex justify-content-between">
+      <h1>All Address</h1>
+      <%= link_to "Create New Address", new_address_path, class: "btn btn-success h-100" %>
+    </div>
+
+    <% @addresses.each do |address| %>
+      <%= link_to edit_address_path(address.id), class: "text-decoration-none" do %>
+        <div class="card shadow p-4 my-2">
+          <div class="d-flex justify-content-between">
+            <div>Name:
+              <span class="ms-2 fw-semibold"><%= address.name %></span>
+            </div>
+
+            <div>
+              <span class="badge bg-info"><%= 'Default' if address.is_default %></span>
+              <span class="badge bg-primary"><%= address.genre %></span>
+            </div>
+          </div>
+
+          <div>Phone Number:
+            <span class="ms-2 fw-semibold"><%= address.phone_number %></span>
+          </div>
+          <div>Remark:
+            <span class="ms-2 fw-semibold"><%= address.remark.blank? ? 'N/A' : address.remark %></span></div>
+          <div>Address:
+            <span class="ms-2 fw-semibold"><%= address.street_address %></span></div>
+          <div>
+            <span class="fw-semibold"><%= "#{ address.barangay.name }, #{ address.city.name } City, #{ address.province.name }" %></span>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+
+  </div>
+</div>
+<%= render 'client/shared/footer' %>
