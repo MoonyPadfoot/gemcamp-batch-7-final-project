@@ -64,6 +64,6 @@ class Client::Users::AddressController < ClientsController
   end
 
   def address_params
-    params.require(:client_address).permit(:barangay_id, :city_id, :province_id, :region_id, :is_default, :remark, :phone_number, :street_address, :name, genre_ids: [])
+    params.require(:client_address).permit(:barangay_id, :city_id, :province_id, :region_id, :is_default, :remark, :phone_number, :street_address, :name, :genre)
   end
 end
