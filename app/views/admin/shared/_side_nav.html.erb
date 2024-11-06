@@ -16,11 +16,18 @@
         </a>
         <ul class="collapse nav flex-column ms-1" id="submenu2" data-bs-parent="#menu">
           <li>
-            <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">User List</span></a>
+            <%= link_to admin_root_path, class: "nav-link px-0 text-decoration-none" do %>
+              <span class="d-none d-sm-inline">User List</span>
+            <% end %>
           </li>
           <li class="w-100">
             <%= link_to item_index_path, class: "nav-link px-0 text-decoration-none" do %>
               <span class="d-none d-sm-inline">Item List</span>
+            <% end %>
+          </li>
+          <li class="w-100">
+            <%= link_to category_index_path, class: "nav-link px-0 text-decoration-none" do %>
+              <span class="d-none d-sm-inline">Category List</span>
             <% end %>
           </li>
         </ul>
