@@ -1,5 +1,5 @@
 class Admin::ItemController < AdminsController
-  before_action :set_item, only: [:edit, :update, :destroy]
+  before_action :set_item, only: [:edit, :update, :destroy, :start, :pause, :end, :cancel]
 
   def index
     @items = Admin::Item.all
@@ -37,6 +37,42 @@ class Admin::ItemController < AdminsController
     @item.destroy
     flash[:notice] = 'Item deleted successfully!'
     redirect_to item_index_path
+  end
+
+  def start
+    if @item.may_start?
+      @item.start!
+      redirect_to @item, notice: "Item started!"
+    else
+      redirect_to @item, alert: "Cannot start item."
+    end
+  end
+
+  def pause
+    if @item.may_pause?
+      @item.pause!
+      redirect_to @item, notice: "Item paused!"
+    else
+      redirect_to @item, alert: "Cannot pause item."
+    end
+  end
+
+  def end
+    if @item.may_end?
+      @item.end!
+      redirect_to @item, notice: "Item ended!"
+    else
+      redirect_to @item, alert: "Cannot end item."
+    end
+  end
+
+  def cancel
+    if @item.may_cancel?
+      @item.cancel!
+      redirect_to @item, notice: "Item canceled!"
+    else
+      redirect_to @item, alert: "Cannot cancel item."
+    end
   end
 
   private
