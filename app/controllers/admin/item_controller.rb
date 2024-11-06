@@ -2,15 +2,15 @@ class Admin::ItemController < AdminsController
   before_action :set_item, only: [:edit, :update, :destroy]
 
   def index
-    @items = Item.all
+    @items = Admin::Item.all
   end
 
   def new
-    @item = Item.new
+    @item = Admin::Item.new
   end
 
   def create
-    @item = Item.new(item_params)
+    @item = Admin::Item.new(item_params)
 
     if @item.save
       flash[:notice] = 'Item created successfully!'
@@ -42,7 +42,7 @@ class Admin::ItemController < AdminsController
   private
 
   def set_item
-    @item = Item.find(params[:id])
+    @item = Admin::Item.find(params[:id])
   end
 
   def item_params

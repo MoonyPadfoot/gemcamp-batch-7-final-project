@@ -70,7 +70,7 @@
       <div class="col-12 field my-2">
         <%= f.label :status, "Status:", class: "form-label me-2" %>
         <div>
-          <% Item.statuses.each_key do |status| %>
+          <% Admin::Item.statuses.each_key do |status| %>
             <%= f.radio_button :status, status %>
             <%= f.label :status, status.humanize, value: status %>
           <% end %>

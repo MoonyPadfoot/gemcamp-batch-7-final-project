@@ -1,4 +1,4 @@
-class Item < ApplicationRecord
+class Admin::Item < ApplicationRecord
   mount_uploader :image, ImageUploader
 
   enum status: { inactive: 0, active: 1 }
