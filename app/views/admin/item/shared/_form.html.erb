@@ -1,4 +1,4 @@
-<%= form_with model: @item, url: path do |f| %>
+<%= form_with model: @item, url: path, data: { controller: 'select2' } do |f| %>
   <div class="row row-cols-2">
     <div class="col">
       <div class="col-12 field my-2">
@@ -75,6 +75,12 @@
             <%= f.label :status, status.humanize, value: status %>
           <% end %>
         </div>
+      </div>
+
+      <div class="col-12 field my-2">
+        <%= f.label :category_ids, "Categories:", class: "form-label me-2" %>
+        <%= f.select :category_ids, Admin::Category.all.map { |category| [category.name, category.id] }, {},
+                     data: { placeholder: 'Please select categories' }, multiple: true, class: 'select2 w-100' %>
       </div>
     </div>
 
