@@ -7,6 +7,7 @@ class Client::Users::AddressController < ClientsController
 
   def new
     @address = Client::Address.new
+    @regions = Address::Region.all
   end
 
   def create
