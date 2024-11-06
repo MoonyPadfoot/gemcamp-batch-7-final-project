@@ -31,7 +31,7 @@ class Admin::Item < ApplicationRecord
     end
 
     event :pause do
-      transitions from: :starting, to: :pause
+      transitions from: :starting, to: :paused
     end
 
     event :end do

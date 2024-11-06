@@ -42,43 +42,47 @@ class Admin::ItemController < AdminsController
   def start
     if @item.may_start?
       @item.start!
-      redirect_to @item, notice: "Item started!"
+      flash[:notice] = "Item started!"
     else
-      redirect_to @item, alert: "Cannot start item."
+      flash[:alert] = "Cannot start item."
     end
+    redirect_to item_index_path
   end
 
   def pause
     if @item.may_pause?
       @item.pause!
-      redirect_to @item, notice: "Item paused!"
+      flash[:notice] = "Item paused!"
     else
-      redirect_to @item, alert: "Cannot pause item."
+      flash[:alert] = "Cannot pause item."
     end
+    redirect_to item_index_path
   end
 
   def end
     if @item.may_end?
       @item.end!
-      redirect_to @item, notice: "Item ended!"
+      flash[:notice] = "Item ended!"
     else
-      redirect_to @item, alert: "Cannot end item."
+      flash[:alert] = "Cannot end item."
     end
+    redirect_to item_index_path
   end
 
   def cancel
     if @item.may_cancel?
       @item.cancel!
-      redirect_to @item, notice: "Item canceled!"
+      flash[:notice] = "Item canceled!"
     else
-      redirect_to @item, alert: "Cannot cancel item."
+      flash[:alert] = "Cannot cancel item."
     end
+    redirect_to item_index_path
   end
 
   private
 
   def set_item
-    @item = Admin::Item.find(params[:id])
+    @item = Admin::Item.find(params[:id] || params[:item_id])
   end
 
   def item_params
