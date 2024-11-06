@@ -34,8 +34,12 @@ class Admin::CategoryController < AdminsController
   end
 
   def destroy
-    @category.destroy
-    flash[:notice] = 'Category deleted successfully!'
+    if !@category.items.exists?
+      @category.destroy
+      flash[:notice] = 'Category deleted successfully!'
+    else
+      flash[:alert] = "Category in use and can't be deleted"
+    end
     redirect_to category_index_path
   end
 
