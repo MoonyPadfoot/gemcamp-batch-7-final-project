@@ -4,19 +4,12 @@ class Users::RegistrationsController < Devise::RegistrationsController
   before_action :configure_permitted_parameters, only: [:create, :update]
 
   def new
-    cookies.delete :promoter
-
-    if User.exists?(email: params[:promoter]) || params[:promoter].blank?
-      cookies[:promoter] = params[:promoter]
-    else
-      raise ActionController::RoutingError.new('Promoter is non existing. Sumbong mama ;)')
-    end
-
+    cookies[:promoter] ||= params[:promoter] if User.exists?(email: params[:promoter])
     super
   end
 
   def create
-    super and return unless cookies[:promoter].present?
+    super and return unless User.exists?(email: cookies[:promoter])
 
     super do |resource|
       @promoter = User.find_by(email: cookies[:promoter])
