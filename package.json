@@ -22,7 +22,8 @@
     "nodemon": "^3.1.7",
     "postcss": "^8.4.47",
     "postcss-cli": "^11.0.0",
-    "sass": "^1.80.3"
+    "sass": "^1.80.3",
+    "select2": "^4.1.0-rc.0"
   },
   "browserslist": [
     "defaults"
