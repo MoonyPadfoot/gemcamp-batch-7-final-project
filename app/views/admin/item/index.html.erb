@@ -22,6 +22,7 @@
             <td>Offline At</td>
             <td>Start At</td>
             <td>Status</td>
+            <td>Categories</td>
             <td>Actions</td>
           </tr>
           </thead>
@@ -37,6 +38,11 @@
               <td class="text-nowrap"><%= item.offline_at.strftime("%Y/%m/%d %I:%M %p") %></td>
               <td class="text-nowrap"><%= item.start_at.strftime("%Y/%m/%d %I:%M %p") %></td>
               <td class="text-nowrap"><%= item.status %></td>
+              <td >
+                <% item.categories.each do |category| %>
+                <span class="badge bg-primary"><%= category.name %></span>
+                <% end %>
+              </td>
               <td class="text-nowrap">
                 <div class="d-flex justify-content-start">
                   <%= link_to "Edit", edit_item_path(item), class: "btn btn-sm btn-warning me-2" %>
