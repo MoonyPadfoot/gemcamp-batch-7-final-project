@@ -6,6 +6,7 @@ class Admin::Item < ApplicationRecord
 
   has_many :item_category_ships
   has_many :categories, through: :item_category_ships
+  has_many :tickets
 
   validates :image, presence: true, format: { with: %r{.(gif|jpg|jpeg|png)\Z}i, message: 'must be a URL for GIF, JPG, JPEG or PNG image.' }
   validates :name, uniqueness: true, presence: true

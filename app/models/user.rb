@@ -12,6 +12,7 @@ class User < ApplicationRecord
   belongs_to :parent, class_name: User.name, foreign_key: 'parent_id', counter_cache: :children_members, optional: true
   has_many :addresses, class_name: "Client::Address"
   has_many :children, class_name: User.name, foreign_key: 'parent_id', dependent: :destroy
+  has_many :tickets
 
   validates :username, uniqueness: true, allow_nil: true
   validates :phone_number, phone: {
