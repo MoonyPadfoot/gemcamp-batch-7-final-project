@@ -3,6 +3,7 @@ class Admin::ItemController < AdminsController
 
   def index
     @items = Admin::Item.all
+                        .page(params[:page]).per(10)
   end
 
   def new
