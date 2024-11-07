@@ -1,31 +1,7 @@
 <%= render 'client/shared/nav' %>
 <div class="container mb-2">
-
-  <div id="carouselExample" class="carousel slide w-100">
-    <div class="carousel-inner">
-      <div class="carousel-item active" style="height: 300px;">
-        <img src="https://loremflickr.com/300/300" class="d-block w-100" alt="...">
-      </div>
-      <div class="carousel-item" style="height: 300px;">
-        <img src="https://loremflickr.com/300/300" class="d-block w-100" alt="...">
-      </div>
-      <div class="carousel-item" style="height: 300px;">
-        <img src="https://loremflickr.com/300/300" class="d-block w-100" alt="...">
-      </div>
-    </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Next</span>
-    </button>
-  </div>
-
-  <div class="bg-dark p-2">
-    <h5 class="text-white mb-0">Announcement:</h5>
-  </div>
+  <%= render 'client/shared/banner' %>
+  <%= render 'client/shared/announcement' %>
 
   <div class="mt-2">
     <h3><span class="badge text-bg-secondary">Winners Feedback</span></h3>
