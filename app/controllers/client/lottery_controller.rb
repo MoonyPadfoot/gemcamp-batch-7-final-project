@@ -7,6 +7,7 @@ class Client::LotteryController < ApplicationController
                         .filter_by_status
                         .filter_by_category(params[:category])
                         .filter_by_state
+                        .page(params[:page]).per(4)
   end
 
   def after_sign_out_path_for(resource_or_scope)

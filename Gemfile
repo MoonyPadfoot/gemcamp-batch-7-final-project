@@ -53,6 +53,8 @@ gem 'devise'
 
 gem 'faker'
 
+gem 'kaminari'
+
 gem 'phonelib'
 
 gem 'rest-client'
