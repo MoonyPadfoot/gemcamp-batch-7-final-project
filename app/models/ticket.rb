@@ -2,7 +2,7 @@ class Ticket < ApplicationRecord
   include AASM
 
   belongs_to :user
-  belongs_to :item, class_name: 'Admin::Item', counter_cache: :batch_count
+  belongs_to :item, class_name: 'Admin::Item'
 
   aasm column: :state do
     state :pending, initial: true
@@ -32,7 +32,7 @@ class Ticket < ApplicationRecord
   private
 
   def assign_serial_number
-    number_count = self.joins(:item).where(batch_count: item.batch_count).count
+    number_count = self.includes(:item).where(batch_count: batch_count, items: {id: item.id }).count
     self.update(serial_number: "#{Time.current.strftime("%Y%m%d")}-#{item.id}-#{item.batch_count}-#{number_count.to_s.rjust(4, '0')}")
   end
 
