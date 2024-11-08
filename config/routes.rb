@@ -37,7 +37,9 @@ Rails.application.routes.draw do
         put :cancel
       end
       resources :category, path: 'category'
-      resources :ticket, only: [:index], path: 'ticket'
+      resources :ticket, only: [:index], path: 'ticket' do
+        put :cancel
+      end
     end
 
     root to: 'admin/home#index', as: :admin_root
