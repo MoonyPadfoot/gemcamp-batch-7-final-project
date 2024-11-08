@@ -32,7 +32,7 @@ class Admin::Item < ApplicationRecord
       transitions from: [:pending, :ended, :cancelled], to: :starting,
                   guard: [:quantity_enough?, active?, :offline_before_today?],
                   success: [:deduct_quantity, :add_batch_count]
-      transitions from: :paused, to: :starting, success: [:deduct_quantity, :add_batch_count]
+      transitions from: :paused, to: :starting
     end
 
     event :pause do
