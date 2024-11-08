@@ -69,7 +69,7 @@ class Admin::Item < ApplicationRecord
   end
 
   def cancel_batch_tickets
-    tickets = self.includes(:tickets).where(batch_count: batch_count, id: self.id)
+    tickets = Ticket.includes(:item).where(batch_count: batch_count, items: {id: self.id })
     tickets.each do |ticket|
       ticket.cancel! if ticket.may_cancel?
     end
