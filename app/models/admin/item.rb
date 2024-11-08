@@ -30,7 +30,7 @@ class Admin::Item < ApplicationRecord
 
     event :start do
       transitions from: [:pending, :ended, :cancelled], to: :starting,
-                  guard: [:quantity_enough?, :status_active?, :offline_before_today?],
+                  guard: [:quantity_enough?, active?, :offline_before_today?],
                   success: [:deduct_quantity, :add_batch_count]
       transitions from: :paused, to: :starting, success: [:deduct_quantity, :add_batch_count]
     end
@@ -62,10 +62,6 @@ class Admin::Item < ApplicationRecord
 
   def quantity_enough?
     self.quantity >= 1
-  end
-
-  def status_active?
-    self.status == 'active'
   end
 
   def offline_before_today?
