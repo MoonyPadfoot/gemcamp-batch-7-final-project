@@ -1,5 +1,6 @@
 class Client::LotteryController < ApplicationController
-  before_action :authorize_client, :set_item, only: :show
+  before_action :authorize_client, :set_item, only: [:show, :allow_starting_items]
+  before_action :allow_starting_items, only: :show
 
   def index
     @categories = Admin::Category.all
@@ -33,4 +34,9 @@ class Client::LotteryController < ApplicationController
     @item = Admin::Item.find(params[:id])
   end
 
+  def allow_starting_items
+    unless @item.starting?
+      redirect_to lottery_index_path, alert: "You are not authorized to view this item."
+    end
+  end
 end
