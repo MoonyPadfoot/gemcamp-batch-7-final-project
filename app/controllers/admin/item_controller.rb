@@ -35,8 +35,13 @@ class Admin::ItemController < AdminsController
   end
 
   def destroy
-    @item.destroy
-    flash[:notice] = 'Item deleted successfully!'
+    if !@item.tickets.exists?
+      @item.destroy
+      flash[:notice] = 'Item deleted successfully!'
+    else
+      flash[:alert] = "Item has associated tickets and can't be deleted"
+    end
+
     redirect_to item_index_path
   end
 
