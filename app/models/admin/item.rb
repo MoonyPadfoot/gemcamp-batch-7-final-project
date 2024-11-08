@@ -30,7 +30,7 @@ class Admin::Item < ApplicationRecord
 
     event :start do
       transitions from: [:pending, :ended, :cancelled], to: :starting,
-                  guard: [:quantity_enough?, active?, :offline_before_today?],
+                  guard: [:quantity_enough?, :active?, :offline_before_today?],
                   success: [:deduct_quantity, :add_batch_count]
       transitions from: :paused, to: :starting
     end
@@ -44,7 +44,7 @@ class Admin::Item < ApplicationRecord
     end
 
     event :cancel do
-      transitions from: [:starting, :paused], to: :cancelled, success: cancel_batch_tickets
+      transitions from: [:starting, :paused], to: :cancelled, success: :cancel_batch_tickets
     end
   end
 
