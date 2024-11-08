@@ -44,7 +44,7 @@ class Admin::Item < ApplicationRecord
     end
 
     event :cancel do
-      transitions from: [:starting, :paused], to: :cancelled
+      transitions from: [:starting, :paused], to: :cancelled, success: cancel_all_tickets
     end
   end
 
@@ -70,5 +70,12 @@ class Admin::Item < ApplicationRecord
 
   def offline_before_today?
     self.offline_at > Time.current
+  end
+
+  def cancel_all_tickets
+    tickets = self.includes(:tickets).where(batch_count: batch_count, id: self.id)
+    tickets.each do |ticket|
+      ticket.cancel! if ticket.may_cancel?
+    end
   end
 end
