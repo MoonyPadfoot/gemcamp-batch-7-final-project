@@ -15,12 +15,14 @@
   <div class="row row-cols-2 g-5 mt-3">
     <% @items.each do |item| %>
       <div class="col my-2">
-        <div class="card shadow h-100">
-          <%= image_tag(item&.image_url || "https://loremflickr.com/300/300", class: "card-img-top w-100", style: "height: 30rem;") %>
-          <div class="card-body">
-            <h5 class="card-title text-center"><%= item.name %></h5>
+        <%= link_to lottery_path(item) do %>
+          <div class="card shadow h-100">
+            <%= image_tag(item&.image_url || "https://loremflickr.com/300/300", class: "card-img-top w-100", style: "height: 30rem;") %>
+            <div class="card-body">
+              <h5 class="card-title text-center"><%= item.name %></h5>
+            </div>
           </div>
-        </div>
+        <% end %>
       </div>
     <% end %>
   </div>

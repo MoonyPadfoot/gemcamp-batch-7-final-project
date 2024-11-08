@@ -1,5 +1,5 @@
 class Client::LotteryController < ApplicationController
-  before_action :authorize_client
+  before_action :authorize_client, :set_item, only: :show
 
   def index
     @categories = Admin::Category.all
@@ -9,6 +9,8 @@ class Client::LotteryController < ApplicationController
                         .filter_by_state
                         .page(params[:page]).per(4)
   end
+
+  def show; end
 
   def after_sign_out_path_for(resource_or_scope)
     new_client_session_path
@@ -26,4 +28,9 @@ class Client::LotteryController < ApplicationController
   def current_user
     warden.authenticate(scope: :client)
   end
+
+  def set_item
+    @item = Admin::Item.find(params[:id])
+  end
+
 end

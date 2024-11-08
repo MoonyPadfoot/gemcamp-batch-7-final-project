@@ -8,7 +8,7 @@ Rails.application.routes.draw do
 
     scope module: 'client' do
       resources :home, only: [:index], path: 'home'
-      resources :lottery, only: [:index], path: 'lottery'
+      resources :lottery, only: [:index, :show], path: 'lottery'
       namespace :users do
         resources :invite_people, only: [:index], path: 'invite-people'
       end
@@ -37,7 +37,7 @@ Rails.application.routes.draw do
         put :cancel
       end
       resources :category, path: 'category'
-      resources :ticket, only: [:index], path: 'ticket' do
+      resources :ticket, only: [:index, :create], path: 'ticket' do
         put :cancel
       end
     end
