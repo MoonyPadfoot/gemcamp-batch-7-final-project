@@ -5,14 +5,18 @@ class LotteryController < ApplicationController
   def index
     @categories = Category.all
     @items = Item.all
-                        .filter_by_status
-                        .filter_by_category(params[:category])
-                        .filter_by_state
-                        .page(params[:page]).per(4)
+                 .filter_by_status
+                 .filter_by_category(params[:category])
+                 .filter_by_state
+                 .page(params[:page]).per(4)
   end
 
   def show
     @ticket = Ticket.new
+
+    ticket_count = Ticket.includes(:item).where(batch_count: @item.batch_count, items: { id: @item.id }).count
+    @ticket_percentage = ticket_count.to_f / @item.minimum_tickets * 100
+    @user_tickets = current_user.tickets
   end
 
   def after_sign_out_path_for(resource_or_scope)

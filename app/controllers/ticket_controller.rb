@@ -11,8 +11,14 @@ class TicketController < ApplicationController
   end
 
   def create
-    ticket_count = params[:ticket][:ticket_count].to_i
     item_id = params[:ticket][:item_id]
+    ticket_count = params[:ticket][:ticket_count].to_i
+
+    if current_client.coins == 0
+      flash[:alert] = "Ticket(s) purchased failed. Coins insufficient."
+      redirect_to lottery_path(item_id) and return
+    end
+
     tickets = []
 
     ticket_count.times do
