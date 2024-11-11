@@ -38,9 +38,9 @@ Rails.application.routes.draw do
         put :end
         put :cancel
       end
-      resources :category, path: 'category'
     end
 
+    resources :category, path: 'category'
     resources :ticket, only: [:index], path: 'ticket' do
       put :cancel
     end

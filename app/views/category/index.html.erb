@@ -1,0 +1,39 @@
+<div class="container-fluid">
+  <div class="row flex-nowrap">
+    <%= render 'admin/shared/side_nav' %>
+
+    <div class="col p-0">
+      <%= render 'admin/shared/nav' %>
+
+      <div class="container-fluid mt-4">
+        <div class="d-flex justify-content-between">
+          <h1>All Categories</h1>
+          <%= link_to "Create New Category", new_category_path, class: "btn btn-success h-100" %>
+        </div>
+        <table class="table table-bordered mt-2">
+          <thead>
+          <tr>
+            <td>Name</td>
+            <td>Actions</td>
+          </tr>
+          </thead>
+          <tbody>
+          <% @categories.each do |category| %>
+            <tr>
+              <td class="text-nowrap"><%= category.name %></td>
+              <td class="text-nowrap p-2">
+                <div class="d-flex justify-content-start">
+                  <%= link_to "Edit", edit_category_path(category), class: "btn btn-sm btn-warning me-2" %>
+                  <%= button_to "Delete", category_path(category), method: :delete, class: "btn btn-sm btn-danger" %>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+          </tbody>
+        </table>
+        <%= paginate @categories %>
+      </div>
+
+    </div>
+  </div>
+</div>
