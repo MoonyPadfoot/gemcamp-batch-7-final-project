@@ -19,6 +19,8 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :ticket, only: [:create], path: 'ticket'
+
     root to: 'client/home#index', as: :client_root
 
   end
@@ -37,9 +39,10 @@ Rails.application.routes.draw do
         put :cancel
       end
       resources :category, path: 'category'
-      resources :ticket, only: [:index, :create], path: 'ticket' do
-        put :cancel
-      end
+    end
+
+    resources :ticket, only: [:index], path: 'ticket' do
+      put :cancel
     end
 
     root to: 'admin/home#index', as: :admin_root
