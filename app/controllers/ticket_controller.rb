@@ -7,7 +7,12 @@ class TicketController < ApplicationController
 
   def index
     @tickets = Ticket.all
-                     .page(params[:page]).per(10)
+    @tickets = @tickets.filter_by_serial_number(params[:serial_number]) unless params[:serial_number].blank?
+    @tickets = @tickets.filter_by_item_name(params[:item_name]) unless params[:item_name].blank?
+    @tickets = @tickets.filter_by_email(params[:email]) unless params[:email].blank?
+    @tickets = @tickets.filter_by_created_at(params[:start_date], params[:end_date]) unless params[:start_date].blank? && params[:end_date].blank?
+    @tickets = @tickets.filter_by_state(params[:state]) unless params[:state].blank?
+    @tickets = @tickets.page(params[:page]).per(10)
   end
 
   def create

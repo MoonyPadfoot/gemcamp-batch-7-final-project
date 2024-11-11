@@ -6,6 +6,13 @@ class Ticket < ApplicationRecord
 
   belongs_to :user
   belongs_to :item
+  has_many :winners
+
+  scope :filter_by_serial_number, ->(serial_number) { where(serial_number: serial_number) }
+  scope :filter_by_item_name, ->(item_name) { joins(:item).where('items.name LIKE ?', "%#{item_name}%") }
+  scope :filter_by_email, ->(email) { joins(:user).where(users: { email: email }) }
+  scope :filter_by_created_at, ->(start_date, end_date) { where(created_at: start_date..end_date) }
+  scope :filter_by_state, ->(state) { where(state: state) }
 
   aasm column: :state do
     state :pending, initial: true
