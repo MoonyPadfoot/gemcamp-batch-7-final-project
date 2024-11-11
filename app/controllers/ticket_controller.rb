@@ -1,6 +1,8 @@
 class TicketController < ApplicationController
   before_action :authenticate_admin!, only: :index
   before_action :authorize_admin, only: :index
+  before_action :authenticate_client!, only: :create
+  before_action :authorize_client, only: :create
   before_action :set_ticket, only: :cancel
 
   def index
@@ -25,7 +27,18 @@ class TicketController < ApplicationController
     redirect_to ticket_index_path
   end
 
+  def after_sign_out_path_for(resource_or_scope)
+    new_client_session_path
+  end
+
   private
+
+  def authorize_client
+    if current_client&.admin?
+      sign_out(current_admin)
+      redirect_to new_client_session_path, alert: 'You are not allowed to access this part of the site'
+    end
+  end
 
   def authorize_admin
     if current_admin&.client?
