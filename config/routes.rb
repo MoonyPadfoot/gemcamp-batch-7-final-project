@@ -8,7 +8,6 @@ Rails.application.routes.draw do
 
     scope module: 'client' do
       resources :home, only: [:index], path: 'home'
-      resources :lottery, only: [:index, :show], path: 'lottery'
       namespace :users do
         resources :invite_people, only: [:index], path: 'invite-people'
       end
@@ -19,6 +18,7 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :lottery, only: [:index, :show], path: 'lottery'
     resources :ticket, only: [:create], path: 'ticket'
 
     root to: 'client/home#index', as: :client_root
