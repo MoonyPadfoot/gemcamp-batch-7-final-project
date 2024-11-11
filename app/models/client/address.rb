@@ -6,6 +6,7 @@ class Client::Address < ApplicationRecord
   belongs_to :province, class_name: "Address::Province"
   belongs_to :city, class_name: "Address::City"
   belongs_to :barangay, class_name: "Address::Barangay"
+  has_many :winners
 
   validates :name, uniqueness: true, presence: true
   validates :street_address, presence: true

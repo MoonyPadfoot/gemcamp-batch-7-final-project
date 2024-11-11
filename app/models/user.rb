@@ -13,6 +13,7 @@ class User < ApplicationRecord
   has_many :addresses, class_name: "Client::Address"
   has_many :children, class_name: User.name, foreign_key: 'parent_id', dependent: :destroy
   has_many :tickets
+  has_many :winners
 
   validates :username, uniqueness: true, allow_nil: true
   validates :phone_number, phone: {
