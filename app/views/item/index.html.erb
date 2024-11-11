@@ -1,0 +1,72 @@
+<div class="container-fluid">
+  <div class="row flex-nowrap">
+    <%= render 'admin/shared/side_nav' %>
+
+    <div class="col p-0">
+      <%= render 'admin/shared/nav' %>
+
+      <div class="container-fluid mt-4">
+        <div class="d-flex justify-content-between">
+          <h1>All Items</h1>
+          <%= link_to "Create New Item", new_item_path, class: "btn btn-success h-100" %>
+        </div>
+        <table class="table table-bordered mt-2">
+          <thead>
+          <tr>
+            <td>Name</td>
+            <td>Image</td>
+            <td>Status</td>
+            <td>Quantity</td>
+            <td>Minimum Tickets</td>
+            <td>Batch Count</td>
+            <td>Online At</td>
+            <td>Offline At</td>
+            <td>Start At</td>
+            <td>Categories</td>
+            <td>Status Actions</td>
+            <td>Actions</td>
+          </tr>
+          </thead>
+          <tbody>
+          <% @items.each do |item| %>
+            <tr>
+              <td class="text-nowrap"><%= item.name %></td>
+              <td class="text-nowrap"><%= image_tag(item.image_url || "https://loremflickr.com/50/50", style: 'width: 50px; height: 50px;') %></td>
+              <td class="text-nowrap">
+                <span class="<%= "badge #{item.status == 'active' ? 'bg-primary' : 'bg-danger' }" %>"><%= item.status %></span>
+              </td>
+              <td class=" text-nowrap"><%= item.quantity %></td>
+              <td class="text-nowrap text-center"><%= item.minimum_tickets %></td>
+              <td class="text-nowrap text-center"><%= item.batch_count %></td>
+              <td class="text-nowrap"><%= item.online_at.strftime("%Y/%m/%d %I:%M %p") %></td>
+              <td class="text-nowrap"><%= item.offline_at.strftime("%Y/%m/%d %I:%M %p") %></td>
+              <td class="text-nowrap"><%= item.start_at.strftime("%Y/%m/%d %I:%M %p") %></td>
+              <td>
+                <% item.categories.each do |category| %>
+                  <span class="badge bg-primary"><%= category.name %></span>
+                <% end %>
+              </td>
+              <td>
+                <div class="d-flex justify-content-start">
+                  <%= button_to "Start", item_start_path(item), method: :put, class: "btn btn-sm btn-success me-1", disabled: !item.may_start? %>
+                  <%= button_to "Pause", item_pause_path(item), method: :put, class: "btn btn-sm btn-secondary me-1", disabled: !item.may_pause? %>
+                  <%= button_to "Cancel", item_cancel_path(item), method: :put, class: "btn btn-sm btn-warning me-1", disabled: !item.may_cancel? %>
+                  <%= button_to "End", item_end_path(item), method: :put, class: "btn btn-sm btn-danger me-1", disabled: !item.may_end? %>
+                </div>
+              </td>
+              <td class="text-nowrap">
+                <div class="d-flex justify-content-start">
+                  <%= link_to "Edit", edit_item_path(item), class: "btn btn-sm btn-warning me-1" %>
+                  <%= button_to "Delete", item_path(item), method: :delete, class: "btn btn-sm btn-danger" %>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+          </tbody>
+        </table>
+        <%= paginate @items %>
+      </div>
+
+    </div>
+  </div>
+</div>

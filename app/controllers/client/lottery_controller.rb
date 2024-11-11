@@ -3,15 +3,17 @@ class Client::LotteryController < ApplicationController
   before_action :allow_starting_items, only: :show
 
   def index
-    @categories = Admin::Category.all
-    @items = Admin::Item.all
+    @categories = Category.all
+    @items = Item.all
                         .filter_by_status
                         .filter_by_category(params[:category])
                         .filter_by_state
                         .page(params[:page]).per(4)
   end
 
-  def show; end
+  def show
+    @ticket = Ticket.new
+  end
 
   def after_sign_out_path_for(resource_or_scope)
     new_client_session_path
@@ -31,7 +33,7 @@ class Client::LotteryController < ApplicationController
   end
 
   def set_item
-    @item = Admin::Item.find(params[:id])
+    @item = Item.find(params[:id])
   end
 
   def allow_starting_items

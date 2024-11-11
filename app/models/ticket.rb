@@ -4,7 +4,7 @@ class Ticket < ApplicationRecord
   after_save :deduct_user_coin
 
   belongs_to :user
-  belongs_to :item, class_name: 'Admin::Item'
+  belongs_to :item
 
   aasm column: :state do
     state :pending, initial: true
@@ -30,7 +30,7 @@ class Ticket < ApplicationRecord
   private
 
   def assign_serial_number
-    number_count = self.includes(:item).where(batch_count: batch_count, items: {id: item.id }).count
+    number_count = self.includes(:item).where(batch_count: batch_count, items: { id: item.id }).count
     self.update(serial_number: "#{Time.current.strftime("%Y%m%d")}-#{item.id}-#{item.batch_count}-#{number_count.to_s.rjust(4, '0')}")
   end
 

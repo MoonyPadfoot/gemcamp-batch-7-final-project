@@ -32,14 +32,14 @@ Rails.application.routes.draw do
 
     scope module: 'admin' do
       resources :home, only: [:index], path: 'home'
-      resources :item, path: 'item' do
-        put :start
-        put :pause
-        put :end
-        put :cancel
-      end
     end
 
+    resources :item, path: 'item' do
+      put :start
+      put :pause
+      put :end
+      put :cancel
+    end
     resources :category, path: 'category'
     resources :ticket, only: [:index], path: 'ticket' do
       put :cancel
