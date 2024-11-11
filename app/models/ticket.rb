@@ -2,6 +2,7 @@ class Ticket < ApplicationRecord
   include AASM
 
   after_save :deduct_user_coin
+  after_create :assign_serial_number
 
   belongs_to :user
   belongs_to :item
@@ -30,8 +31,9 @@ class Ticket < ApplicationRecord
   private
 
   def assign_serial_number
-    number_count = self.includes(:item).where(batch_count: batch_count, items: { id: item.id }).count
-    self.update(serial_number: "#{Time.current.strftime("%Y%m%d")}-#{item.id}-#{item.batch_count}-#{number_count.to_s.rjust(4, '0')}")
+    number_count = Ticket.includes(:item).where(batch_count: batch_count, items: { id: item.id }).count
+    self.serial_number = "#{Time.current.strftime("%Y%m%d")}-#{item.id}-#{item.batch_count}-#{number_count.to_s.rjust(4, '0')}"
+    save
   end
 
   def deduct_user_coin
