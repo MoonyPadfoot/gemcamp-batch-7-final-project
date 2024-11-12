@@ -54,6 +54,7 @@ Rails.application.routes.draw do
     resources :ticket, only: [:index], path: 'ticket' do
       put :cancel
     end
+    resources :offer, path: 'offer'
 
     root to: 'admin/home#index', as: :admin_root
 
