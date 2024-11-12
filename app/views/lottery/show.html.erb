@@ -5,7 +5,7 @@
     <div class="card-body px-5 py-4">
       <h5 class="card-title"><%= @item.name %></h5>
       <div class="progress" role="progressbar" aria-label="Example with label" aria-valuenow="<%= @ticket_percentage %>" aria-valuemin="0" aria-valuemax="100">
-        <div class="progress-bar" style="width: #{ @ticket_percentage }"><%= @ticket_percentage %>%</div>
+        <div class="progress-bar" style="width: <%= "#{ @ticket_percentage }%" %>"><%= @ticket_percentage %>%</div>
       </div>
     </div>
   </div>
