@@ -16,7 +16,7 @@ class LotteryController < ApplicationController
 
     ticket_count = Ticket.includes(:item).where(batch_count: @item.batch_count, items: { id: @item.id }).count
     @ticket_percentage = ticket_count.to_f / @item.minimum_tickets * 100
-    @user_tickets = current_user.tickets
+    @user_tickets = Ticket.includes(:item).where(user: current_user, batch_count: @item.batch_count, items: { id: @item.id })
   end
 
   def after_sign_out_path_for(resource_or_scope)
