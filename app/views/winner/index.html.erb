@@ -5,65 +5,71 @@
     <div class="col p-0">
       <%= render 'admin/shared/nav' %>
 
-      <div class="container-fluid ">
+      <div class="container-fluid">
         <div class="d-flex justify-content-between">
           <h1>All Winners</h1>
         </div>
 
         <%= render 'winner/filter' %>
 
-        <table class="table table-striped table-bordered mt-2">
-          <thead>
-          <tr>
-            <td>Item Name</td>
-            <td>Serial Number</td>
-            <td>Email</td>
-            <td>Address</td>
-            <td>Batch Count</td>
-            <td>State</td>
-            <td>Price</td>
-            <td>Paid At</td>
-            <td>Admin</td>
-            <td>Picture</td>
-            <td>Comment</td>
-            <td>Created At</td>
-            <td>Actions</td>
-          </tr>
-          </thead>
-          <tbody>
-          <% @winners.each do |winner| %>
+        <div class="table-responsive">
+          <table class="table table-responsive table-striped table-bordered mt-2">
+            <thead>
             <tr>
-              <td class="text-nowrap"><%= winner.item.name %></td>
-              <td class="text-nowrap"><%= winner.ticket.serial_number %></td>
-              <td class="text-nowrap"><%= winner.user.email %></td>
-              <td class="text-nowrap"><%= "#{winner.address.street_address}, #{winner.address.barangay.name}, #{winner.address.city.name} City, #{winner.address.province.name}" %></td>
-              <td class="text-nowrap"><%= winner.item_batch_count %></td>
-              <td class="text-nowrap"><span class="badge <%=
-                case winner.state
-                when 'won' then 'bg-success'
-                when 'lost' then 'bg-danger'
-                when 'cancelled' then 'bg-secondary'
-                else 'bg-primary'
-                end
-              %>"><%= winner.state %></span></td>
-              <td class="text-nowrap"><%= winner.price %></td>
-              <td class="text-nowrap"><%= winner.paid_at.strftime("%Y/%m/%d %I:%M %p") %></td>
-              <td class="text-nowrap"><%= winner.admin.name %></td>
-              <td class="text-nowrap"><%= winner.comment %></td>
-              <td class="text-nowrap"><%= image_tag(winner&.picture_url || "https://loremflickr.com/300/300", style: "height: 30rem;") %></td>
-              <td class="text-nowrap"><%= winner.created_at.strftime("%Y/%m/%d %I:%M %p") %></td>
-              <td class="text-nowrap p-2">
-                <%= button_to "Submit", winner_submit_path(winner), method: :put, class: "btn btn-sm btn-success me-1", disabled: !winner.may_submit? %>
-                <%= button_to "Pay", winner_pay_path(winner), method: :put, class: "btn btn-sm btn-primary me-1", disabled: !winner.may_pay? %>
-                <%= button_to "Ship", winner_ship_path(winner), method: :put, class: "btn btn-sm btn-warning me-1", disabled: !winner.may_ship? %>
-                <%= button_to "Deliver", winner_deliver_path(winner), method: :put, class: "btn btn-sm btn-info me-1", disabled: !winner.may_deliver? %>
-                <%= button_to "Publish", winner_publish_path(winner), method: :put, class: "btn btn-sm btn-secondary me-1", disabled: !winner.may_publish? %>
-                <%= button_to "Remove", winner_publish_path(winner), method: :put, class: "btn btn-sm btn-danger me-1", disabled: !winner.may_remove_publish? %>
-              </td>
+              <td>Item Name</td>
+              <td>Serial Number</td>
+              <td>Email</td>
+              <td>Address</td>
+              <td>Batch Count</td>
+              <td>State</td>
+              <td>Price</td>
+              <td>Paid At</td>
+              <td>Admin</td>
+              <td>Picture</td>
+              <td>Comment</td>
+              <td>Created At</td>
+              <td>Actions</td>
             </tr>
-          <% end %>
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+            <% @winners.each do |winner| %>
+              <tr>
+                <td class="text-nowrap"><%= winner.item.name %></td>
+                <td class="text-nowrap"><%= winner.ticket.serial_number %></td>
+                <td class="text-nowrap"><%= winner.user.email %></td>
+                <td class="text-nowrap"><%= "#{winner.address.street_address}, #{winner.address.barangay.name}, #{winner.address.city.name} City, #{winner.address.province.name}" %></td>
+                <td class="text-nowrap"><%= winner.item_batch_count %></td>
+                <td class="text-nowrap"><span class="badge <%=
+                  case winner.state
+                  when 'won' then 'bg-success'
+                  when 'paid' then 'bg-primary'
+                  when 'shipped' then 'btn-warning'
+                  when 'delivered' then 'btn-info'
+                  when 'published' then 'btn-info'
+                  when 'remove_published' then 'btn-danger'
+                  end
+                %>"><%= winner.state %></span></td>
+                <td class="text-nowrap"><%= winner.price %></td>
+                <td class="text-nowrap"><%= winner.paid_at.strftime("%Y/%m/%d %I:%M %p") %></td>
+                <td class="text-nowrap"><%= winner.admin.email %></td>
+                <td><%= image_tag(winner&.picture_url || "https://loremflickr.com/300/300", style: "height: 30rem;") %></td>
+                <td><%= winner.comment %></td>
+                <td class="text-nowrap"><%= winner.created_at.strftime("%Y/%m/%d %I:%M %p") %></td>
+                <td class="text-nowrap p-2">
+                  <%= button_to "Submit", winner_submit_path(winner), method: :put, class: "btn btn-sm btn-success me-1", disabled: !winner.may_submit? %>
+                  <%= button_to "Pay", winner_pay_path(winner), method: :put, class: "btn btn-sm btn-primary me-1", disabled: !winner.may_pay? %>
+                  <%= button_to "Ship", winner_ship_path(winner), method: :put, class: "btn btn-sm btn-warning me-1", disabled: !winner.may_ship? %>
+                  <%= button_to "Deliver", winner_deliver_path(winner), method: :put, class: "btn btn-sm btn-info me-1", disabled: !winner.may_deliver? %>
+                  <%= button_to "Publish", winner_publish_path(winner), method: :put, class: "btn btn-sm btn-secondary me-1", disabled: !winner.may_publish? %>
+                  <%= button_to "Remove", winner_publish_path(winner), method: :put, class: "btn btn-sm btn-danger me-1", disabled: !winner.may_remove_publish? %>
+                </td>
+              </tr>
+            <% end %>
+            </tbody>
+          </table>
+          <%= paginate @winners %>
+        </div>
+
       </div>
 
     </div>

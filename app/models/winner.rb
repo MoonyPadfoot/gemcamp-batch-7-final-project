@@ -1,12 +1,13 @@
 class Winner < ApplicationRecord
   include AASM
-  mount_uploader :image, ImageUploader
+  mount_uploader :picture, ImageUploader
 
   belongs_to :item
   belongs_to :ticket
   belongs_to :user
   belongs_to :address, class_name: "Client::Address"
   belongs_to :admin, class_name: User.name, foreign_key: 'admin_id'
+
 
   aasm column: :state do
     state :won, initial: true
