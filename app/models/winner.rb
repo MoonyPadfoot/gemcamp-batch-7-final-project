@@ -8,6 +8,10 @@ class Winner < ApplicationRecord
   belongs_to :address, class_name: "Client::Address"
   belongs_to :admin, class_name: User.name, foreign_key: 'admin_id'
 
+  scope :filter_by_serial_number, ->(serial_number) { joins(:ticket).where(tickets: { serial_number: serial_number }) }
+  scope :filter_by_email, ->(email) { joins(:user).where(users: { email: email }) }
+  scope :filter_by_created_at, ->(start_date, end_date) { where(created_at: start_date..end_date) }
+  scope :filter_by_state, ->(state) { where(state: state) }
 
   aasm column: :state do
     state :won, initial: true
