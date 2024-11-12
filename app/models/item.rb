@@ -41,7 +41,9 @@ class Item < ApplicationRecord
     end
 
     event :end do
-      transitions from: :starting, to: :ended
+      transitions from: :starting, to: :ended,
+                  guard: :item_tickets_enough?,
+                  success: [:update_ticket_states]
     end
 
     event :cancel do
@@ -70,9 +72,29 @@ class Item < ApplicationRecord
   end
 
   def cancel_batch_tickets
-    tickets = Ticket.includes(:item).where(batch_count: batch_count, items: { id: self.id })
-    tickets.each do |ticket|
+    tickets_for_item.each do |ticket|
       ticket.cancel! if ticket.may_cancel?
     end
+  end
+
+  def item_tickets_enough?
+    tickets_for_item.count >= self.minimum_tickets
+  end
+
+  def update_ticket_states
+    @ticket_winner = tickets_for_item.sample
+    @ticket_winner.win!
+
+    @ticket_losers = tickets_for_item.where.not(id: @ticket_winner.id)
+    @ticket_losers.each { |ticket| ticket.lose! }
+
+    @winner = Winner.create!(item: @ticket_winner.item, user: @ticket_winner.user, address: Client::Address.find_by(user: @ticket_winner.user),
+                             ticket: @ticket_winner, item_batch_count: @ticket_winner.batch_count)
+  end
+
+  private
+
+  def tickets_for_item
+    Ticket.includes(:item).where(batch_count: batch_count, items: { id: self.id })
   end
 end
