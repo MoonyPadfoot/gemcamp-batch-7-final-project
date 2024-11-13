@@ -3,7 +3,7 @@ class CreateOffers < ActiveRecord::Migration[7.0]
     create_table :offers do |t|
       t.string :image
       t.string :name
-      t.string :status, default: 0
+      t.integer :status, default: 0
       t.decimal :amount, precision: 18, scale: 2, default: 0
       t.integer :coin
       t.timestamps

@@ -102,7 +102,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_12_083904) do
   create_table "offers", charset: "utf8mb4", force: :cascade do |t|
     t.string "image"
     t.string "name"
-    t.string "status", default: "0"
+    t.integer "status", default: 0
     t.decimal "amount", precision: 18, scale: 2, default: "0.0"
     t.integer "coin"
     t.datetime "created_at", null: false
