@@ -14,6 +14,7 @@ class User < ApplicationRecord
   has_many :children, class_name: User.name, foreign_key: 'parent_id', dependent: :destroy
   has_many :tickets
   has_many :winners
+  has_many :orders
 
   validates :username, uniqueness: true, allow_nil: true
   validates :phone_number, phone: {
