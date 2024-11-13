@@ -1,12 +1,13 @@
 class Order < ApplicationRecord
+  include AASM
   enum genre: { deposit: 0, increase: 1, deduct: 2, bonus: 3, share: 4 }
+
+  after_create :assign_serial_number
+  before_save :allow_nil_or_zero_unless_deposit, :offer_required_if_deposit
 
   belongs_to :offer, optional: true
   belongs_to :user
 
-  validate :offer_required_if_deposit
-  validate :allow_nil_or_zero_unless_deposit
-  validates :serial_number, presence: true
   validates :amount, presence: true, numericality: { only_numeric: true, greater_than_or_equal_to: 0 }
   validates :coin, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
 
@@ -49,7 +50,7 @@ class Order < ApplicationRecord
   private
 
   def assign_serial_number
-    number_count = Order.includes(:user).where(order: order.id, users: { id: user.id }).count
+    number_count = Order.includes(:user).where(users: { id: user.id }).count
     self.serial_number = "#{Time.current.strftime("%Y%m%d")}-#{id}-#{user.id}-#{number_count.to_s.rjust(4, '0')}"
     save
   end
