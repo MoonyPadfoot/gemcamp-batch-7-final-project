@@ -51,8 +51,8 @@
                   end
                 %>"><%= winner.state %></span></td>
                 <td class="text-nowrap text-end"><%= winner.price %></td>
-                <td class="text-nowrap"><%= winner.paid_at.strftime("%Y/%m/%d %I:%M %p") %></td>
-                <td class="text-nowrap"><%= winner.admin.email %></td>
+                <td class="text-nowrap"><%= winner.paid_at&.strftime("%Y/%m/%d %I:%M %p") %></td>
+                <td class="text-nowrap"><%= winner.admin&.email %></td>
                 <td><%= image_tag(winner&.picture_url || "https://loremflickr.com/300/300", style: "height: 30rem;") %></td>
                 <td><%= winner.comment %></td>
                 <td class="text-nowrap"><%= winner.created_at.strftime("%Y/%m/%d %I:%M %p") %></td>
