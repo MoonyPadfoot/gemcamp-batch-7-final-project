@@ -1,0 +1,21 @@
+<%= render 'client/shared/nav' %>
+<div class="container mb-3 pb-5 px-5">
+  <div class="card shadow mt-5">
+    <%= image_tag(@offer&.image_url || "https://loremflickr.com/300/300", class: "card-img-top w-100", style: "height: 35rem;") %>
+    <div class="card-body px-5 py-4 text-center">
+      <h5 class="card-title"><%= @offer.name %></h5>
+      <h1 class="fw-bolder"><%= @offer.coin %> Coin(s)</h1>
+      <span class="fw-bold">P <%= @offer.amount %></span>
+
+      <%= form_with model: @order, url: shop_index_path do |f| %>
+        <%= f.hidden_field :offer_id, value: @offer.id %>
+        <%= f.hidden_field :amount, value: @offer.amount %>
+        <%= f.hidden_field :coin, value: @offer.coin %>
+        <div class="w-100 actions text-center my-2">
+          <%= f.submit "Purchase", class: 'btn btn-md btn-success w-100' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+<%= render 'client/shared/footer' %>

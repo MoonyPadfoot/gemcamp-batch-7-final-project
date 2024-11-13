@@ -20,6 +20,7 @@ Rails.application.routes.draw do
 
     resources :lottery, only: [:index, :show], path: 'lottery'
     resources :ticket, only: [:create], path: 'ticket'
+    resources :shop, only: [:index, :show, :create], path: 'shop'
 
     root to: 'client/home#index', as: :client_root
 

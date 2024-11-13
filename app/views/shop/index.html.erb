@@ -1,0 +1,22 @@
+<%= render 'client/shared/nav' %>
+<div class="container mb-2 pb-5">
+  <%= render 'client/shared/banner' %>
+  <%= render 'client/shared/announcement' %>
+
+  <div class="row row-cols-2 g-5 mt-3">
+    <% @offers.each do |offer| %>
+      <div class="col my-2">
+        <%= link_to shop_path(offer) do %>
+          <div class="card shadow h-100">
+            <%= image_tag(offer&.image_url || "https://loremflickr.com/300/300", class: "card-img-top w-100", style: "height: 30rem;") %>
+            <div class="card-body">
+              <h5 class="card-title text-center"><%= offer.name %></h5>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+  <%= paginate @offers %>
+</div>
+<%= render 'client/shared/footer' %>
