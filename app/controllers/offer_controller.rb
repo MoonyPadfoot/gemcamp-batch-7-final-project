@@ -3,7 +3,8 @@ class OfferController < AdminsController
 
   def index
     @offers = Offer.all
-                   .page(params[:page]).per(10)
+    @offers = @offers.filter_by_status(params[:status]) unless params[:status].blank?
+    @offers = @offers.page(params[:page]).per(10)
   end
 
   def new

@@ -10,6 +10,9 @@
           <h1>All Offers</h1>
           <%= link_to "Create New Offer", new_offer_path, class: "btn btn-success h-100" %>
         </div>
+
+        <%= render 'offer/shared/filter' %>
+
         <table class="table table-bordered mt-2">
           <thead>
           <tr>
