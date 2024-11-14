@@ -1,0 +1,26 @@
+<%= render 'client/shared/nav' %>
+<div class="container d-flex justify-content-center pt-3 pb-5">
+  <div class="w-100">
+    <%= render 'client/users/me/shared/profile' %>
+    <%= render 'client/users/me/shared/links' %>
+
+    <% @invitation_histories.each do |invitation_history| %>
+      <div class="card shadow p-4 my-2">
+        <div>Username:
+          <span class="ms-2 fw-semibold"><%= invitation_history.username %></span>
+        </div>
+        <div>Email:
+          <span class="ms-2 fw-semibold"><%= invitation_history.email %></span>
+        </div>
+        <div>Phone Number:
+          <span class="ms-2 fw-semibold"><%= invitation_history.phone_number %></span>
+        </div>
+        <div>Joined At:
+          <span class="ms-2 fw-semibold"><%= invitation_history.created_at.strftime("%Y/%m/%d %I:%M %p") %></span>
+        </div>
+      </div>
+    <% end %>
+    <%= paginate @invitation_histories %>
+  </div>
+</div>
+<%= render 'client/shared/footer' %>

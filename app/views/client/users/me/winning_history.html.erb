@@ -1,0 +1,23 @@
+<%= render 'client/shared/nav' %>
+<div class="container d-flex justify-content-center pt-3 pb-5">
+  <div class="w-100">
+    <%= render 'client/users/me/shared/profile' %>
+    <%= render 'client/users/me/shared/links' %>
+
+    <% @winning_histories.each do |winning_history| %>
+      <div class="card shadow p-4 my-2">
+        <div>Item Name:
+          <span class="ms-2 fw-semibold"><%= winning_history.item.name %></span>
+        </div>
+        <div>Serial Number:
+          <span class="ms-2 fw-semibold"><%= winning_history.serial_number %></span>
+        </div>
+        <div>Created At:
+          <span class="ms-2 fw-semibold"><%= winning_history.created_at.strftime("%Y/%m/%d %I:%M %p") %></span>
+        </div>
+      </div>
+    <% end %>
+    <%= paginate @winning_histories %>
+  </div>
+</div>
+<%= render 'client/shared/footer' %>

@@ -14,6 +14,12 @@ Rails.application.routes.draw do
 
       scope module: 'users' do
         resources :me, only: :index, path: 'me'
+        namespace :me do
+          get :order_history
+          get :winning_history
+          get :lottery_history
+          get :invitation_history
+        end
         resources :address, except: :show, path: 'address'
       end
     end
