@@ -56,6 +56,10 @@ Rails.application.routes.draw do
       put :cancel
     end
     resources :offer, path: 'offer'
+    resources :order, only: [:index], path: 'order' do
+      put :pay
+      put :cancel
+    end
 
     root to: 'admin/home#index', as: :admin_root
 

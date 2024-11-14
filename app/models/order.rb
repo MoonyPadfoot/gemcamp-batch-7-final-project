@@ -11,6 +11,13 @@ class Order < ApplicationRecord
   validates :amount, presence: true, numericality: { only_numeric: true, greater_than_or_equal_to: 0 }
   validates :coin, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
 
+  scope :filter_by_serial_number, ->(serial_number) { where(serial_number: serial_number) }
+  scope :filter_by_email, ->(email) { joins(:user).where(users: { email: email }) }
+  scope :filter_by_offer_name, ->(offer_name) { joins(:offer).where('offers.name LIKE ?', "%#{offer_name}%") }
+  scope :filter_by_created_at, ->(start_date, end_date) { where(created_at: start_date..end_date) }
+  scope :filter_by_genre, ->(genre) { where(genre: genre) }
+  scope :filter_by_state, ->(state) { where(state: state) }
+
   aasm column: :state do
     state :pending, initial: true
     state :submitted, :cancelled, :paid
