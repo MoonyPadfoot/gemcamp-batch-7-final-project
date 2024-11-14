@@ -57,9 +57,12 @@
           </tbody>
         </table>
 
+        <%= paginate @orders %>
+
         <div class="ms-auto w-25 d-flex justify-content-end gap-5">
           <div>Amount Subtotal <h3 class="fw-bold text-end"><%= Order.sum(:amount) %></h3></div>
           <div>Coins Subtotal <h3 class="fw-bold text-end"><%= Order.sum(:coin) %></h3></div>
+          <div>Convenience Fee <h3 class="fw-bold text-end">0</h3></div>
         </div>
       </div>
     </div>

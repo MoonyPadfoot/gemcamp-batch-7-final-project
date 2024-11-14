@@ -9,6 +9,7 @@ class OrderController < AdminsController
     @orders = @orders.filter_by_created_at(params[:start_date], params[:end_date]) unless params[:start_date].blank? && params[:end_date].blank?
     @orders = @orders.filter_by_genre(params[:genre]) unless params[:genre].blank?
     @orders = @orders.filter_by_state(params[:state]) unless params[:state].blank?
+    @orders = @orders.page(params[:page]).per(10)
   end
 
   def pay
