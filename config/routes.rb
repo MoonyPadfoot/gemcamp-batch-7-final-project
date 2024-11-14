@@ -7,19 +7,19 @@ Rails.application.routes.draw do
                controllers: { registrations: 'users/registrations', sessions: 'client/users/sessions' }, path: 'users'
 
     scope module: 'client' do
-      resources :home, only: [:index], path: 'home'
+      resources :home, only: :index, path: 'home'
       namespace :users do
-        resources :invite_people, only: [:index], path: 'invite-people'
+        resources :invite_people, only: :index, path: 'invite-people'
       end
 
       scope module: 'users' do
-        resources :me, only: [:index], path: 'me'
+        resources :me, only: :index, path: 'me'
         resources :address, except: :show, path: 'address'
       end
     end
 
     resources :lottery, only: [:index, :show], path: 'lottery'
-    resources :ticket, only: [:create], path: 'ticket'
+    resources :ticket, only: :create, path: 'ticket'
     resources :shop, only: [:index, :show, :create], path: 'shop'
 
     root to: 'client/home#index', as: :client_root
@@ -28,11 +28,11 @@ Rails.application.routes.draw do
 
   constraints(AdminDomainConstraint.new) do
     devise_for :admin, class_name: 'User',
-               only: [:sessions],
+               only: :sessions,
                controllers: { sessions: 'admin/sessions' }, path: 'users'
 
     scope module: 'admin' do
-      resources :home, only: [:index], path: 'home'
+      resources :home, only: :index, path: 'home'
     end
 
     resources :item, path: 'item' do
@@ -42,7 +42,7 @@ Rails.application.routes.draw do
       put :cancel
     end
 
-    resources :winner, path: 'winner', only: [:index] do
+    resources :winner, path: 'winner', only: :index do
       put :submit
       put :pay
       put :ship
@@ -52,11 +52,11 @@ Rails.application.routes.draw do
     end
 
     resources :category, path: 'category'
-    resources :ticket, only: [:index], path: 'ticket' do
+    resources :ticket, only: :index, path: 'ticket' do
       put :cancel
     end
     resources :offer, path: 'offer'
-    resources :order, only: [:index], path: 'order' do
+    resources :order, only: :index, path: 'order' do
       put :pay
       put :cancel
     end
