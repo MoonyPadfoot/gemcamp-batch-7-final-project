@@ -10,6 +10,16 @@ class WinnerController < AdminsController
     @winners = @winners.page(params[:page]).per(10)
   end
 
+  def claim
+    if @winner.may_claim?
+      @winner.claim!
+      flash[:notice] = "Claimed!"
+    else
+      flash[:alert] = "Cannot claimed."
+    end
+    redirect_to winner_index_path
+  end
+
   def submit
     if @winner.may_submit?
       @winner.submit!
