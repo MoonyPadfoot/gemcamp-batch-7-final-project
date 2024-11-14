@@ -15,6 +15,7 @@
         <div>Created At:
           <span class="ms-2 fw-semibold"><%= winning_history.created_at.strftime("%Y/%m/%d %I:%M %p") %></span>
         </div>
+        <%= link_to "Select Address", me_select_address_path(winning_history) %>
       </div>
     <% end %>
     <%= paginate @winning_histories %>

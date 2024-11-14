@@ -13,7 +13,6 @@ Rails.application.routes.draw do
       end
 
       scope module: 'users' do
-        resources :me, only: :index, path: 'me'
         namespace :me do
           get :order_history
           get :winning_history
@@ -49,6 +48,7 @@ Rails.application.routes.draw do
     end
 
     resources :winner, path: 'winner', only: :index do
+      put :claim
       put :submit
       put :pay
       put :ship

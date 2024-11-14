@@ -20,4 +20,13 @@ class Client::Users::MeController < ClientsController
     @invitation_histories = User.includes(:children).where(parent_id: current_user.id)
                                 .page(params[:page]).per(10)
   end
+
+  def claim_prize
+
+  end
+
+  def select_address
+    @winner = Winner.new
+    @addresses = Client::Address.order(is_default: :desc)
+  end
 end
