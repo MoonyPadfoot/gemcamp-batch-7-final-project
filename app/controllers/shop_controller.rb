@@ -5,7 +5,7 @@ class ShopController < ApplicationController
 
   def index
     @offers = Offer.all
-                   .filter_by_status
+                   .filter_by_status(Offer.statuses[:active])
                    .page(params[:page]).per(6)
   end
 

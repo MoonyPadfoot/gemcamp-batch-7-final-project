@@ -22,7 +22,7 @@ class Order < ApplicationRecord
     state :pending, initial: true
     state :submitted, :cancelled, :paid
 
-    event :start do
+    event :submit do
       transitions from: :pending, to: :submitted
     end
 
