@@ -1,8 +1,7 @@
 class Ticket < ApplicationRecord
   include AASM
 
-  after_save :deduct_user_coin
-  after_create :assign_serial_number
+  after_create :assign_serial_number, :deduct_user_coin
 
   belongs_to :user
   belongs_to :item
