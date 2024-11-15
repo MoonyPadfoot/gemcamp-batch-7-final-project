@@ -56,19 +56,19 @@ class Item < ApplicationRecord
   end
 
   def deduct_quantity
-    self.update(quantity: self.quantity - 1)
+    update(quantity: quantity - 1)
   end
 
   def add_batch_count
-    self.update(batch_count: self.batch_count + 1)
+    update(batch_count: batch_count + 1)
   end
 
   def quantity_enough?
-    self.quantity >= 1
+    quantity >= 1
   end
 
   def offline_before_today?
-    self.offline_at > Time.current
+    offline_at > Time.current
   end
 
   def cancel_batch_tickets
@@ -78,7 +78,7 @@ class Item < ApplicationRecord
   end
 
   def item_tickets_enough?
-    tickets_for_item.count >= self.minimum_tickets
+    tickets_for_item.count >= minimum_tickets
   end
 
   def update_ticket_states
@@ -95,6 +95,6 @@ class Item < ApplicationRecord
   private
 
   def tickets_for_item
-    Ticket.includes(:item).where(batch_count: batch_count, items: { id: self.id })
+    Ticket.includes(:item).where(batch_count: batch_count, items: { id: id })
   end
 end
