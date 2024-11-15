@@ -16,6 +16,8 @@
             <td>Serial Number</td>
             <td>Email</td>
             <td>Offer</td>
+            <td>Amount</td>
+            <td>Coin</td>
             <td>Genre</td>
             <td>State</td>
             <td>Created At</td>
@@ -27,15 +29,9 @@
             <tr>
               <td class="text-nowrap"><%= order.serial_number %></td>
               <td class="text-nowrap"><%= order.user.email %></td>
-              <td class="text-nowrap"><%= order.offer&.name %></td>
-              <td class="text-nowrap"><span class="badge <%=
-                case order.state
-                when 'pending' then 'bg-primary'
-                when 'submitted' then 'bg-info'
-                when 'cancelled' then 'bg-secondary'
-                when 'paid' then 'bg-success'
-                end
-              %>"><%= order.state %></span></td>
+              <td class="text-nowrap"><%= order.offer.name %></td>
+              <td class="text-nowrap"><%= order.offer&.amount %></td>
+              <td class="text-nowrap"><%= order.offer&.coin %></td>
               <td class="text-nowrap"><span class="badge <%=
                 case order.genre
                 when 'deposit' then 'bg-primary'
@@ -45,6 +41,14 @@
                 when 'share' then 'bg-warning'
                 end
               %>"><%= order.genre %></span></td>
+              <td class="text-nowrap"><span class="badge <%=
+                case order.state
+                when 'pending' then 'bg-primary'
+                when 'submitted' then 'bg-info'
+                when 'cancelled' then 'bg-secondary'
+                when 'paid' then 'bg-success'
+                end
+              %>"><%= order.state %></span></td>
               <td class="text-nowrap"><%= order.created_at.strftime("%Y/%m/%d %I:%M %p") %></td>
               <td class="text-nowrap p-2">
                 <div class="d-flex justify-content-start">

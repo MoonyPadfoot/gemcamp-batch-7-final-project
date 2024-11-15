@@ -18,6 +18,7 @@ class ShopController < ApplicationController
     @order.user = current_user
 
     if @order.save
+      @order.submit! if @order.may_submit?
       flash[:notice] = 'Offer purchased successfully!'
     else
       flash[:alert] = 'Offer purchase failed!'
