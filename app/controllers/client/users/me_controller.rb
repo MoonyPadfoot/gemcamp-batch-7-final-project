@@ -14,6 +14,9 @@ class Client::Users::MeController < ClientsController
   def winning_history
     @winning_histories = Ticket.includes(:user).where(users: { id: current_client.id }, state: :won)
                                .page(params[:page]).per(10)
+
+    @winner = Winner.new
+    @addresses = Client::Address.order(is_default: :desc)
   end
 
   def invitation_history
@@ -22,11 +25,20 @@ class Client::Users::MeController < ClientsController
   end
 
   def claim_prize
+    @winner = Winner.includes(:item).where(items: { id: params[:winner][:item_id] }, ticket_id: params[:winner][:ticket_id]).first
+
+    if @winner.update(winner_params) && @winner.may_claim?
+      @winner.claim!
+      flash[:notice] = 'Prize claimed successfully!'
+      redirect_to me_winning_history_path
+    else
+      flash.now[:alert] = 'Prize failed to claim'
+      render claim_prize_me_index_path, status: :unprocessable_entity
+    end
+  end
+
+  def share_feedback
 
   end
 
-  def select_address
-    @winner = Winner.new
-    @addresses = Client::Address.order(is_default: :desc)
-  end
 end
