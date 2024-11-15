@@ -27,31 +27,37 @@ class Order < ApplicationRecord
     end
 
     event :pay do
-      transitions from: :submitted, to: :paid, success: :adjust_user_if_paid
+      transitions from: :submitted, to: :paid, success: [:adjust_coin_paid, :add_deposit]
     end
 
     event :cancel do
       transitions from: [:pending, :submitted], to: :cancelled
-      transitions from: :paid, to: :cancelled, success: :adjust_user_if_cancelled
+      transitions from: :paid, to: :cancelled, success: [:adjust_coin_cancelled, :deduct_deposit]
     end
   end
 
-  def adjust_user_if_paid
+  def adjust_coin_paid
     if deduct?
       user.update(coins: user.coins + 1)
     else
       user.update(coins: user.coins - 1)
     end
+  end
+
+  def add_deposit
     user.update(total_deposit: user.total_deposit + amount) if deposit?
   end
 
-  def adjust_user_if_cancelled
+  def deduct_deposit
+    user.update(total_deposit: user.total_deposit - amount) if deposit?
+  end
+
+  def adjust_coin_cancelled
     if deduct?
       user.update(coins: user.coins - 1)
     else
       user.update(coins: user.coins + 1)
     end
-    user.update(total_deposit: user.total_deposit - amount) if deposit?
   end
 
   private
