@@ -5,7 +5,7 @@ class Winner < ApplicationRecord
   belongs_to :item
   belongs_to :ticket
   belongs_to :user
-  belongs_to :address, class_name: "Client::Address"
+  belongs_to :address, class_name: "Client::Address", optional: true
   belongs_to :admin, class_name: User.name, foreign_key: 'admin_id', optional: true
 
   scope :filter_by_serial_number, ->(serial_number) { joins(:ticket).where(tickets: { serial_number: serial_number }) }
