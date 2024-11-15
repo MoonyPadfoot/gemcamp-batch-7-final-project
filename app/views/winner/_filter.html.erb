@@ -14,7 +14,7 @@
 
     <div class="col">
       <div class="input-group">
-        <%= f.select :state, options_for_select(['won', 'claimed', 'submitted', 'paid', 'shipped', 'delivered', 'shared', 'published', 'remove published'], params[:state]),
+        <%= f.select :state, options_for_select(Winner.aasm.states.map(&:name), params[:state]),
                      { include_blank: 'Please select state' }, { class: "form-select w-25" } %>
       </div>
     </div>
