@@ -13,6 +13,15 @@ Rails.application.routes.draw do
       end
 
       scope module: 'users' do
+        resources :me, only: :index do
+          collection do
+            put :claim_prize
+          end
+
+          member do
+            get 'claim_prize/:id/select_address', to: 'me#select_address', as: :select_address
+          end
+        end
         namespace :me do
           get :order_history
           get :winning_history
