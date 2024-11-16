@@ -16,6 +16,7 @@ Rails.application.routes.draw do
         resources :me, only: :index do
           collection do
             put :claim_prize
+            put :share_feedback
           end
 
           member do

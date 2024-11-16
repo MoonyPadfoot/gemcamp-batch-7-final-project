@@ -27,26 +27,29 @@ class Client::Users::MeController < ClientsController
   def claim_prize
     @winner = Winner.includes(:item).where(items: { id: params[:winner][:item_id] }, ticket_id: params[:winner][:ticket_id]).first
 
-    if @winner.update(winner_params) && @winner.may_claim?
+    if @winner.update(params.require(:winner).permit(:address_id)) && @winner.may_claim?
       @winner.claim!
       flash[:notice] = 'Prize claimed successfully!'
       redirect_to me_winning_history_path
     else
+      winning_history
       flash.now[:alert] = 'Prize failed to claim'
-      render claim_prize_me_index_path, status: :unprocessable_entity
+      render :winning_history, status: :unprocessable_entity
     end
   end
 
-  def may_claim_prize?(winning_history)
-    Winner.includes(:ticket).find_by(
-      ticket_id: winning_history.id,
-      item_id: winning_history.item_id,
-      item_batch_count: winning_history.batch_count
-    )&.may_claim?
-  end
-
   def share_feedback
+    @winner = Winner.includes(:item).where(items: { id: params[:winner][:item_id] }, ticket_id: params[:winner][:ticket_id]).first
 
+    if @winner.update(params.require(:winner).permit(:comment, :picture)) && @winner.may_share?
+      @winner.share!
+      flash[:notice] = 'Feedback shared successfully!'
+      redirect_to me_winning_history_path
+    else
+      flash.now[:alert] = "Feedback failed to share: #{ @winner.errors.full_messages.to_sentence }"
+      winning_history
+      render :winning_history, status: :unprocessable_entity
+    end
   end
 
 end
