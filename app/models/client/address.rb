@@ -8,7 +8,7 @@ class Client::Address < ApplicationRecord
   belongs_to :barangay, class_name: "Address::Barangay"
   has_many :winners
 
-  validates :name, uniqueness: true, presence: true
+  validates :name, presence: true
   validates :street_address, presence: true
   validates :phone_number, phone: {
     possible: true,
