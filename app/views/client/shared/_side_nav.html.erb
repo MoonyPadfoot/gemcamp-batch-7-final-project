@@ -3,28 +3,37 @@
     <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
   </div>
 
-  <div class="px-3">
-    <%= image_tag(current_client&.image_url || "https://loremflickr.com/50/50", style: 'width: 50px; height: 50px;', class: 'w-25') %>
-    <div>Username: <span class="fw-bold"><%= current_client&.username %></span></div>
-    <div>Email: <span class="fw-bold"><%= current_client&.email %></span></div>
-    <div>Coins: <span class="fw-bold"><%= current_client&.coins %></span></div>
-    <button class="btn btn-primary w-100 mt-2">Cash In Now</button>
-  </div>
+  <% if !client_signed_in? %>
 
-  <div class="offcanvas-body px-0">
-    <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-start" id="menu">
-      <li class="nav-item">
-        <a href="#" class="nav-link text-truncate">
-          <span class="ms-1 d-none d-sm-inline">Contact Us</span>
-        </a>
-      </li>
-      <li>
-        <%= link_to "My Profile", users_invite_people_path, class: "nav-link text-truncate ms-1 d-none d-sm-inline" %>
-      </li>
-      <li>
-        <%= button_to 'Logout', destroy_client_session_path, method: :delete, form: { data: { turbo_confirm: 'Are you sure?' } }, class: "nav-link text-truncate ms-1" %>
-      </li>
-    </ul>
-  </div>
+    <div class="d-flex flex-column mx-3">
+      <span class="my-2">Already have an account?</span>
+      <%= link_to "Login", new_client_session_path, class: "btn btn-success " %>
+      <span class="text-center my-2">or</span>
+      <%= link_to "Sign up", new_client_registration_path, class: "btn btn-primary" %>
+    </div>
+  <% else %>
+    <div class="px-3">
+      <%= image_tag(current_client&.image_url || "https://loremflickr.com/50/50", style: 'width: 50px; height: 50px;', class: 'w-25') %>
+      <div>Username: <span class="fw-bold"><%= current_client&.username %></span></div>
+      <div>Email: <span class="fw-bold"><%= current_client&.email %></span></div>
+      <div>Coins: <span class="fw-bold"><%= current_client&.coins %></span></div>
+      <button class="btn btn-primary w-100 mt-2">Cash In Now</button>
+    </div>
 
+    <div class="offcanvas-body px-0">
+      <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-start" id="menu">
+        <li class="nav-item">
+          <a href="#" class="nav-link text-truncate">
+            <span class="ms-1 d-none d-sm-inline">Contact Us</span>
+          </a>
+        </li>
+        <li>
+          <%= link_to "My Profile", users_invite_people_path, class: "nav-link text-truncate ms-1 d-none d-sm-inline" %>
+        </li>
+        <li>
+          <%= button_to 'Logout', destroy_client_session_path, method: :delete, form: { data: { turbo_confirm: 'Are you sure?' } }, class: "nav-link text-truncate ms-1" %>
+        </li>
+      </ul>
+    </div>
+  <% end %>
 </div>
