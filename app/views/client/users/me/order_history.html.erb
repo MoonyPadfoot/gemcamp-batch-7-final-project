@@ -28,6 +28,8 @@
             end
           %> ms-2 fw-semibold"><%= order_history.state %></span>
         </div>
+
+        <%= button_to "Cancel Order", order_cancel_path(order_history), method: :put, class: "btn btn-danger w-100 mt-2" if order_history.may_cancel? && order_history.state == 'submitted' %>
       </div>
     <% end %>
     <%= paginate @order_histories %>

@@ -37,6 +37,9 @@ Rails.application.routes.draw do
     resources :ticket, only: :create, path: 'ticket'
     resources :shop, only: [:index, :show, :create], path: 'shop'
     resources :shares, only: :index, path: 'share'
+    resources :order, only: :index, path: 'order' do
+      put :cancel
+    end
 
     root to: 'client/home#index', as: :client_root
 
@@ -75,7 +78,6 @@ Rails.application.routes.draw do
     resources :offer, path: 'offer'
     resources :order, only: :index, path: 'order' do
       put :pay
-      put :cancel
     end
 
     root to: 'admin/home#index', as: :admin_root

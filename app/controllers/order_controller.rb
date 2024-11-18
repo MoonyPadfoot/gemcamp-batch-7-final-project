@@ -1,4 +1,8 @@
-class OrderController < AdminsController
+class OrderController < ApplicationController
+  before_action :authenticate_admin!, only: :index
+  before_action :authorize_admin, only: :index
+  before_action :authenticate_client!, only: :cancel
+  before_action :authorize_client, only: :cancel
   before_action :set_order, only: [:pay, :cancel]
 
   def index
@@ -19,20 +23,37 @@ class OrderController < AdminsController
     else
       flash[:alert] = "Cannot pay order."
     end
-    redirect_to order_index_path
+    redirect_to me_order_history_path
   end
 
   def cancel
     if @order.may_cancel?
       @order.cancel!
       flash[:notice] = "Order cancelled!"
+      redirect_to me_order_history_path
     else
       flash[:alert] = "Cannot cancel order."
+      render :winning_history, status: :unprocessable_entity
     end
-    redirect_to order_index_path
   end
 
   private
+
+  private
+
+  def authorize_client
+    if current_client&.admin?
+      sign_out(current_admin)
+      redirect_to new_client_session_path, alert: 'You are not allowed to access this part of the site'
+    end
+  end
+
+  def authorize_admin
+    if current_admin&.client?
+      sign_out(current_client)
+      redirect_to new_admin_session_path, alert: 'You are not allowed to access this part of the site'
+    end
+  end
 
   def set_order
     @order = Order.find(params[:order_id])
