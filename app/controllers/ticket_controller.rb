@@ -32,10 +32,13 @@ class TicketController < ApplicationController
       tickets << ticket
     end
 
-    if tickets.all?(&:save)
-      flash[:notice] = "Ticket(s) successfully purchased."
-    else
-      flash[:alert] = "Ticket(s) purchased failed. Please try again later."
+    ActiveRecord::Base.transaction do
+      if tickets.all?(&:save)
+        flash[:notice] = "Ticket(s) successfully purchased."
+      else
+        flash[:alert] = "Ticket(s) purchased failed. Please try again later."
+        raise ActiveRecord::Rollback
+      end
     end
 
     redirect_to lottery_path(item_id)
