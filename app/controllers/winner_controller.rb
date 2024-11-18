@@ -17,7 +17,7 @@ class WinnerController < AdminsController
     else
       flash[:alert] = "Cannot claimed."
     end
-    redirect_to winner_index_path
+    redirect_to winner_index_path(page: params[:page])
   end
 
   def submit
@@ -27,7 +27,7 @@ class WinnerController < AdminsController
     else
       flash[:alert] = "Cannot submit."
     end
-    redirect_to winner_index_path
+    redirect_to winner_index_path(page: params[:page])
   end
 
   def pay
@@ -37,7 +37,7 @@ class WinnerController < AdminsController
     else
       flash[:alert] = "Cannot pay."
     end
-    redirect_to winner_index_path
+    redirect_to winner_index_path(page: params[:page])
   end
 
   def ship
@@ -47,7 +47,7 @@ class WinnerController < AdminsController
     else
       flash[:alert] = "Cannot ship."
     end
-    redirect_to winner_index_path
+    redirect_to winner_index_path(page: params[:page])
   end
 
   def deliver
@@ -57,7 +57,7 @@ class WinnerController < AdminsController
     else
       flash[:alert] = "Cannot deliver."
     end
-    redirect_to winner_index_path
+    redirect_to winner_index_path(page: params[:page])
   end
 
   def publish
@@ -67,7 +67,7 @@ class WinnerController < AdminsController
     else
       flash[:alert] = "Cannot publish."
     end
-    redirect_to winner_index_path
+    redirect_to winner_index_path(page: params[:page])
   end
 
   def remove_publish
@@ -77,7 +77,7 @@ class WinnerController < AdminsController
     else
       flash[:alert] = "Cannot unpublish."
     end
-    redirect_to winner_index_path
+    redirect_to winner_index_path(page: params[:page])
   end
 
   private

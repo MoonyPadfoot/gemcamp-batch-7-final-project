@@ -37,7 +37,13 @@
                 <td class="text-nowrap"><%= winner.item.name %></td>
                 <td class="text-nowrap"><%= winner.ticket.serial_number %></td>
                 <td class="text-nowrap"><%= winner.user.email %></td>
-                <td class="text-nowrap"><%= "#{winner.address.street_address}, #{winner.address.barangay.name}, #{winner.address.city.name} City, #{winner.address.province.name}" %></td>
+                <td class="text-nowrap">
+                  <% if winner.address.nil? %>
+                  Address not available
+                  <%  else  %>
+                    <%=  "#{winner.address.street_address}, #{winner.address.barangay.name}, #{winner.address.city.name} City, #{winner.address.province.name}"  %>
+                  <%  end %>
+                </td>
                 <td class="text-nowrap text-center"><%= winner.item_batch_count %></td>
                 <td class="text-nowrap text-center"><span class="badge <%=
                   case winner.state
@@ -53,17 +59,29 @@
                 <td class="text-nowrap text-end"><%= winner.price %></td>
                 <td class="text-nowrap"><%= winner.paid_at&.strftime("%Y/%m/%d %I:%M %p") %></td>
                 <td class="text-nowrap"><%= winner.admin&.email %></td>
-                <td><%= image_tag(winner&.picture_url || "https://loremflickr.com/300/300", style: "height: 30rem;") %></td>
+                <td><%= image_tag(winner&.picture_url || "https://loremflickr.com/300/300", style: "width: 50px; height: 50px;") %></td>
                 <td><%= winner.comment %></td>
                 <td class="text-nowrap"><%= winner.created_at.strftime("%Y/%m/%d %I:%M %p") %></td>
                 <td class="text-nowrap">
                   <div class="d-flex justify-content-start">
-                    <%= button_to "Submit", winner_submit_path(winner), method: :put, class: "btn btn-sm btn-success me-1", disabled: !winner.may_submit? %>
-                    <%= button_to "Pay", winner_pay_path(winner), method: :put, class: "btn btn-sm btn-primary me-1", disabled: !winner.may_pay? %>
-                    <%= button_to "Ship", winner_ship_path(winner), method: :put, class: "btn btn-sm btn-warning me-1", disabled: !winner.may_ship? %>
-                    <%= button_to "Deliver", winner_deliver_path(winner), method: :put, class: "btn btn-sm btn-info me-1", disabled: !winner.may_deliver? %>
-                    <%= button_to "Publish", winner_publish_path(winner), method: :put, class: "btn btn-sm btn-secondary me-1", disabled: !winner.may_publish? %>
-                    <%= button_to "Remove", winner_remove_publish_path(winner), method: :put, class: "btn btn-sm btn-danger me-1", disabled: !winner.may_remove_publish? %>
+                    <%= button_to "Submit", winner_submit_path(winner), method: :put, class: "btn btn-sm btn-success me-1",
+                                  disabled: !winner.may_submit?,
+                                  params: { page: params[:page] } %>
+                    <%= button_to "Pay", winner_pay_path(winner), method: :put, class: "btn btn-sm btn-primary me-1",
+                                  disabled: !winner.may_pay?,
+                                  params: { page: params[:page] } %>
+                    <%= button_to "Ship", winner_ship_path(winner), method: :put, class: "btn btn-sm btn-warning me-1",
+                                  disabled: !winner.may_ship?,
+                                  params: { page: params[:page] } %>
+                    <%= button_to "Deliver", winner_deliver_path(winner), method: :put, class: "btn btn-sm btn-info me-1",
+                                  disabled: !winner.may_deliver?,
+                                  params: { page: params[:page] } %>
+                    <%= button_to "Publish", winner_publish_path(winner), method: :put, class: "btn btn-sm btn-secondary me-1",
+                                  disabled: !winner.may_publish?,
+                                  params: { page: params[:page] } %>
+                    <%= button_to "Remove", winner_remove_publish_path(winner), method: :put, class: "btn btn-sm btn-danger me-1",
+                                  disabled: !winner.may_remove_publish?,
+                                  params: { page: params[:page] } %>
                   </div>
                 </td>
               </tr>

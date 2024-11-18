@@ -30,7 +30,7 @@
                   <div class="col-12 field my-2">
                     <%= f.label :address_id, "Choose Address:", class: "form-label me-2" %>
                     <%= f.collection_select :address_id,
-                                            @addresses, :id, :name, {},
+                                            @addresses, :id, :name, { :selected => @addresses.first },
                                             data: { address_target: "selectId", action: "change->address#updateDetails" },
                                             class: 'form-select w-100' %>
                   </div>
@@ -85,14 +85,14 @@
               <div class="w-100 field my-2">
                 <%= f.label :picture, "Image:", class: "form-label" %>
                 <%= f.file_field :picture, class: "form-control" %>
-                <% @winner.errors.full_messages_for(:picture).each do |message| %>
+                <% winning_history.errors.full_messages_for(:picture).each do |message| %>
                   <div class="text-danger"><%= message %></div>
                 <% end %>
               </div>
 
               <div class="w-100 field my-2">
                 <%= f.text_area :comment, class: "form-control", style: "height: 150px;", placeholder: "Share a feedback" %>
-                <% @winner.errors.full_messages_for(:comment).each do |message| %>
+                <% winning_history.errors.full_messages_for(:comment).each do |message| %>
                   <div class="text-danger"><%= message %></div>
                 <% end %>
               </div>

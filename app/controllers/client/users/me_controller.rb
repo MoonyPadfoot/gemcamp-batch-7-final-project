@@ -41,7 +41,8 @@ class Client::Users::MeController < ClientsController
   def share_feedback
     @winner = Winner.find(params[:winner][:id])
 
-    if @winner.update(params.require(:winner).permit(:comment, :picture), context: :share_feedback) && @winner.may_share?
+    @winner.update(params.require(:winner).permit(:comment, :picture))
+    if @winner.may_share? && @winner.valid?(:share_feedback)
       @winner.share!
       flash[:notice] = 'Feedback shared successfully!'
       redirect_to me_winning_history_path
