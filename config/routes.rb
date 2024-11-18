@@ -36,6 +36,7 @@ Rails.application.routes.draw do
     resources :lottery, only: [:index, :show], path: 'lottery'
     resources :ticket, only: :create, path: 'ticket'
     resources :shop, only: [:index, :show, :create], path: 'shop'
+    resources :shares, only: :index, path: 'share'
 
     root to: 'client/home#index', as: :client_root
 
@@ -67,7 +68,7 @@ Rails.application.routes.draw do
       put :remove_publish
     end
 
-    resources :category, path: 'category'
+    resources :categories, path: 'categories'
     resources :ticket, only: :index, path: 'ticket' do
       put :cancel
     end
