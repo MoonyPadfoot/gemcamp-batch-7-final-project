@@ -12,11 +12,9 @@ class Client::Users::MeController < ClientsController
   end
 
   def winning_history
-    @winning_histories = Ticket.includes(:user).where(users: { id: current_client.id }, state: :won)
+    @winning_histories = Winner.includes(:user).includes(:ticket).where(users: { id: current_client.id }, tickets: { state: :won })
                                .page(params[:page]).per(10)
-
-    @winner = Winner.new
-    @addresses = Client::Address.order(is_default: :desc)
+    get_addresses
   end
 
   def invitation_history
@@ -25,31 +23,40 @@ class Client::Users::MeController < ClientsController
   end
 
   def claim_prize
-    @winner = Winner.includes(:item).where(items: { id: params[:winner][:item_id] }, ticket_id: params[:winner][:ticket_id]).first
+    @winner = Winner.find(params[:winner][:id])
 
-    if @winner.update(params.require(:winner).permit(:address_id)) && @winner.may_claim?
+    if @winner.may_claim?
+      @winner.update(params.require(:winner).permit(:address_id))
       @winner.claim!
       flash[:notice] = 'Prize claimed successfully!'
       redirect_to me_winning_history_path
     else
+      flash.now[:alert] = "Prize failed to claim: #{ @winner.errors.full_messages.to_sentence }"
       winning_history
-      flash.now[:alert] = 'Prize failed to claim'
+      get_addresses
       render :winning_history, status: :unprocessable_entity
     end
   end
 
   def share_feedback
-    @winner = Winner.includes(:item).where(items: { id: params[:winner][:item_id] }, ticket_id: params[:winner][:ticket_id]).first
+    @winner = Winner.find(params[:winner][:id])
 
-    if @winner.update(params.require(:winner).permit(:comment, :picture)) && @winner.may_share?
+    if @winner.update(params.require(:winner).permit(:comment, :picture), context: :share_feedback) && @winner.may_share?
       @winner.share!
       flash[:notice] = 'Feedback shared successfully!'
       redirect_to me_winning_history_path
     else
       flash.now[:alert] = "Feedback failed to share: #{ @winner.errors.full_messages.to_sentence }"
       winning_history
+      get_addresses
       render :winning_history, status: :unprocessable_entity
     end
+  end
+
+  private
+
+  def get_addresses
+    @addresses = Client::Address.includes(:user).where(users: { id: current_client.id }).order(is_default: :desc)
   end
 
 end

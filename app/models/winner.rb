@@ -8,8 +8,8 @@ class Winner < ApplicationRecord
   belongs_to :address, class_name: "Client::Address", optional: true
   belongs_to :admin, class_name: User.name, foreign_key: 'admin_id', optional: true
 
-  validates :picture, presence: true, format: { with: %r{.(gif|jpg|jpeg|png)\Z}i, message: 'must be a URL for GIF, JPG, JPEG or PNG image.' }
-  validates :comment, presence: true
+  validates :picture, presence: true, format: { with: %r{.(gif|jpg|jpeg|png)\Z}i, message: 'must be a URL for GIF, JPG, JPEG or PNG image.' }, on: :share_feedback
+  validates :comment, presence: true, on: :share_feedback
 
   scope :filter_by_serial_number, ->(serial_number) { joins(:ticket).where(tickets: { serial_number: serial_number }) }
   scope :filter_by_email, ->(email) { joins(:user).where(users: { email: email }) }

@@ -10,98 +10,99 @@
           <span class="ms-2 fw-semibold"><%= winning_history.item.name %></span>
         </div>
         <div>Serial Number:
-          <span class="ms-2 fw-semibold"><%= winning_history.serial_number %></span>
+          <span class="ms-2 fw-semibold"><%= winning_history.ticket.serial_number %></span>
         </div>
         <div>Created At:
           <span class="ms-2 fw-semibold"><%= winning_history.created_at.strftime("%Y/%m/%d %I:%M %p") %></span>
         </div>
-        <% if may_claim_prize?(winning_history) %>
+
+        <% if winning_history.may_claim? %>
           <button class="btn btn-success mt-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<%= winning_history.id %>" aria-expanded="false" aria-controls="collapseExample">
             Claim Prize
           </button>
+
+          <div class="collapse" id="collapse<%= winning_history.id %>">
+            <div class="card card-body mt-2">
+              <%= form_with model: winning_history, url: claim_prize_me_index_path, method: :put do |f| %>
+                <%= f.hidden_field :id, value: winning_history.id %>
+
+                <div data-controller="address">
+                  <div class="col-12 field my-2">
+                    <%= f.label :address_id, "Choose Address:", class: "form-label me-2" %>
+                    <%= f.collection_select :address_id,
+                                            @addresses, :id, :name, {},
+                                            data: { address_target: "selectId", action: "change->address#updateDetails" },
+                                            class: 'form-select w-100' %>
+                  </div>
+
+                  <div id="address-details" data-address-target="detailsId">
+                    <div class="d-flex justify-content-between">
+                      <div>Name:
+                        <span class="ms-2 fw-semibold"><%= @addresses.first&.name %></span>
+                      </div>
+
+                      <div>
+                        <span class="badge bg-info"><%= 'Default' if @addresses.first&.is_default %></span>
+                        <span class="badge bg-primary"><%= @addresses.first&.genre %></span>
+                      </div>
+                    </div>
+                    <div>Phone Number:
+                      <span class="ms-2 fw-semibold"><%= @addresses.first&.phone_number %></span>
+                    </div>
+                    <div>Remark:
+                      <span class="ms-2 fw-semibold"><%= @addresses.first&.remark.blank? ? 'N/A' : @addresses.first&.remark %></span>
+                    </div>
+                    <div>Address:
+                      <span class="ms-2 fw-semibold"><%= @addresses.first&.street_address %></span>
+                    </div>
+                    <div>
+                      <span class="fw-semibold"><%= "#{@addresses.first&.barangay&.name}, #{@addresses.first&.city&.name} City, #{@addresses.first&.province&.name}" %></span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-12 actions text-center my-2">
+                  <%= f.submit "Select Address", class: 'btn btn-md btn-success w-100' %>
+                </div>
+              <% end %>
+            </div>
+          </div>
         <% else %>
           <p class="text-center mt-2 p-3 text-primary-emphasis bg-primary-subtle border border-primary-subtle rounded-3">
             Prize already claimed
           </p>
         <% end %>
-        <div class="collapse" id="collapse<%= winning_history.id %>">
-          <div class="card card-body mt-2">
-            <%= form_with model: @winner, url: claim_prize_me_index_path, method: :put do |f| %>
-              <%= f.hidden_field :ticket_id, value: winning_history.id %>
-              <%= f.hidden_field :item_id, value: winning_history.item_id %>
 
-              <div data-controller="address">
-                <div class="col-12 field my-2">
-                  <%= f.label :address_id, "Choose Address:", class: "form-label me-2" %>
-                  <%= f.collection_select :address_id,
-                                          @addresses, :id, :name, {},
-                                          data: { address_target: "selectId", action: "change->address#updateDetails" },
-                                          class: 'form-select w-100' %>
-                </div>
-
-                <div id="address-details" data-address-target="detailsId">
-                  <div class="d-flex justify-content-between">
-                    <div>Name:
-                      <span class="ms-2 fw-semibold"><%= @addresses.first&.name %></span>
-                    </div>
-
-                    <div>
-                      <span class="badge bg-info"><%= 'Default' if @addresses.first&.is_default %></span>
-                      <span class="badge bg-primary"><%= @addresses.first&.genre %></span>
-                    </div>
-                  </div>
-                  <div>Phone Number:
-                    <span class="ms-2 fw-semibold"><%= @addresses.first&.phone_number %></span>
-                  </div>
-                  <div>Remark:
-                    <span class="ms-2 fw-semibold"><%= @addresses.first&.remark.blank? ? 'N/A' : @addresses.first&.remark %></span>
-                  </div>
-                  <div>Address:
-                    <span class="ms-2 fw-semibold"><%= @addresses.first&.street_address %></span>
-                  </div>
-                  <div>
-                    <span class="fw-semibold"><%= "#{@addresses.first&.barangay&.name}, #{@addresses.first&.city&.name} City, #{@addresses.first&.province&.name}" %></span>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-12 actions text-center my-2">
-                <%= f.submit "Select Address", class: 'btn btn-md btn-success w-100' %>
-              </div>
-            <% end %>
-          </div>
-        </div>
-
-        <% if may_share?(winning_history) %>
+        <% if winning_history.may_share? %>
           <button class="btn btn-info mt-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapseShare<%= winning_history.id %>" aria-expanded="false" aria-controls="collapseExample">
             Share
           </button>
+
+          <div class="collapse" id="collapseShare<%= winning_history.id %>">
+            <%= form_with model: winning_history, url: share_feedback_me_index_path, method: :put do |f| %>
+              <%= f.hidden_field :id, value: winning_history.id %>
+
+              <div class="w-100 field my-2">
+                <%= f.label :picture, "Image:", class: "form-label" %>
+                <%= f.file_field :picture, class: "form-control" %>
+                <% @winner.errors.full_messages_for(:picture).each do |message| %>
+                  <div class="text-danger"><%= message %></div>
+                <% end %>
+              </div>
+
+              <div class="w-100 field my-2">
+                <%= f.text_area :comment, class: "form-control", style: "height: 150px;", placeholder: "Share a feedback" %>
+                <% @winner.errors.full_messages_for(:comment).each do |message| %>
+                  <div class="text-danger"><%= message %></div>
+                <% end %>
+              </div>
+
+              <div class="w-100 actions text-center my-2">
+                <%= f.submit "Submit Feedback", class: 'btn btn-md btn-success w-100' %>
+              </div>
+            <% end %>
+          </div>
         <% end %>
-        <div class="collapse" id="collapseShare<%= winning_history.id %>">
-          <%= form_with model: @winner, url: share_feedback_me_index_path, method: :put do |f| %>
-            <%= f.hidden_field :ticket_id, value: winning_history.id %>
-            <%= f.hidden_field :item_id, value: winning_history.item_id %>
-
-            <div class="w-100 field my-2">
-              <%= f.label :picture, "Image:", class: "form-label" %>
-              <%= f.file_field :picture, class: "form-control" %>
-              <% @winner.errors.full_messages_for(:picture).each do |message| %>
-                <div class="text-danger"><%= message %></div>
-              <% end %>
-            </div>
-
-            <div class="w-100 field my-2">
-              <%= f.text_area :comment, class: "form-control", style: "height: 150px;", placeholder: "Share a feedback" %>
-              <% @winner.errors.full_messages_for(:comment).each do |message| %>
-                <div class="text-danger"><%= message %></div>
-              <% end %>
-            </div>
-
-            <div class="w-100 actions text-center my-2">
-              <%= f.submit "Submit Feedback", class: 'btn btn-md btn-success w-100' %>
-            </div>
-          <% end %>
-        </div>
       </div>
     <% end %>
     <%= paginate @winning_histories %>
