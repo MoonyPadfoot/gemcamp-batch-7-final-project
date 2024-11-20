@@ -66,6 +66,7 @@ Rails.application.routes.draw do
         put :cancel
       end
       resources :categories
+      resources :invites, only: :index
     end
 
     resources :item, path: 'item' do
@@ -89,7 +90,6 @@ Rails.application.routes.draw do
       put :cancel
     end
     resources :offer, path: 'offer'
-    resources :invites, only: :index
     resources :news_ticker
 
     root to: 'admin/home#index', as: :admin_root
