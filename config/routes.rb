@@ -65,6 +65,7 @@ Rails.application.routes.draw do
         put :pay
         put :cancel
       end
+      resources :categories
     end
 
     resources :item, path: 'item' do
@@ -84,7 +85,6 @@ Rails.application.routes.draw do
       put :remove_publish
     end
 
-    resources :categories, path: 'categories'
     resources :ticket, only: :index, path: 'ticket' do
       put :cancel
     end
