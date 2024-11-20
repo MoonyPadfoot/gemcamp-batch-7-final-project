@@ -10,6 +10,7 @@ class Order < ApplicationRecord
 
   validates :amount, presence: true, numericality: { only_numeric: true, greater_than_or_equal_to: 0 }
   validates :coin, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+  validates :remarks, presence: true, on: :balance_operate
 
   scope :filter_by_serial_number, ->(serial_number) { where(serial_number: serial_number) }
   scope :filter_by_email, ->(email) { joins(:user).where(users: { email: email }) }
@@ -37,10 +38,10 @@ class Order < ApplicationRecord
   end
 
   def adjust_coin_paid
-    if deduct?
-      user.update(coins: user.coins + 1)
+    if !deduct?
+      user.update(coins: user.coins + coin)
     else
-      user.update(coins: user.coins - 1)
+      user.update(coins: user.coins - coin)
     end
   end
 
@@ -53,10 +54,10 @@ class Order < ApplicationRecord
   end
 
   def adjust_coin_cancelled
-    if deduct?
-      user.update(coins: user.coins - 1)
+    if !deduct?
+      user.update(coins: user.coins - coin)
     else
-      user.update(coins: user.coins + 1)
+      user.update(coins: user.coins + coin)
     end
   end
 

@@ -1,0 +1,35 @@
+<%= form_with model: @order, url: path do |f| %>
+  <div class="card shadow p-4">
+    <div class="input-group mb-3">
+      <span class="input-group-text" id="basic-addon1">Coins</span>
+      <%= f.number_field :coin, class: "form-control", aria: { label: "Coins", describedby: "basic-addon1" } %>
+    </div>
+    <%= f.hidden_field :genre,
+                       value: if request.path.include?('/increase')
+                                Order.genres.key(1)
+                              elsif request.path.include?('/deduct')
+                                Order.genres.key(2)
+                              elsif request.path.include?('/bonus')
+                                Order.genres.key(3)
+                              end %>
+    <div class="input-group mb-3">
+      <span class="input-group-text" id="basic-addon2">Genre</span>
+      <%= f.text_field :genre, class: "form-control", value: if request.path.include?('/increase')
+                                                               Order.genres.key(1)
+                                                             elsif request.path.include?('/deduct')
+                                                               Order.genres.key(2)
+                                                             elsif request.path.include?('/bonus')
+                                                               Order.genres.key(3)
+                                                             end, readonly: true, aria: { label: "Genre", describedby: "basic-addon2" } %>
+    </div>
+
+    <div class="input-group mb-3">
+      <span class="input-group-text" id="basic-addon3">Remarks</span>
+      <%= f.text_area :remarks, class: "form-control", aria: { label: "Remarks", describedby: "basic-addon3" } %>
+    </div>
+
+    <div class="actions text-center my-2">
+      <%= f.submit "Submit", class: 'btn btn-success w-100' %>
+    </div>
+  </div>
+<% end %>

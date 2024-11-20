@@ -52,6 +52,15 @@ Rails.application.routes.draw do
 
     scope module: 'admin' do
       resources :home, only: :index, path: 'home'
+      namespace :users do
+        resources :clients do
+          namespace :orders do
+            resources :increase, only: [:new, :create]
+            resources :deduct, only: [:new, :create]
+            resources :bonus, only: [:new, :create]
+          end
+        end
+      end
     end
 
     resources :item, path: 'item' do
@@ -79,6 +88,7 @@ Rails.application.routes.draw do
     resources :order, only: :index, path: 'order' do
       put :pay
     end
+    resources :invites, only: :index
 
     root to: 'admin/home#index', as: :admin_root
 
