@@ -12,8 +12,7 @@ class Client::Users::MeController < ClientsController
   end
 
   def winning_history
-    @winning_histories = Winner.includes(:user).includes(:ticket).where(users: { id: current_client.id }, tickets: { state: :won })
-                               .page(params[:page]).per(10)
+    get_winning_histories
     get_addresses
   end
 
@@ -32,7 +31,7 @@ class Client::Users::MeController < ClientsController
       redirect_to me_winning_history_path
     else
       flash.now[:alert] = "Prize failed to claim: #{ @winner.errors.full_messages.to_sentence }"
-      winning_history
+      get_winning_histories
       get_addresses
       render :winning_history, status: :unprocessable_entity
     end
@@ -48,7 +47,7 @@ class Client::Users::MeController < ClientsController
       redirect_to me_winning_history_path
     else
       flash.now[:alert] = "Feedback failed to share: #{ @winner.errors.full_messages.to_sentence }"
-      winning_history
+      get_winning_histories
       get_addresses
       render :winning_history, status: :unprocessable_entity
     end
@@ -58,6 +57,11 @@ class Client::Users::MeController < ClientsController
 
   def get_addresses
     @addresses = Client::Address.includes(:user).where(users: { id: current_client.id }).order(is_default: :desc)
+  end
+
+  def get_winning_histories
+    @winning_histories = Winner.includes(:user).includes(:ticket).where(users: { id: current_client.id }, tickets: { state: :won })
+                               .page(params[:page]).per(10)
   end
 
 end
