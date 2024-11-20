@@ -1,48 +1,36 @@
-<%= form_with url: orders_path, method: :get, class: "form-inline w-100 mb-3" do |f| %>
-  <div class="row g-2">
-    <div class="col-4">
+<%= form_with url: winners_path, method: :get, class: "form-inline w-100 mb-3" do |f| %>
+  <div class="row row-cols-3 g-2">
+    <div class="col">
       <div class="input-group">
         <%= f.text_field :serial_number, class: "form-control", type: "search", placeholder: "Serial Number", aria: { label: 'Serial Number' }, value: params[:serial_number] %>
       </div>
     </div>
 
-    <div class="col-4">
+    <div class="col">
       <div class="input-group">
         <%= f.email_field :email, class: "form-control", type: "search", placeholder: "Email", aria: { label: 'Email' }, value: params[:email] %>
       </div>
     </div>
 
-    <div class="col-4">
+    <div class="col">
       <div class="input-group">
-        <%= f.text_field :offer_name, class: "form-control", type: "search", placeholder: "Offer Name", aria: { label: 'Offer Name' }, value: params[:offer_name] %>
-      </div>
-    </div>
-
-    <div class="col-6">
-      <div class="input-group">
-        <%= f.select :genre, options_for_select(Order.genres.keys.map { |key| [key.humanize, key] }, params[:genre]),
-                     { include_blank: 'Please select genre' }, { class: "form-select" } %>
-      </div>
-    </div>
-
-    <div class="col-6">
-      <div class="input-group">
-        <%= f.select :state, options_for_select(Order.aasm.states.map(&:name), params[:state]),
+        <%= f.select :state, options_for_select(Winner.aasm.states.map(&:name), params[:state]),
                      { include_blank: 'Please select state' }, { class: "form-select w-25" } %>
       </div>
     </div>
 
-    <div class="col-6">
+    <div class="col">
       <div class="input-group">
         <%= f.datetime_field :start_date, class: "form-control", placeholder: "Start Date", value: params[:start_date] %>
       </div>
     </div>
 
-    <div class="col-6">
+    <div class="col">
       <div class="input-group">
         <%= f.datetime_field :end_date, class: "form-control", placeholder: "Start Date", value: params[:end_date] %>
       </div>
     </div>
   </div>
+
   <%= f.submit "Search", class: "btn btn-primary my-2 ms-auto", type: "submit" %>
 <% end %>

@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   constraints(ClientDomainConstraint.new) do
     devise_for :client, class_name: 'User',
                only: [:registrations, :sessions],
-               controllers: { registrations: 'users/registrations', sessions: 'client/users/sessions' }, path: 'users'
+               controllers: { registrations: 'users/registrations', sessions: 'client/sessions' }, path: 'users'
 
     scope module: 'client' do
       resources :home, only: :index, path: 'home'
@@ -34,12 +34,11 @@ Rails.application.routes.draw do
       resources :orders, only: :index do
         put :cancel
       end
+      resources :lotteries, only: [:index, :show]
+      resources :shares, only: :index
+      resources :shops, only: [:index, :show, :create]
+      resources :tickets, only: :create
     end
-
-    resources :lottery, only: [:index, :show], path: 'lottery'
-    resources :ticket, only: :create, path: 'ticket'
-    resources :shop, only: [:index, :show, :create], path: 'shop'
-    resources :shares, only: :index, path: 'share'
 
     root to: 'client/home#index', as: :client_root
 
@@ -73,22 +72,21 @@ Rails.application.routes.draw do
         put :end
         put :cancel
       end
+      resources :offers
+      resources :winners, only: :index do
+        put :claim
+        put :submit
+        put :pay
+        put :ship
+        put :deliver
+        put :publish
+        put :remove_publish
+      end
+      resources :tickets, only: :index do
+        put :cancel
+      end
     end
 
-    resources :winner, path: 'winner', only: :index do
-      put :claim
-      put :submit
-      put :pay
-      put :ship
-      put :deliver
-      put :publish
-      put :remove_publish
-    end
-
-    resources :ticket, only: :index, path: 'ticket' do
-      put :cancel
-    end
-    resources :offer, path: 'offer'
     resources :news_ticker
 
     root to: 'admin/home#index', as: :admin_root

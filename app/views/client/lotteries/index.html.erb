@@ -1,0 +1,33 @@
+<%= render 'client/shared/nav' %>
+<div class="container mb-2 pb-5">
+  <%= render 'client/shared/banner' %>
+  <%= render 'client/shared/announcement' %>
+  <button class="btn btn-primary rounded-0 my-3 w-100">Button</button>
+  <div class="d-flex">
+    <%= button_to "All", lotteries_path, method: :get, class: "btn rounded-circle me-2 #{ params[:category].present? ? 'btn-info' : 'btn-primary' }" %>
+    <% @categories.each do |category| %>
+      <%= button_to category.name, lotteries_path,
+                    method: :get, params: { category: category.name },
+                    class: "btn me-2 #{ params[:category] == category.name ? 'btn-primary' : 'btn-info' }" %>
+    <% end %>
+  </div>
+
+  <div class="row row-cols-2 g-5 mt-3">
+    <% @items.each do |item| %>
+      <div class="col my-2">
+        <%= link_to lottery_path(item) do %>
+          <div class="card shadow h-100">
+            <%= image_tag(item&.image_url || "https://loremflickr.com/300/300", class: "card-img-top w-100", style: "height: 30rem;") %>
+            <div class="card-body">
+              <h5 class="card-title text-center"><%= item.name %></h5>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+
+  <%= paginate @items %>
+
+</div>
+<%= render 'client/shared/footer' %>

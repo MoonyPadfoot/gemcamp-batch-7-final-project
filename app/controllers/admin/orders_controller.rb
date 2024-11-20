@@ -19,7 +19,7 @@ class Admin::OrdersController < AdminsController
     else
       flash[:alert] = "Cannot pay orders."
     end
-    redirect_to order_index_path
+    redirect_to orders_path
   end
 
   def cancel
@@ -29,7 +29,7 @@ class Admin::OrdersController < AdminsController
       redirect_to me_order_history_path
     else
       flash[:alert] = "Cannot cancel orders."
-      render :order_index, status: :unprocessable_entity
+      render :order, status: :unprocessable_entity
     end
   end
 
