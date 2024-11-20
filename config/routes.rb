@@ -31,15 +31,15 @@ Rails.application.routes.draw do
         end
         resources :address, except: :show, path: 'address'
       end
+      resources :orders, only: :index do
+        put :cancel
+      end
     end
 
     resources :lottery, only: [:index, :show], path: 'lottery'
     resources :ticket, only: :create, path: 'ticket'
     resources :shop, only: [:index, :show, :create], path: 'shop'
     resources :shares, only: :index, path: 'share'
-    resources :order, only: :index, path: 'order' do
-      put :cancel
-    end
 
     root to: 'client/home#index', as: :client_root
 
@@ -60,6 +60,10 @@ Rails.application.routes.draw do
             resources :bonus, only: [:new, :create]
           end
         end
+      end
+      resources :orders, only: :index do
+        put :pay
+        put :cancel
       end
     end
 
@@ -85,10 +89,8 @@ Rails.application.routes.draw do
       put :cancel
     end
     resources :offer, path: 'offer'
-    resources :order, only: :index, path: 'order' do
-      put :pay
-    end
     resources :invites, only: :index
+    resources :news_ticker
 
     root to: 'admin/home#index', as: :admin_root
 

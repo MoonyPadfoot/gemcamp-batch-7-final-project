@@ -1,0 +1,74 @@
+<div class="container-fluid">
+  <div class="row flex-nowrap">
+    <%= render 'admin/shared/side_nav' %>
+
+    <div class="col p-0">
+      <%= render 'admin/shared/nav' %>
+
+      <div class="container-fluid mt-4">
+        <h1>All Orders</h1>
+
+        <%= render 'admin/orders/shared/filter' %>
+
+        <table class="table table-bordered mt-2">
+          <thead>
+          <tr>
+            <td>Serial Number</td>
+            <td>Email</td>
+            <td>Offer</td>
+            <td>Amount</td>
+            <td>Coin</td>
+            <td>Genre</td>
+            <td>State</td>
+            <td>Created At</td>
+            <td>Actions</td>
+          </tr>
+          </thead>
+          <tbody>
+          <% @orders.each do |order| %>
+            <tr>
+              <td class="text-nowrap"><%= order.serial_number %></td>
+              <td class="text-nowrap"><%= order.user.email %></td>
+              <td class="text-nowrap"><%= order.offer&.name %></td>
+              <td class="text-nowrap"><%= order.offer&.amount %></td>
+              <td class="text-nowrap"><%= order.offer&.coin %></td>
+              <td class="text-nowrap"><span class="badge <%=
+                case order.genre
+                when 'deposit' then 'bg-primary'
+                when 'increase' then 'bg-success'
+                when 'deduct' then 'bg-danger'
+                when 'bonus' then 'bg-info'
+                when 'share' then 'bg-warning'
+                end
+              %>"><%= order.genre %></span></td>
+              <td class="text-nowrap"><span class="badge <%=
+                case order.state
+                when 'pending' then 'bg-primary'
+                when 'submitted' then 'bg-info'
+                when 'cancelled' then 'bg-secondary'
+                when 'paid' then 'bg-success'
+                end
+              %>"><%= order.state %></span></td>
+              <td class="text-nowrap"><%= order.created_at.strftime("%Y/%m/%d %I:%M %p") %></td>
+              <td class="text-nowrap p-2">
+                <div class="d-flex justify-content-start">
+                  <%= button_to "Pay", order_pay_path(order), method: :put, class: "btn btn-sm btn-success me-1", disabled: !order.may_pay? %>
+                  <%= button_to "Cancel", order_cancel_path(order), method: :put, class: "btn btn-sm btn-danger me-1", disabled: !order.may_cancel? %>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+          </tbody>
+        </table>
+
+        <%= paginate @orders %>
+
+        <div class="ms-auto w-25 d-flex justify-content-end gap-5">
+          <div>Amount Subtotal <h3 class="fw-bold text-end"><%= Order.sum(:amount) %></h3></div>
+          <div>Coins Subtotal <h3 class="fw-bold text-end"><%= Order.sum(:coin) %></h3></div>
+          <div>Convenience Fee <h3 class="fw-bold text-end">0</h3></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

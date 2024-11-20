@@ -11,8 +11,8 @@ class Admin::Users::Orders::BonusController < AdminsController
 
     ActiveRecord::Base.transaction do
       if @order.valid?(:balance_operate) && @order.save
-        order_pay
         order_submit
+        order_pay
         flash[:notice] = "Bonus for #{@order.user.email} added!"
         redirect_to admin_root_path
       else
