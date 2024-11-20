@@ -37,6 +37,7 @@ class Admin::Users::Orders::DeductController < AdminsController
     else
       flash[:alert] = "Coin failed to deduct: #{ @order.errors.full_messages.to_sentence }"
       render template: "admin/users/orders/new", status: :unprocessable_entity
+      raise ActiveRecord::Rollback
     end
   end
 
@@ -44,8 +45,12 @@ class Admin::Users::Orders::DeductController < AdminsController
     if @order.may_pay?
       @order.pay!
     else
+      if @order.may_cancel?
+        @order.cancel!
+      end
       flash[:alert] = "Coin failed to deduct: #{ @order.errors.full_messages.to_sentence }"
       render template: "admin/users/orders/new", status: :unprocessable_entity
+      raise ActiveRecord::Rollback
     end
   end
 end

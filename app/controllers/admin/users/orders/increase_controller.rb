@@ -31,6 +31,7 @@ class Admin::Users::Orders::IncreaseController < AdminsController
     else
       flash[:alert] = "Coin failed to add: #{ @order.errors.full_messages.to_sentence }"
       render template: "admin/users/orders/new", status: :unprocessable_entity
+      raise ActiveRecord::Rollback
     end
   end
 
@@ -40,6 +41,7 @@ class Admin::Users::Orders::IncreaseController < AdminsController
     else
       flash[:alert] = "Coin failed to add: #{ @order.errors.full_messages.to_sentence }"
       render template: "admin/users/orders/new", status: :unprocessable_entity
+      raise ActiveRecord::Rollback
     end
   end
 end
