@@ -1,0 +1,28 @@
+<%= form_with model: @news_ticker, url: path do |f| %>
+  <%= f.hidden_field :admin_id, value: current_admin.id %>
+
+  <div class="row row-cols-2">
+    <div class="col-12 field my-2">
+      <%= f.label :content, "Content:", class: "form-label" %>
+      <%= f.text_area :content, class: "form-control" %>
+      <% @news_ticker.errors.full_messages_for(:content).each do |message| %>
+        <div class="text-danger"><%= message %></div>
+      <% end %>
+    </div>
+
+    <div class="col-12 field my-2">
+      <%= f.label :status, "Status:", class: "form-label me-2" %>
+      <div>
+        <% NewsTicker.statuses.each_key do |status| %>
+          <%= f.radio_button :status, status, checked: (f.object.status.present? ? f.object.status == status : status == status.inactive) %>
+          <%= f.label :status, status.humanize%>
+        <% end %>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="col-12 actions text-center my-2">
+    <%= f.submit "Save News", class: 'btn btn-md btn-success w-100' %>
+  </div>
+<% end %>

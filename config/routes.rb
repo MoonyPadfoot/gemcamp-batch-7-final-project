@@ -85,9 +85,8 @@ Rails.application.routes.draw do
       resources :tickets, only: :index do
         put :cancel
       end
+      resources :news_tickers
     end
-
-    resources :news_ticker
 
     root to: 'admin/home#index', as: :admin_root
 
