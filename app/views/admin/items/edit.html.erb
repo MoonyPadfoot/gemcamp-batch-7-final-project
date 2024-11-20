@@ -1,0 +1,17 @@
+<div class="container-fluid">
+  <div class="row flex-nowrap">
+    <%= render 'admin/shared/side_nav' %>
+
+    <div class="col p-0">
+      <%= render 'admin/shared/nav' %>
+
+      <div class="container-fluid w-75 mt-4">
+        <h1>Edit Item</h1>
+        <div class="card shadow p-4">
+          <%= render partial: 'admin/items/shared/form', locals: { path: item_path } %>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

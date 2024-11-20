@@ -67,13 +67,12 @@ Rails.application.routes.draw do
       end
       resources :categories
       resources :invites, only: :index
-    end
-
-    resources :item, path: 'item' do
-      put :start
-      put :pause
-      put :end
-      put :cancel
+      resources :items do
+        put :start
+        put :pause
+        put :end
+        put :cancel
+      end
     end
 
     resources :winner, path: 'winner', only: :index do
