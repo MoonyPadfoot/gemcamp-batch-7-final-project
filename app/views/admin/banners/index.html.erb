@@ -1,0 +1,47 @@
+<div class="container-fluid">
+  <div class="row flex-nowrap">
+    <%= render 'admin/shared/side_nav' %>
+
+    <div class="col p-0">
+      <%= render 'admin/shared/nav' %>
+
+      <div class="container-fluid mt-4">
+        <div class="d-flex justify-content-between">
+          <h1>All Banners</h1>
+          <%= link_to "Create New Banner", new_banner_path, class: "btn btn-success h-100" %>
+        </div>
+        <table class="table table-bordered mt-2">
+          <thead>
+          <tr>
+            <td>Preview</td>
+            <td>Status</td>
+            <td>Online At</td>
+            <td>Offline At</td>
+            <td>Actions</td>
+          </tr>
+          </thead>
+          <tbody>
+          <% @banners.each do |banner| %>
+            <tr>
+              <td class="text-nowrap text-center"><%= image_tag(banner.preview_url || "https://loremflickr.com/50/50", style: 'width: 50px; height: 50px;') %></td>
+              <td class="text-nowrap">
+                <span class="<%= "badge #{banner.status == 'active' ? 'bg-primary' : 'bg-danger' }" %>"><%= banner.status %></span>
+              </td>
+              <td class="text-nowrap"><%= banner.online_at.strftime("%Y/%m/%d %I:%M %p") %></td>
+              <td class="text-nowrap"><%= banner.offline_at.strftime("%Y/%m/%d %I:%M %p") %></td>
+              <td class="text-nowrap p-2">
+                <div class="d-flex justify-content-start">
+                  <%= link_to "Edit", edit_banner_path(banner), class: "btn btn-sm btn-warning me-2" %>
+                  <%= button_to "Delete", banner_path(banner), method: :delete, class: "btn btn-sm btn-danger" %>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+          </tbody>
+        </table>
+        <%= paginate @banners %>
+      </div>
+
+    </div>
+  </div>
+</div>

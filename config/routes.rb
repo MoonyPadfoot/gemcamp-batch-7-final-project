@@ -86,6 +86,7 @@ Rails.application.routes.draw do
         put :cancel
       end
       resources :news_tickers
+      resources :banners
     end
 
     root to: 'admin/home#index', as: :admin_root

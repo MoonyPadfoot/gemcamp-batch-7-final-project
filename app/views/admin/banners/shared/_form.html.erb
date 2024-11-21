@@ -1,0 +1,43 @@
+<%= form_with model: @banner, url: path do |f| %>
+  <div class="row row-cols-2">
+    <div class="col field my-2">
+      <%= f.label "Preview Image", class: "form-label" %>
+      <%= f.file_field :preview, class: "form-control" %>
+      <% @banner.errors.full_messages_for(:preview).each do |message| %>
+        <div class="text-danger"><%= message %></div>
+      <% end %>
+    </div>
+
+    <div class="col field my-2">
+      <%= f.label :status, "Status:", class: "form-label me-2" %>
+      <div>
+        <% Banner.statuses.each_key do |status| %>
+          <%= f.radio_button :status, status, checked: (f.object.status.present? ? f.object.status == status : status == status.inactive) %>
+          <%= f.label :status, status.humanize %>
+        <% end %>
+      </div>
+    </div>
+
+
+    <div class="col field my-2">
+      <%= f.label :online_at, "Online At:", class: "form-label" %>
+      <%= f.datetime_field :online_at, class: "form-control" %>
+      <% @banner.errors.full_messages_for(:online_at).uniq.each do |message| %>
+        <div class="text-danger"><%= message %></div>
+      <% end %>
+    </div>
+
+    <div class="colfield my-2">
+      <%= f.label :offline_at, "Offline At:", class: "form-label" %>
+      <%= f.datetime_field :offline_at, class: "form-control" %>
+      <% @banner.errors.full_messages_for(:offline_at).uniq.each do |message| %>
+        <div class="text-danger"><%= message %></div>
+      <% end %>
+    </div>
+
+  </div>
+
+  <div class="col-12 actions text-center my-2">
+    <%= f.submit "Save Banner", class: 'btn btn-md btn-success w-100' %>
+  </div>
+<% end %>
