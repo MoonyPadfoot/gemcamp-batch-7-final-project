@@ -20,7 +20,7 @@ class Item < ApplicationRecord
   validates :batch_count, presence: true
 
   scope :filter_by_category, ->(category) { joins(:categories).where(categories: { name: category }) if category.present? }
-  scope :filter_by_status, -> { where(status: self.statuses[:active]) }
+  scope :filter_by_status, -> { where(status: :active) }
   scope :filter_by_state, -> { where(state: :starting) }
 
   default_scope { where(deleted_at: nil) }

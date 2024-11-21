@@ -5,5 +5,13 @@ class Client::HomeController < ClientsController
                      .where("online_at <= ?", Time.current)
                      .where("offline_at > ?", Time.current)
     @news_tickers = NewsTicker.all.where(status: :active).limit(5)
+    @shares = Winner.all.where(state: 'published')
+                    .order(created_at: :desc)
+                    .limit(5)
+    @items = Item.all
+                 .filter_by_status
+                 .filter_by_state
+                 .order(created_at: :desc)
+                 .limit(8)
   end
 end

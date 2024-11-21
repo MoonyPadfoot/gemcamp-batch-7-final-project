@@ -5,36 +5,30 @@
 
   <div class="mt-2">
     <h3><span class="badge text-bg-secondary">Winners Feedback</span></h3>
-    <div class="row gap-2 mx-1">
-      <div class="card p-4 w-30 col">
-        <img src="https://loremflickr.com/300/300" class="d-block w-100" alt="...">
-      </div>
-      <div class="card p-4 w-30 col">
-        <img src="https://loremflickr.com/300/300" class="d-block w-100" alt="...">
-      </div>
-      <div class="card p-4 w-30 col">
-        <img src="https://loremflickr.com/300/300" class="d-block w-100" alt="...">
-      </div>
-      <%= link_to "More..", class: "col" do %>
-        <div class="card p-4 w-30 h-100">
+    <div class="row row-cols-5 gap-2 mx-1">
+      <% @shares.each do |share| %>
+        <div class="card p-4 w-30 col">
+          <%= image_tag(share&.picture_url, class: "d-block w-100", style: "height: 300px; weight: 300px;") %>
+        </div>
+      <% end %>
+      <%= link_to shares_path, class: "col text-decoration-none" do %>
+        <div class="card p-4 w-30 h-100 d-flex justify-content-center align-items-center">
           <span>More...</span>
         </div>
       <% end %>
     </div>
 
     <h3><span class="badge text-bg-secondary mt-2">Coming Soon</span></h3>
-    <div class="row gap-2 mx-1">
-      <div class="card p-4 w-30 col">
-        <img src="https://loremflickr.com/300/300" class="d-block w-100" alt="...">
-      </div>
-      <div class="card p-4 w-30 col">
-        <img src="https://loremflickr.com/300/300" class="d-block w-100" alt="...">
-      </div>
-      <div class="card p-4 w-30 col">
-        <img src="https://loremflickr.com/300/300" class="d-block w-100" alt="...">
-      </div>
-      <%= link_to "More..", class: "col" do %>
-        <div class="card p-4 w-30 h-100">
+    <div class="row cols-5 gap-2 mx-1">
+      <% @items.each do |item| %>
+        <%= link_to lottery_path(item), class: "col text-decoration-none" do %>
+          <div class="card p-4 w-30 col">
+            <%= image_tag(item&.image_url, class: "d-block w-100", style: "height: 300px; weight: 300px;") %>
+          </div>
+        <% end %>
+      <% end %>
+      <%= link_to lotteries_path, class: "col text-decoration-none" do %>
+        <div class="card p-4 w-30 h-100 d-flex justify-content-center align-items-center">
           <span>More...</span>
         </div>
       <% end %>
