@@ -1,3 +1,8 @@
-<div class="bg-dark p-2">
-  <h5 class="text-white mb-0">Announcement:</h5>
+<div class="bg-dark py-2 px-3 d-flex align-items-center">
+  <h5 class="text-white mb-0 d-inline">Announcement:</h5>
+  <div class="marquee d-inline">
+    <% @news_tickers.each_with_index do |news, index| %>
+      <p class="text-white d-inline" style="animation-delay: <%= index * 8 %>s;"><%= news.content %></p>
+    <% end %>
+  </div>
 </div>

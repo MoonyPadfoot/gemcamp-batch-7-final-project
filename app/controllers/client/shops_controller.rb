@@ -6,6 +6,10 @@ class Client::ShopsController < ClientsController
     @offers = Offer.all
                    .filter_by_status(Offer.statuses[:active])
                    .page(params[:page]).per(6)
+    @banners = Banner.all.where(status: :active)
+                     .where("online_at <= ?", Time.current)
+                     .where("offline_at > ?", Time.current)
+    @news_tickers = NewsTicker.all.where(status: :active).limit(5)
   end
 
   def show
@@ -14,7 +18,7 @@ class Client::ShopsController < ClientsController
 
   def create
     @order = Order.new(order_params)
-    @order.user = current_user
+    @order.user = current_client
 
     if @order.save
       @order.submit! if @order.may_submit?
@@ -22,7 +26,7 @@ class Client::ShopsController < ClientsController
     else
       flash[:alert] = 'Offer purchase failed!'
     end
-    redirect_to shop_index_path
+    redirect_to shops_path
   end
 
   private
