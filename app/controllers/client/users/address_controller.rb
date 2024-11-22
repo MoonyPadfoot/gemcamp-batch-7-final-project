@@ -23,7 +23,7 @@ class Client::Users::AddressController < ClientsController
       @cities = @address.province.cities if @address.province
       @barangays = @address.city.barangays if @address.city
 
-      flash.now[:alert] = 'Address creation failed'
+      flash.now[:alert] = "Address creation failed: #{ @address.errors.full_messages.join(', ') }"
 
       render :new, status: :unprocessable_entity
     end
@@ -46,7 +46,7 @@ class Client::Users::AddressController < ClientsController
       @cities = @address.province.cities if @address.province
       @barangays = @address.city.barangays if @address.city
 
-      flash.now[:alert] = 'Address update failed'
+      flash.now[:alert] = "Address update failed: #{ @address.errors.full_messages.join(',') }"
 
       render :new, status: :unprocessable_entity
     end
