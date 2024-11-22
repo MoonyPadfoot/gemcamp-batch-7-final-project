@@ -4,8 +4,8 @@
       <i class="bi bi-bootstrap"></i>
     <% end %>
     <div class="navbar-nav">
-      <a class="nav-link" href="#">Coins</a>
-      <a class="nav-link" href="#">Claim</a>
+      <%= link_to "Coins", shops_path, class: "nav-link" %>
+      <%= link_to "Claim", me_winning_history_path, class: "nav-link" %>
       <a class="nav-link" href="#">Language</a>
       <button class="navbar-toggler d-block" data-bs-toggle="offcanvas" data-bs-target="#offcanvas" role="button">
         <i class="navbar-toggler-icon" data-bs-toggle="offcanvas" data-bs-target="#offcanvas"></i>

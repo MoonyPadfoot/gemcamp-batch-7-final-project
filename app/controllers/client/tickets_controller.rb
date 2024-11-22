@@ -7,7 +7,7 @@ class Client::TicketsController < ClientsController
 
     if current_client.coins < ticket_count
       flash[:alert] = "Ticket(s) purchased failed. Coins insufficient."
-      redirect_to lottery_path(item_id) and return
+      redirect_to shops_path and return
     end
 
     tickets = []
