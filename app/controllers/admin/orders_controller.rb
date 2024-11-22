@@ -26,7 +26,7 @@ class Admin::OrdersController < AdminsController
     if @order.may_cancel?
       @order.cancel!
       flash[:notice] = "Order cancelled!"
-      redirect_to me_order_history_path
+      redirect_to orders_path
     else
       flash[:alert] = "Cannot cancel orders."
       render :order, status: :unprocessable_entity

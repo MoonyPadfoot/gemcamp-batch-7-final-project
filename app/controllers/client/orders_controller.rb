@@ -12,16 +12,6 @@ class Client::OrdersController < ClientsController
     @orders = @orders.page(params[:page]).per(10)
   end
 
-  def pay
-    if @order.may_pay?
-      @order.pay!
-      flash[:notice] = "Order payed!"
-    else
-      flash[:alert] = "Cannot pay orders."
-    end
-    redirect_to me_order_history_path
-  end
-
   def cancel
     if @order.may_cancel?
       @order.cancel!
