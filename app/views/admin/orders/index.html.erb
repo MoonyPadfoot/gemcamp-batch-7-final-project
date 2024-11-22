@@ -17,7 +17,7 @@
             <td>Email</td>
             <td>Offer</td>
             <td>Amount</td>
-            <td>Coin</td>
+            <td>Coins</td>
             <td>Genre</td>
             <td>State</td>
             <td>Created At</td>
@@ -31,7 +31,7 @@
               <td class="text-nowrap"><%= order.user.email %></td>
               <td class="text-nowrap"><%= order.offer&.name %></td>
               <td class="text-nowrap"><%= order.amount %></td>
-              <td class="text-nowrap"><%= order.coin %></td>
+              <td class="text-nowrap text-center"><%= order.coin %></td>
               <td class="text-nowrap"><span class="badge <%=
                 case order.genre
                 when 'deposit' then 'bg-primary'
