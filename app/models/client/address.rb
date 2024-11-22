@@ -20,14 +20,14 @@ class Client::Address < ApplicationRecord
   validates :province_id, presence: true
   validates :city_id, presence: true
   validates :barangay_id, presence: true
-  validate :user_address_max
+  validate :user_address_max, on: :create
 
   before_save :unset_other_defaults, if: :is_default?
 
   private
 
   def unset_other_defaults
-    Client::Address.includes(:user).where(is_default: true, users: { id: user.id }).update_all(is_default: false)
+    Client::Address.includes(:user).find_by(is_default: true, users: { id: user.id }).update(is_default: false)
   end
 
   def user_address_max
