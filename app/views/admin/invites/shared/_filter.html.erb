@@ -1,0 +1,7 @@
+<%= form_with url: invites_path, method: :get, class: "form-inline w-100 mb-3" do |f| %>
+  <div class="input-group w-25">
+    <%= f.email_field :email, class: "form-control", type: "search", placeholder: "Email", aria: { label: 'Email' }, value: params[:email] %>
+  </div>
+
+  <%= f.submit "Search", class: "btn btn-primary my-2 ms-auto", type: "submit" %>
+<% end %>
