@@ -1,6 +1,6 @@
 class Order < ApplicationRecord
   include AASM
-  enum genre: { deposit: 0, increase: 1, deduct: 2, bonus: 3, share: 4 }
+  enum genre: { deposit: 0, increase: 1, deduct: 2, bonus: 3, share: 4, member_level: 5 }
 
   after_create :assign_serial_number
   before_save :allow_nil_or_zero_unless_deposit, :offer_required_if_deposit

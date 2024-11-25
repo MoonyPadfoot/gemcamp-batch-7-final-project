@@ -10,6 +10,7 @@
           <h1>All Winners</h1>
         </div>
 
+        <%= link_to 'Export', winners_path(format: :csv, page: params[:page]), class: 'btn btn-primary mb-2' %>
         <%= render 'admin/winners/filter' %>
 
         <div class="table-responsive">

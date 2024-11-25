@@ -7,7 +7,7 @@
 
       <div class="container-fluid mt-4">
         <h1>All Orders</h1>
-
+        <%= link_to 'Export', orders_path(format: :csv, page: params[:page]), class: 'btn btn-primary mb-2' %>
         <%= render 'admin/orders/shared/filter' %>
 
         <table class="table table-bordered mt-2">

@@ -15,6 +15,7 @@ class User < ApplicationRecord
   has_many :tickets
   has_many :winners
   has_many :orders
+  has_many :member_levels
 
   validates :username, uniqueness: true, allow_nil: true
   validates :phone_number, phone: {
@@ -27,4 +28,12 @@ class User < ApplicationRecord
   validates :total_deposit, presence: true
   validates :children_members, presence: true, numericality: { greater_than_or_equal_to: 0 }
   validates :image, allow_blank: true, format: { with: %r{.(gif|jpg|jpeg|png)\Z}i, message: 'must be a URL for GIF, JPG, JPEG or PNG image.' }
+
+  after_save :upgrade_next_level
+
+  private
+
+  def upgrade_next_level
+    User.where(parent: :parent_id).count
+  end
 end

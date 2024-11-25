@@ -8,6 +8,7 @@
       <div class="container-fluid ">
         <h1>Invites List</h1>
 
+        <%= link_to 'Export', invites_path(format: :csv, page: params[:page]), class: 'btn btn-primary mb-2' %>
         <%= render 'admin/invites/shared/filter' %>
 
         <table class="table table-striped table-bordered mt-2">

@@ -8,7 +8,10 @@
       <div class="container-fluid mt-4">
         <div class="d-flex justify-content-between">
           <h1>All Items</h1>
-          <%= link_to "Create New Item", new_item_path, class: "btn btn-success h-100" %>
+          <div class="d-flex justify-content-end align-items-center gap-2">
+            <%= link_to 'Export', items_path(format: :csv, page: params[:page]), class: 'btn btn-primary' %>
+            <%= link_to "Create New Item", new_item_path, class: "btn btn- btn-success" %>
+          </div>
         </div>
         <table class="table table-bordered mt-2">
           <thead>

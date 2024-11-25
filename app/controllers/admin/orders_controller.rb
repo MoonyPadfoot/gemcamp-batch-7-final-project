@@ -10,6 +10,32 @@ class Admin::OrdersController < AdminsController
     @orders = @orders.filter_by_genre(params[:genre]) unless params[:genre].blank?
     @orders = @orders.filter_by_state(params[:state]) unless params[:state].blank?
     @orders = @orders.page(params[:page]).per(10)
+
+    respond_to do |format|
+      format.html
+      format.csv {
+        csv_string = CSV.generate do |csv|
+          csv << [
+            Order.human_attribute_name(:serial_number),
+            'Email',
+            'Offer',
+            Order.human_attribute_name(:amount),
+            'Coins',
+            Order.human_attribute_name(:genre),
+            Order.human_attribute_name(:state),
+            Order.human_attribute_name(:created_at),
+          ]
+
+          @orders.each do |order|
+            csv << [
+              order.serial_number, order.user.email, order.offer&.name, order.amount, order.coin, order.genre,
+              order.state, order.created_at.strftime("%Y/%m/%d %I:%M %p")
+            ]
+          end
+        end
+        render plain: csv_string
+      }
+    end
   end
 
   def pay

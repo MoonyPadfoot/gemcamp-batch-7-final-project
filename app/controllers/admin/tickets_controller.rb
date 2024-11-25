@@ -10,6 +10,28 @@ class Admin::TicketsController < ApplicationController
     @tickets = @tickets.filter_by_created_at(params[:start_date], params[:end_date]) unless params[:start_date].blank? && params[:end_date].blank?
     @tickets = @tickets.filter_by_state(params[:state]) unless params[:state].blank?
     @tickets = @tickets.page(params[:page]).per(10)
+
+    respond_to do |format|
+      format.html
+      format.csv {
+        csv_string = CSV.generate do |csv|
+          csv << [
+            'Item name',
+            Ticket.human_attribute_name(:serial_number),
+            'Email',
+            Ticket.human_attribute_name(:state),
+            Ticket.human_attribute_name(:created_at),
+          ]
+
+          @tickets.each do |ticket|
+            csv << [
+              ticket.item.name, ticket.serial_number, ticket.user.email, ticket.state, ticket.created_at.strftime("%Y/%m/%d %I:%M %p")
+            ]
+          end
+        end
+        render plain: csv_string
+      }
+    end
   end
 
   def cancel

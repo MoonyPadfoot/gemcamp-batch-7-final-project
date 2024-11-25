@@ -5,6 +5,35 @@ class Admin::ItemsController < AdminsController
     @items = Item.all
                  .includes(:categories)
                  .page(params[:page]).per(10)
+
+    respond_to do |format|
+      format.html
+      format.csv {
+        csv_string = CSV.generate do |csv|
+          csv << [
+            Item.human_attribute_name(:name),
+            Item.human_attribute_name(:image),
+            Item.human_attribute_name(:status),
+            Item.human_attribute_name(:quantity),
+            Item.human_attribute_name(:minimum_tickets),
+            Item.human_attribute_name(:batch_count),
+            Item.human_attribute_name(:online_at),
+            Item.human_attribute_name(:offline_at),
+            Item.human_attribute_name(:start_at),
+            "Categories",
+          ]
+
+          @items.each do |item|
+            csv << [
+              item.name, item.image_url, item.status, item.quantity, item.minimum_tickets, item.batch_count,
+              item.online_at.strftime("%Y/%m/%d %I:%M %p"), item.offline_at.strftime("%Y/%m/%d %I:%M %p"),
+              item.start_at.strftime("%Y/%m/%d %I:%M %p"), item.categories.pluck(:name).join(', ')
+            ]
+          end
+        end
+        render plain: csv_string
+      }
+    end
   end
 
   def new

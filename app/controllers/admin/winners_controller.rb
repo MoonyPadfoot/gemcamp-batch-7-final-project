@@ -8,6 +8,38 @@ class Admin::WinnersController < AdminsController
     @winners = @winners.filter_by_created_at(params[:start_date], params[:end_date]) unless params[:start_date].blank? && params[:end_date].blank?
     @winners = @winners.filter_by_state(params[:state]) unless params[:state].blank?
     @winners = @winners.page(params[:page]).per(10)
+
+    respond_to do |format|
+      format.html
+      format.csv {
+        csv_string = CSV.generate do |csv|
+          csv << [
+            Ticket.human_attribute_name(:serial_number),
+            User.human_attribute_name(:email),
+            'Address',
+            'Batch count',
+            Winner.human_attribute_name(:state),
+            Winner.human_attribute_name(:price),
+            Winner.human_attribute_name(:paid_at),
+            'Admin',
+            Winner.human_attribute_name(:picture),
+            Winner.human_attribute_name(:comment),
+            Winner.human_attribute_name(:created_at),
+          ]
+
+          @winners.each do |winner|
+            csv << [
+              winner.ticket.serial_number, winner.user.email,
+              winner.address.nil? ? 'Address not available' :
+                "#{winner.address.street_address}, #{winner.address.barangay.name}, #{winner.address.city.name} City, #{winner.address.province.name}",
+              winner.item_batch_count, winner.state, winner.price, winner.paid_at&.strftime("%Y/%m/%d %I:%M %p"),
+              winner.admin&.email, winner&.picture_url, winner.comment, winner.created_at.strftime("%Y/%m/%d %I:%M %p")
+            ]
+          end
+        end
+        render plain: csv_string
+      }
+    end
   end
 
   def claim
