@@ -17,7 +17,7 @@ class Client::Users::MeController < ClientsController
   end
 
   def invitation_history
-    @invitation_histories = User.includes(:children).where(parent_id: current_user.id)
+    @invitation_histories = User.includes(:children).where(parent_id: current_client.id)
                                 .page(params[:page]).per(10)
   end
 
