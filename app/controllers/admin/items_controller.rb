@@ -1,4 +1,6 @@
 class Admin::ItemsController < AdminsController
+  require 'csv'
+
   before_action :set_item, only: [:edit, :update, :destroy, :start, :pause, :end, :cancel]
 
   def index

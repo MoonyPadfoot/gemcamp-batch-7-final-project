@@ -1,4 +1,6 @@
 class Admin::WinnersController < AdminsController
+  require 'csv'
+
   before_action :set_winner, only: [:submit, :pay, :ship, :deliver, :publish, :remove_publish]
 
   def index

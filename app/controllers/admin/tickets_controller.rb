@@ -1,4 +1,6 @@
 class Admin::TicketsController < ApplicationController
+  require 'csv'
+
   before_action :authenticate_admin!, only: :index
   before_action :set_ticket, only: :cancel
 

@@ -1,4 +1,5 @@
 class Admin::InvitesController < AdminsController
+  require 'csv'
   def index
     @clients = User.includes(:parent).where(role: :client)
     @clients = @clients.where.not(parent: { id: nil })

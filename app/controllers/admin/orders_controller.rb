@@ -1,4 +1,6 @@
 class Admin::OrdersController < AdminsController
+  require 'csv'
+
   before_action :set_order, only: [:pay, :cancel]
 
   def index

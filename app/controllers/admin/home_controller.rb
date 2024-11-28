@@ -1,4 +1,5 @@
 class Admin::HomeController < AdminsController
+  require 'csv'
   def index
     @clients = User.where(role: :client)
                    .page(params[:page]).per(10)
