@@ -9,13 +9,24 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   def create
-    super and return unless User.exists?(email: cookies[:promoter])
-
-    super do |resource|
+    if User.exists?(email: cookies[:promoter])
       @promoter = User.find_by(email: cookies[:promoter])
-      resource.parent_id = @promoter.id
+      build_resource(sign_up_params)
+      resource.parent = @promoter
+      resource.member_level = MemberLevel.first
 
-      cookies.delete :promoter if resource.save
+      if resource.save
+        cookies.delete(:promoter)
+        set_flash_message!(:notice, :signed_up) if is_flashing_format?
+        sign_up(resource_name, resource)
+        respond_with resource, location: after_sign_up_path_for(resource)
+      else
+        clean_up_passwords resource
+        set_minimum_password_length
+        respond_with resource
+      end
+    else
+      super
     end
   end
 

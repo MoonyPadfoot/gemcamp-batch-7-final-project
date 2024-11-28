@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_11_21_032042) do
+ActiveRecord::Schema[7.0].define(version: 2024_11_28_081914) do
   create_table "address_barangays", charset: "utf8mb4", force: :cascade do |t|
     t.bigint "city_id"
     t.string "code"
@@ -109,6 +109,14 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_21_032042) do
     t.datetime "deleted_at"
   end
 
+  create_table "member_levels", charset: "utf8mb4", force: :cascade do |t|
+    t.integer "level"
+    t.integer "required_members"
+    t.integer "coins"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "news_tickers", charset: "utf8mb4", force: :cascade do |t|
     t.text "content"
     t.integer "status", default: 0
@@ -173,7 +181,9 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_21_032042) do
     t.datetime "updated_at", null: false
     t.string "image"
     t.bigint "parent_id"
+    t.bigint "member_level_id"
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["member_level_id"], name: "index_users_on_member_level_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["username"], name: "index_users_on_username", unique: true
   end

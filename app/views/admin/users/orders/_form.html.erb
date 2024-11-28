@@ -11,6 +11,8 @@
                                 Order.genres.key(2)
                               elsif request.path.include?('/bonus')
                                 Order.genres.key(3)
+                              elsif request.path.include?('/member_level')
+                                Order.genres.key(5)
                               end %>
     <div class="input-group mb-3">
       <span class="input-group-text" id="basic-addon2">Genre</span>
@@ -20,13 +22,17 @@
                                                                Order.genres.key(2)
                                                              elsif request.path.include?('/bonus')
                                                                Order.genres.key(3)
+                                                             elsif request.path.include?('/member_level')
+                                                               Order.genres.key(5)
                                                              end, readonly: true, aria: { label: "Genre", describedby: "basic-addon2" } %>
     </div>
 
-    <div class="input-group mb-3">
-      <span class="input-group-text" id="basic-addon3">Remarks</span>
-      <%= f.text_area :remarks, class: "form-control", aria: { label: "Remarks", describedby: "basic-addon3" } %>
-    </div>
+    <% unless request.path.include?('/member_level') %>
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon3">Remarks</span>
+        <%= f.text_area :remarks, class: "form-control", aria: { label: "Remarks", describedby: "basic-addon3" } %>
+      </div>
+    <% end %>
 
     <div class="actions text-center my-2">
       <%= f.submit "Submit", class: 'btn btn-success w-100' %>

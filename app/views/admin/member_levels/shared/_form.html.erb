@@ -1,0 +1,21 @@
+<%= form_with model: @member_level, url: path do |f| %>
+  <div class="my-2">
+    <%= f.label :required_members, class: "form-label" %>
+    <%= f.number_field :required_members, class: "form-control" %>
+    <% @member_level.errors.full_messages_for(:required_members).uniq.each do |message| %>
+      <div class="text-danger"><%= message %></div>
+    <% end %>
+  </div>
+
+  <div class="my-2">
+    <%= f.label :coins, class: "form-label" %>
+    <%= f.number_field :coins, class: "form-control" %>
+    <% @member_level.errors.full_messages_for(:coins).uniq.each do |message| %>
+      <div class="text-danger"><%= message %></div>
+    <% end %>
+  </div>
+
+  <div class="actions text-center my-2">
+    <%= f.submit "Save Member Level", class: 'btn btn-md btn-success w-100' %>
+  </div>
+<% end %>

@@ -5,5 +5,20 @@
   </div>
 
   <p><a href="<%= @invite_url %>"><%= @invite_url %></a></p>
+
+  <div class="card shadow p-4 mb-2">
+    <h3>Invited Members</h3>
+    <div class="row row-cols-2 mt-2">
+      <% @invite_members.each do |invite_member| %>
+        <div class="col">
+          <p><%= invite_member.email %></p>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <%= paginate @invite_members %>
+
+  <div class="card shadow p-4">Share to <%= @level.required_members %> friends and get <%= @level.coins %> coins</div>
 </div>
 <%= render 'client/shared/footer' %>

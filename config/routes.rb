@@ -57,6 +57,7 @@ Rails.application.routes.draw do
             resources :increase, only: [:new, :create]
             resources :deduct, only: [:new, :create]
             resources :bonus, only: [:new, :create]
+            resources :member_level, only: [:new, :create]
           end
         end
       end
@@ -87,6 +88,7 @@ Rails.application.routes.draw do
       end
       resources :news_tickers
       resources :banners
+      resources :member_levels
     end
 
     root to: 'admin/home#index', as: :admin_root

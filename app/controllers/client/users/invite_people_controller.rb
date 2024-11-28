@@ -11,5 +11,10 @@ class Client::Users::InvitePeopleController < ClientsController
       standalone: true,
       use_path: true
     )
+
+    @invite_members = User.includes(:children).where(parent: current_client)
+                          .page(params[:page]).per(10)
+
+    @level = MemberLevel.includes(:users).where(users: { id: current_client }).first
   end
 end

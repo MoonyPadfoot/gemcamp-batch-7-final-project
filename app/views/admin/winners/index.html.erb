@@ -37,7 +37,7 @@
               <tr>
                 <td class="text-nowrap"><%= winner.item.name %></td>
                 <td class="text-nowrap"><%= winner.ticket.serial_number %></td>
-                <td class="text-nowrap"><%= winner.user.email %></td>
+                <td class="text-nowrap"><%= winner.user&.email %></td>
                 <td class="text-nowrap">
                   <% if winner.address.nil? %>
                   Address not available
