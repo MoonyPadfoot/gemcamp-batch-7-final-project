@@ -4,8 +4,10 @@ class Client::ShopsController < ClientsController
 
   def index
     @offers = Offer.all
-                   .filter_by_status(Offer.statuses[:active])
-                   .page(params[:page]).per(6)
+    @offers = @offers.filter_by_status(Offer.statuses[:active])
+    @offers = @offers.filter_by_genre(params[:genre]) if params[:genre].present?
+    @offers = @offers.page(params[:page]).per(6)
+
     @banners = Banner.all.where(status: :active)
                      .where("online_at <= ?", Time.current)
                      .where("offline_at > ?", Time.current)
@@ -20,11 +22,11 @@ class Client::ShopsController < ClientsController
     @order = Order.new(order_params)
     @order.user = current_client
 
-    if @order.save
+    if @order.valid?(:shop_purchase) && @order.save
       @order.submit! if @order.may_submit?
       flash[:notice] = 'Offer purchased successfully!'
     else
-      flash[:alert] = 'Offer purchase failed!'
+      flash[:alert] = "Offer purchase failed: #{@order.errors[:base].join(", ")}"
     end
     redirect_to shops_path
   end

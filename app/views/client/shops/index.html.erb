@@ -3,6 +3,15 @@
   <%= render 'client/shared/banner' %>
   <%= render 'client/shared/announcement' %>
 
+  <div class="d-flex mt-3">
+    <%= button_to "All", shops_path, method: :get, class: "btn rounded-circle me-2 #{ params[:genre].present? ? 'btn-info' : 'btn-primary' }" %>
+    <% Offer.genres.each_key do |genre| %>
+      <%= button_to genre.humanize, shops_path,
+                    method: :get, params: { genre: genre },
+                    class: "btn me-2 #{ params[:genre] == genre ? 'btn-primary' : 'btn-info' }" %>
+    <% end %>
+  </div>
+
   <div class="row row-cols-2 g-5 mt-3">
     <% @offers.each do |offer| %>
       <div class="col my-2">

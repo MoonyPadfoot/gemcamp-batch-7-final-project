@@ -32,6 +32,12 @@
   </div>
 
   <div class="col-12 field my-2">
+    <%= f.label :genre, "Genre:", class: "form-label me-2" %>
+    <%= f.select :genre, options_for_select(Offer.genres.keys.map { |key| [key.humanize, key] }, params[:genre]),
+                 { include_blank: 'Please select genre' }, { class: "form-select" } %>
+  </div>
+
+  <div class="col-12 field my-2">
     <%= f.label :status, "Status:", class: "form-label me-2" %>
     <div>
       <% Offer.statuses.each_key do |status| %>

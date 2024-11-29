@@ -11,6 +11,7 @@ class Order < ApplicationRecord
   validates :amount, presence: true, numericality: { only_numeric: true, greater_than_or_equal_to: 0 }
   validates :coin, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   validates :remarks, presence: true, on: :balance_operate
+  validate :one_time_purchase, :weekly_purchase, :monthly_purchase, if: -> { offer.present? }
 
   scope :filter_by_serial_number, ->(serial_number) { where(serial_number: serial_number) }
   scope :filter_by_email, ->(email) { joins(:user).where(users: { email: email }) }
@@ -78,6 +79,33 @@ class Order < ApplicationRecord
   def allow_nil_or_zero_unless_deposit
     if deposit?
       errors.add(:amount, "nil or zero not allowed")
+    end
+  end
+
+  def one_time_purchase
+    if Order.includes(:user).includes(:offer).where(user: user, offer: offer).exists?
+      errors.add(:base, "offer can only be purchased once per user") && offer.one_time?
+    end
+  end
+
+  def weekly_purchase
+    last_purchase = Order.includes(:user).includes(:offer).where(user: user, offer: offer).order("orders.created_at").last.created_at
+    if last_purchase.between?(Time.current.beginning_of_week, Time.current.end_of_week) && offer.weekly?
+      errors.add(:base, "offer can only be purchased once a week")
+    end
+  end
+
+  def monthly_purchase
+    last_purchase = Order.includes(:user).includes(:offer).where(user: user, offer: offer).order("orders.created_at").last.created_at
+    if last_purchase.between?(Time.current.beginning_of_month, Time.current.end_of_month) && offer.monthly?
+      errors.add(:base, "offer can only be purchased once a month")
+    end
+  end
+
+  def daily_purchase
+    last_purchase = Order.includes(:user).includes(:offer).where(user: user, offer: offer).order("orders.created_at").last.created_at
+    if last_purchase.between?(Time.current.beginning_of_day, Time.current.end_of_day) && offer.daily?
+      errors.add(:base, "offer can only be purchased once a day")
     end
   end
 end
