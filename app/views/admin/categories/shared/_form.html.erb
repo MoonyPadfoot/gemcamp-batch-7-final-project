@@ -7,6 +7,14 @@
     <% end %>
   </div>
 
+  <div class="col-12 field my-2">
+    <%= f.label :sort, "Sort:", class: "form-label" %>
+    <%= f.number_field :sort, class: "form-control w-25" %>
+    <% @category.errors.full_messages_for(:sort).each do |message| %>
+      <div class="text-danger"><%= message %></div>
+    <% end %>
+  </div>
+
   <div class="col-12 actions text-center my-2">
     <%= f.submit "Save Category", class: 'btn btn-md btn-success w-100' %>
   </div>

@@ -27,10 +27,18 @@
       <% end %>
     </div>
 
-    <div class="colfield my-2">
+    <div class="col field my-2">
       <%= f.label :offline_at, "Offline At:", class: "form-label" %>
       <%= f.datetime_field :offline_at, class: "form-control" %>
       <% @banner.errors.full_messages_for(:offline_at).uniq.each do |message| %>
+        <div class="text-danger"><%= message %></div>
+      <% end %>
+    </div>
+
+    <div class="col field my-2">
+      <%= f.label :sort, "Sort:", class: "form-label" %>
+      <%= f.number_field :sort, class: "form-control w-25" %>
+      <% @banner.errors.full_messages_for(:sort).each do |message| %>
         <div class="text-danger"><%= message %></div>
       <% end %>
     </div>

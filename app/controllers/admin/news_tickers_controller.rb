@@ -3,6 +3,7 @@ class Admin::NewsTickersController < AdminsController
 
   def index
     @news_tickers = NewsTicker.all
+                              .order(sort: :asc)
                               .page(params[:page]).per(10)
   end
 
@@ -50,6 +51,6 @@ class Admin::NewsTickersController < AdminsController
   end
 
   def news_ticker_params
-    params.require(:news_ticker).permit(:content, :status, :admin_id)
+    params.require(:news_ticker).permit(:content, :status, :admin_id, :sort)
   end
 end

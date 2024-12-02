@@ -3,7 +3,8 @@ class Admin::BannersController < AdminsController
 
   def index
     @banners = Banner.all
-                     .page(params[:page]).per(10)
+    @banners = @banners.order(sort: :asc)
+    @banners = @banners.page(params[:page]).per(10)
   end
 
   def new
@@ -50,6 +51,6 @@ class Admin::BannersController < AdminsController
   end
 
   def banner_params
-    params.require(:banner).permit(:preview, :status, :online_at, :offline_at)
+    params.require(:banner).permit(:preview, :status, :online_at, :offline_at, :sort)
   end
 end

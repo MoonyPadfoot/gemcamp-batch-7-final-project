@@ -15,6 +15,7 @@
           <tr>
             <td>Content</td>
             <td>Status</td>
+            <td>Sort</td>
             <td>Actions</td>
           </tr>
           </thead>
@@ -25,6 +26,7 @@
               <td class="text-nowrap">
                 <span class="<%= "badge #{news_ticker.status == 'active' ? 'bg-primary' : 'bg-danger' }" %>"><%= news_ticker.status %></span>
               </td>
+              <td class="text-center"><%= news_ticker.sort %></td>
               <td class="text-nowrap p-2">
                 <div class="d-flex justify-content-start">
                   <%= link_to "Edit", edit_news_ticker_path(news_ticker), class: "btn btn-sm btn-warning me-2" %>

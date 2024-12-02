@@ -3,6 +3,7 @@ class Admin::CategoriesController < AdminsController
 
   def index
     @categories = Category.all
+                          .order(sort: :asc)
                           .page(params[:page]).per(10)
   end
 
