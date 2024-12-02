@@ -4,9 +4,17 @@
       <i class="bi bi-bootstrap"></i>
     <% end %>
     <div class="navbar-nav">
-      <%= link_to "Coins", shops_path, class: "nav-link" %>
-      <%= link_to "Claim", me_winning_history_path, class: "nav-link" %>
-      <a class="nav-link" href="#">Language</a>
+      <%= link_to t('coins'), shops_path, class: "nav-link" %>
+      <%= link_to t('claim'), me_winning_history_path, class: "nav-link" %>
+      <div class="btn-group">
+        <button class="btn dropdown-toggle nav-link" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <%= t('choose_language') %>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end">
+          <%= link_to 'English', params.permit!.merge(locale: 'en'), class: "btn btn-danger dropdown-item" %>
+          <%= link_to 'Tagalog', params.permit!.merge(locale: 'tl'), class: "btn btn-danger dropdown-item" %>
+        </ul>
+      </div>
       <button class="navbar-toggler d-block" data-bs-toggle="offcanvas" data-bs-target="#offcanvas" role="button">
         <i class="navbar-toggler-icon" data-bs-toggle="offcanvas" data-bs-target="#offcanvas"></i>
       </button>

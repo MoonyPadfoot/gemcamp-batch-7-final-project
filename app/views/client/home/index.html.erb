@@ -4,7 +4,7 @@
   <%= render 'client/shared/announcement' %>
 
   <div class="mt-2">
-    <h3><span class="badge text-bg-secondary">Winners Feedback</span></h3>
+    <h3><span class="badge text-bg-secondary"><%= t('winners_feedback') %></span></h3>
     <div class="row row-cols-5 gap-2 mx-1">
       <% @shares.each do |share| %>
         <div class="card p-4 w-30 col">
@@ -13,12 +13,12 @@
       <% end %>
       <%= link_to shares_path, class: "col text-decoration-none" do %>
         <div class="card p-4 w-30 h-100 d-flex justify-content-center align-items-center">
-          <span>More...</span>
+          <span><%= t('more') %></span>
         </div>
       <% end %>
     </div>
 
-    <h3><span class="badge text-bg-secondary mt-2">Coming Soon</span></h3>
+    <h3><span class="badge text-bg-secondary mt-2"><%= t('coming_soon') %></span></h3>
     <div class="row cols-5 gap-2 mx-1">
       <% @items.each do |item| %>
         <%= link_to lottery_path(item), class: "col text-decoration-none" do %>
@@ -29,7 +29,7 @@
       <% end %>
       <%= link_to lotteries_path, class: "col text-decoration-none" do %>
         <div class="card p-4 w-30 h-100 d-flex justify-content-center align-items-center">
-          <span>More...</span>
+          <span><%= t('more') %></span>
         </div>
       <% end %>
     </div>

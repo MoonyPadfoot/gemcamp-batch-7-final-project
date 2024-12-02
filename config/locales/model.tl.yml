@@ -1,4 +1,12 @@
 tl:
+  choose_language: Pumili ng Wika
+  coins: Barya
+  claim: Kunin
+  announcement: "Anunsyo:"
+  winners_feedback: Puna ng mga Nanalo
+  coming_soon: Mga Paparating
+  more: Magpakita pa...
+
   actions: Mga Aksyon
   new: "Magdagdag Ng Bagong %{model}"
   edit: "Palitan ang %{model} "
@@ -12,6 +20,20 @@ tl:
       category:
         one: Kategorya
         other: Mga Kategorya
+      share:
+        one: Ibahagi
+        other: Mga Ipinabahagi
+      invite:
+        one: Imbita
+        other: Mga Inimbitahan
+      lottery:
+        one: Lottery
+        other: Mga Lottery
+      shop:
+        one: Tindahan
+        other: Mga Tindahan
+      me:
+        one: Ako
     attributes:
       category:
         name: Pangalan

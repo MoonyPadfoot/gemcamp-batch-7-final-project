@@ -1,4 +1,12 @@
 en:
+  choose_language: Choose Language
+  coins: Coins
+  claim: Claim
+  announcement: "Announcement:"
+  winners_feedback: Winner's Feedback
+  coming_soon: Coming Soon
+  more: More...
+
   actions: Actions
   new: "Add New %{model}"
   edit: "Edit %{model}"
@@ -12,6 +20,20 @@ en:
       category:
         one: Category
         other: Categories
+      share:
+        one: Share
+        other: Shares
+      invite:
+        one: Invite
+        other: Invites
+      lottery:
+        one: Lottery
+        other: Lotteries
+      shop:
+        one: Shop
+        other: Shops
+      me:
+        one: Me
     attributes:
       category:
         name: Name

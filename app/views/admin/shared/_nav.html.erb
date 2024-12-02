@@ -1,7 +1,7 @@
 <nav class="navbar navbar-light bg-dark d-flex justify-content-end p-0">
   <div class="btn-group">
     <button class="btn btn-secondary rounded-0 dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-      Change language
+      <%= t('choose_language') %>
     </button>
     <ul class="dropdown-menu dropdown-menu-end">
       <%= link_to 'English', params.permit!.merge(locale: 'en'), class: "btn btn-danger dropdown-item" %>
