@@ -1,0 +1,28 @@
+tl:
+  actions: Mga Aksyon
+  new: "Magdagdag Ng Bagong %{model}"
+  edit: "Palitan ang %{model} "
+  buttons:
+    create: "Gumawa ng Bagong %{model}"
+    save: "I-save ang %{model}"
+    edit: Palitan
+    delete: Burahin
+  activerecord:
+    models:
+      category:
+        one: Kategorya
+        other: Mga Kategorya
+    attributes:
+      category:
+        name: Pangalan
+        sort: Uri
+  errors:
+    messages:
+      blank: "ay hindi maaring maging blanko"
+  views:
+    pagination:
+      first: "&laquo; Una"
+      last: "Huli &raquo;"
+      previous: "&lsaquo; Nakaraan"
+      next: "Susunod &rsaquo;"
+      truncate: "..."

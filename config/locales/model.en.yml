@@ -1,0 +1,18 @@
+en:
+  actions: Actions
+  new: "Add New %{model}"
+  edit: "Edit %{model}"
+  buttons:
+    create: "Create New %{model}"
+    save: "Save %{model}"
+    edit: Edit
+    delete: Delete
+  activerecord:
+    models:
+      category:
+        one: Category
+        other: Categories
+    attributes:
+      category:
+        name: Name
+        sort: Sort

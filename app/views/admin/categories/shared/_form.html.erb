@@ -1,6 +1,6 @@
 <%= form_with model: @category, url: path do |f| %>
   <div class="col-12 field my-2">
-    <%= f.label :name, "Name:", class: "form-label" %>
+    <%= f.label :name, "#{Category.human_attribute_name(:name)}:", class: "form-label" %>
     <%= f.text_field :name, class: "form-control" %>
     <% @category.errors.full_messages_for(:name).each do |message| %>
       <div class="text-danger"><%= message %></div>
@@ -8,7 +8,7 @@
   </div>
 
   <div class="col-12 field my-2">
-    <%= f.label :sort, "Sort:", class: "form-label" %>
+    <%= f.label :sort, "#{Category.human_attribute_name(:sort)}:", class: "form-label" %>
     <%= f.number_field :sort, class: "form-control w-25" %>
     <% @category.errors.full_messages_for(:sort).each do |message| %>
       <div class="text-danger"><%= message %></div>
@@ -16,6 +16,6 @@
   </div>
 
   <div class="col-12 actions text-center my-2">
-    <%= f.submit "Save Category", class: 'btn btn-md btn-success w-100' %>
+    <%= f.submit t('buttons.save', model: t('activerecord.models.category.one')), class: 'btn btn-md btn-success w-100' %>
   </div>
 <% end %>
