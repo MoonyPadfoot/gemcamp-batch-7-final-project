@@ -5,15 +5,18 @@ class Client::LotteriesController < ClientsController
 
   def index
     @categories = Category.all
-    @items = Item.all
-                 .filter_by_status
-                 .filter_by_category(params[:category])
-                 .filter_by_state
-                 .page(params[:page]).per(4)
-    @banners = Banner.all.where(status: :active)
-                     .where("online_at <= ?", Time.current)
-                     .where("offline_at > ?", Time.current)
-    @news_tickers = NewsTicker.all.where(status: :active).limit(5)
+
+    @items = Item.filter_by_status
+    @items = @items.filter_by_category(params[:category])
+    @items = @items.filter_by_state
+    @items = @items.page(params[:page]).per(4)
+
+    @banners = Banner.filter_by_status
+    @banners = @banners.filter_by_online_at
+    @banners = @banners.filter_by_offline_at
+    @banners = @banners.order(sort: :asc)
+
+    @news_tickers = NewsTicker.filter_by_status.limit(5)
   end
 
   def show

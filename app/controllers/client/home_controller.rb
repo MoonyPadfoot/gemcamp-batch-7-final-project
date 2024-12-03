@@ -1,18 +1,22 @@
 class Client::HomeController < ClientsController
 
   def index
-    @banners = Banner.all.where(status: :active)
-                     .where("online_at <= ?", Time.current)
-                     .where("offline_at > ?", Time.current)
-                     .order(sort: :asc)
-    @news_tickers = NewsTicker.all.where(status: :active).limit(5).order(sort: :asc)
-    @shares = Winner.all.where(state: 'published')
-                    .order(created_at: :desc)
-                    .limit(5)
-    @items = Item.all
-                 .filter_by_status
-                 .filter_by_state
-                 .order(created_at: :desc)
-                 .limit(8)
+    @banners = Banner.filter_by_status
+    @banners = @banners.filter_by_online_at
+    @banners = @banners.filter_by_offline_at
+    @banners = @banners.order(sort: :asc)
+
+    @news_tickers = NewsTicker.filter_by_status
+    @news_tickers = @news_tickers.limit(5)
+    @news_tickers = @news_tickers.order(sort: :asc)
+
+    @shares = Winner.filter_by_state('published')
+    @shares = @shares.limit(5)
+    @shares = @shares.order(created_at: :desc)
+
+    @items = Item.filter_by_status
+    @items = @items.filter_by_state
+    @items = @items.limit(8)
+    @items = @items.order(created_at: :desc)
   end
 end

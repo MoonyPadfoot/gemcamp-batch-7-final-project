@@ -4,14 +4,16 @@ class Client::ShopsController < ClientsController
 
   def index
     @offers = Offer.all
-    @offers = @offers.filter_by_status(Offer.statuses[:active])
+    @offers = @offers.filter_by_status(:active)
     @offers = @offers.filter_by_genre(params[:genre]) if params[:genre].present?
     @offers = @offers.page(params[:page]).per(6)
 
-    @banners = Banner.all.where(status: :active)
-                     .where("online_at <= ?", Time.current)
-                     .where("offline_at > ?", Time.current)
-    @news_tickers = NewsTicker.all.where(status: :active).limit(5)
+    @banners = Banner.filter_by_status
+    @banners = @banners.filter_by_online_at
+    @banners = @banners.filter_by_offline_at
+    @banners = @banners.order(sort: :asc)
+
+    @news_tickers = NewsTicker.filter_by_status.limit(5)
   end
 
   def show

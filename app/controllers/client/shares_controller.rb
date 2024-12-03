@@ -1,9 +1,12 @@
 class Client::SharesController < ClientsController
   def index
-    @shares = Winner.all.where(state: 'published')
-    @banners = Banner.all.where(status: :active)
-                     .where("online_at <= ?", Time.current)
-                     .where("offline_at > ?", Time.current)
-    @news_tickers = NewsTicker.all.where(status: :active).limit(5)
+    @shares = Winner.filter_by_state('published')
+
+    @banners = Banner.filter_by_status
+    @banners = @banners.filter_by_online_at
+    @banners = @banners.filter_by_offline_at
+    @banners = @banners.order(sort: :asc)
+
+    @news_tickers = NewsTicker.filter_by_status.limit(5)
   end
 end
