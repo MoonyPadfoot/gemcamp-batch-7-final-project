@@ -1,8 +1,6 @@
-<%= render 'client/shared/nav' %>
 <div class="container mb-2 pb-5">
   <%= render 'client/shared/banner' %>
   <%= render 'client/shared/announcement' %>
-  <button class="btn btn-primary rounded-0 my-3 w-100">Button</button>
 
   <% @shares.each do |share| %>
     <div class="card shadow h-100 mt-3">
@@ -18,4 +16,3 @@
     </div>
   <% end %>
 </div>
-<%= render 'client/shared/footer' %>
