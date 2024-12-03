@@ -1,6 +1,6 @@
 class Client::SharesController < ClientsController
   def index
-    @shares = Winner.filter_by_state('published')
+    @shares = Winner.includes(:user).filter_by_state('published')
 
     @banners = Banner.filter_by_status
     @banners = @banners.filter_by_online_at
