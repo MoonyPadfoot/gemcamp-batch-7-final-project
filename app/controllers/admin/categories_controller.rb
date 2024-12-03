@@ -2,9 +2,8 @@ class Admin::CategoriesController < AdminsController
   before_action :set_category, only: [:edit, :update, :destroy]
 
   def index
-    @categories = Category.all
-                          .order(sort: :asc)
-                          .page(params[:page]).per(10)
+    @categories = Category.order(sort: :asc)
+    @categories = @categories.page(params[:page]).per(10)
   end
 
   def new

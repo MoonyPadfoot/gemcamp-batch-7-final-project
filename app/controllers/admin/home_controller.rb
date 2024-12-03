@@ -1,8 +1,10 @@
 class Admin::HomeController < AdminsController
   require 'csv'
+
   def index
-    @clients = User.where(role: :client)
-                   .page(params[:page]).per(10)
+    @clients = User.includes(:tickets).where(role: :client)
+    @clients = @clients.order(created_at: :desc)
+    @clients = @clients.page(params[:page]).per(10)
 
     respond_to do |format|
       format.html

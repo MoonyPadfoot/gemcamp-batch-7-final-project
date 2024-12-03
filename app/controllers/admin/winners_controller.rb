@@ -4,11 +4,11 @@ class Admin::WinnersController < AdminsController
   before_action :set_winner, only: [:submit, :pay, :ship, :deliver, :publish, :remove_publish]
 
   def index
-    @winners = Winner.all
-    @winners = @winners.filter_by_serial_number(params[:serial_number]) unless params[:serial_number].blank?
-    @winners = @winners.filter_by_email(params[:email]) unless params[:email].blank?
-    @winners = @winners.filter_by_created_at(params[:start_date], params[:end_date]) unless params[:start_date].blank? && params[:end_date].blank?
-    @winners = @winners.filter_by_state(params[:state]) unless params[:state].blank?
+    @winners = Winner.order(created_at: :desc)
+    @winners = @winners.filter_by_serial_number(params[:serial_number]) if params[:serial_number].present?
+    @winners = @winners.filter_by_email(params[:email]) if params[:email].present?
+    @winners = @winners.filter_by_created_at(params[:start_date], params[:end_date]) if params[:start_date].present? && params[:end_date].present?
+    @winners = @winners.filter_by_state(params[:state]) if params[:state].present?
     @winners = @winners.page(params[:page]).per(10)
 
     respond_to do |format|

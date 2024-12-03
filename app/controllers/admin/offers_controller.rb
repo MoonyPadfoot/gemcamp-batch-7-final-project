@@ -2,8 +2,8 @@ class Admin::OffersController < AdminsController
   before_action :set_offer, only: [:edit, :update, :destroy]
 
   def index
-    @offers = Offer.all
-    @offers = @offers.filter_by_status(params[:status]) unless params[:status].blank?
+    @offers = Offer.order(created_at: :desc)
+    @offers = @offers.filter_by_status(params[:status]) if params[:status].present?
     @offers = @offers.page(params[:page]).per(10)
   end
 

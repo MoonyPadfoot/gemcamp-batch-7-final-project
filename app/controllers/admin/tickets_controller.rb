@@ -5,12 +5,12 @@ class Admin::TicketsController < ApplicationController
   before_action :set_ticket, only: :cancel
 
   def index
-    @tickets = Ticket.all
-    @tickets = @tickets.filter_by_serial_number(params[:serial_number]) unless params[:serial_number].blank?
-    @tickets = @tickets.filter_by_item_name(params[:item_name]) unless params[:item_name].blank?
-    @tickets = @tickets.filter_by_email(params[:email]) unless params[:email].blank?
-    @tickets = @tickets.filter_by_created_at(params[:start_date], params[:end_date]) unless params[:start_date].blank? && params[:end_date].blank?
-    @tickets = @tickets.filter_by_state(params[:state]) unless params[:state].blank?
+    @tickets = Ticket.order(created_at: :desc)
+    @tickets = @tickets.filter_by_serial_number(params[:serial_number]) if params[:serial_number].present?
+    @tickets = @tickets.filter_by_item_name(params[:item_name]) if params[:item_name].present?
+    @tickets = @tickets.filter_by_email(params[:email]) if params[:email].present?
+    @tickets = @tickets.filter_by_created_at(params[:start_date], params[:end_date]) if params[:start_date].present? && params[:end_date].present?
+    @tickets = @tickets.filter_by_state(params[:state]) if params[:state].present?
     @tickets = @tickets.page(params[:page]).per(10)
 
     respond_to do |format|

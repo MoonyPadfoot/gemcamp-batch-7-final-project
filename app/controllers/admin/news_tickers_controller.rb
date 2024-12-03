@@ -2,9 +2,8 @@ class Admin::NewsTickersController < AdminsController
   before_action :set_news_ticker, only: [:edit, :update, :destroy]
 
   def index
-    @news_tickers = NewsTicker.all
-                              .order(sort: :asc)
-                              .page(params[:page]).per(10)
+    @news_tickers = NewsTicker.order(sort: :asc)
+    @news_tickers = @news_tickers.page(params[:page]).per(10)
   end
 
   def new

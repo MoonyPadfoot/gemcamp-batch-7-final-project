@@ -8,6 +8,8 @@ class NewsTicker < ApplicationRecord
 
   default_scope { where(deleted_at: nil) }
 
+  scope :filter_by_status, -> { where(status: :active) }
+
   def destroy
     update(deleted_at: Time.now)
   end

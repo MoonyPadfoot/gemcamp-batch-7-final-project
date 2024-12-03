@@ -2,8 +2,7 @@ class Admin::MemberLevelsController < AdminsController
   before_action :set_member_level, only: [:edit, :update, :destroy]
 
   def index
-    @member_levels = MemberLevel.all
-                                .page(params[:page]).per(10)
+    @member_levels = MemberLevel.page(params[:page]).per(10)
   end
 
   def new

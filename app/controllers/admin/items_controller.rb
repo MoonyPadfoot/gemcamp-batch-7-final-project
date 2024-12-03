@@ -4,9 +4,9 @@ class Admin::ItemsController < AdminsController
   before_action :set_item, only: [:edit, :update, :destroy, :start, :pause, :end, :cancel]
 
   def index
-    @items = Item.all
-                 .includes(:categories)
-                 .page(params[:page]).per(10)
+    @items = Item.includes(:categories)
+    @items = @items.order(created_at: :desc)
+    @items = @items.page(params[:page]).per(10)
 
     respond_to do |format|
       format.html

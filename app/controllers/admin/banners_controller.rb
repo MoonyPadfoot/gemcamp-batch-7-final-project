@@ -2,8 +2,7 @@ class Admin::BannersController < AdminsController
   before_action :set_banner, only: [:edit, :update, :destroy]
 
   def index
-    @banners = Banner.all
-    @banners = @banners.order(sort: :asc)
+    @banners = Banner.order(sort: :asc)
     @banners = @banners.page(params[:page]).per(10)
   end
 
