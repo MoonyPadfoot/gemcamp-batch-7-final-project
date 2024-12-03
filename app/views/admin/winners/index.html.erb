@@ -51,10 +51,12 @@
                   when 'won' then 'bg-success'
                   when 'claimed' then 'bg-success'
                   when 'paid' then 'bg-primary'
-                  when 'shipped' then 'btn-warning'
-                  when 'delivered' then 'btn-info'
-                  when 'published' then 'btn-secondary'
-                  when 'remove_published' then 'btn-danger'
+                  when 'shipped' then 'bg-warning'
+                  when 'submitted' then 'bg-primary'
+                  when 'delivered' then 'bg-info'
+                  when 'published' then 'bg-secondary'
+                  when 'shared' then 'bg-dark'
+                  when 'remove_published' then 'bg-danger'
                   end
                 %>"><%= winner.state %></span></td>
                 <td class="text-nowrap text-end"><%= winner.price %></td>
