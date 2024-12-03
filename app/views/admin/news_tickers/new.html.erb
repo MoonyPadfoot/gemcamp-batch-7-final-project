@@ -1,17 +1,6 @@
-<div class="container-fluid">
-  <div class="row flex-nowrap">
-    <%= render 'admin/shared/side_nav' %>
-
-    <div class="col p-0">
-      <%= render 'admin/shared/nav' %>
-
-      <div class="container-fluid w-75 mt-4">
-        <h1>Add New News</h1>
-        <div class="card shadow p-4">
-          <%= render partial: 'admin/news_tickers/shared/form', locals: { path: news_tickers_path } %>
-        </div>
-      </div>
-
-    </div>
+<div class="container-fluid w-75 mt-4">
+  <h1>Add New News</h1>
+  <div class="card shadow p-4">
+    <%= render partial: 'admin/news_tickers/shared/form', locals: { path: news_tickers_path } %>
   </div>
 </div>

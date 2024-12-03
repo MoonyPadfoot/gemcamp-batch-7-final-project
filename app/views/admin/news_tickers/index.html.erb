@@ -1,45 +1,34 @@
-<div class="container-fluid">
-  <div class="row flex-nowrap">
-    <%= render 'admin/shared/side_nav' %>
-
-    <div class="col p-0">
-      <%= render 'admin/shared/nav' %>
-
-      <div class="container-fluid mt-4">
-        <div class="d-flex justify-content-between">
-          <h1>All News</h1>
-          <%= link_to "Create New News", new_news_ticker_path, class: "btn btn-success h-100" %>
-        </div>
-        <table class="table table-bordered mt-2">
-          <thead>
-          <tr>
-            <td>Content</td>
-            <td>Status</td>
-            <td>Sort</td>
-            <td>Actions</td>
-          </tr>
-          </thead>
-          <tbody>
-          <% @news_tickers.each do |news_ticker| %>
-            <tr>
-              <td class="text-nowrap"><%= news_ticker.content %></td>
-              <td class="text-nowrap">
-                <span class="<%= "badge #{news_ticker.status == 'active' ? 'bg-primary' : 'bg-danger' }" %>"><%= news_ticker.status %></span>
-              </td>
-              <td class="text-center"><%= news_ticker.sort %></td>
-              <td class="text-nowrap p-2">
-                <div class="d-flex justify-content-start">
-                  <%= link_to "Edit", edit_news_ticker_path(news_ticker), class: "btn btn-sm btn-warning me-2" %>
-                  <%= button_to "Delete", news_ticker_path(news_ticker), method: :delete, class: "btn btn-sm btn-danger" %>
-                </div>
-              </td>
-            </tr>
-          <% end %>
-          </tbody>
-        </table>
-        <%= paginate @news_tickers %>
-      </div>
-
-    </div>
+<div class="container-fluid mt-4">
+  <div class="d-flex justify-content-between">
+    <h1>All News</h1>
+    <%= link_to "Create New News", new_news_ticker_path, class: "btn btn-success h-100" %>
   </div>
+  <table class="table table-bordered mt-2">
+    <thead>
+    <tr>
+      <td>Content</td>
+      <td>Status</td>
+      <td>Sort</td>
+      <td>Actions</td>
+    </tr>
+    </thead>
+    <tbody>
+    <% @news_tickers.each do |news_ticker| %>
+      <tr>
+        <td class="text-nowrap"><%= news_ticker.content %></td>
+        <td class="text-nowrap">
+          <span class="<%= "badge #{news_ticker.status == 'active' ? 'bg-primary' : 'bg-danger' }" %>"><%= news_ticker.status %></span>
+        </td>
+        <td class="text-center"><%= news_ticker.sort %></td>
+        <td class="text-nowrap p-2">
+          <div class="d-flex justify-content-start">
+            <%= link_to "Edit", edit_news_ticker_path(news_ticker), class: "btn btn-sm btn-warning me-2" %>
+            <%= button_to "Delete", news_ticker_path(news_ticker), method: :delete, class: "btn btn-sm btn-danger" %>
+          </div>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+  <%= paginate @news_tickers %>
 </div>

@@ -1,4 +1,4 @@
-class Admin::TicketsController < ApplicationController
+class Admin::TicketsController < AdminsController
   require 'csv'
 
   before_action :authenticate_admin!, only: :index

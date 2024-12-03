@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>App</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
+</head>
+
+<body>
+<% if flash[:alert] %>
+  <div class="alert alert-danger mb-0" role="alert"><%= alert %></div>
+<% end %>
+<% if flash[:notice] %>
+  <div class="alert alert-success mb-0" role="alert"><%= notice %></div>
+<% end %>
+
+<div class="container-fluid">
+  <div class="row flex-nowrap">
+    <%= render 'admin/shared/side_nav' %>
+
+    <div class="col p-0">
+      <%= render 'admin/shared/nav' %>
+
+      <%= yield %>
+
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
