@@ -35,9 +35,7 @@
               <td class="text-nowrap"><%= client.children_members %></td>
               <td class="text-nowrap"><%= client.phone_number || 'N/A' %></td>
               <td class="text-nowrap">
-                <%= link_to "Increase Balance", new_users_client_orders_increase_path(client), class: "btn btn-sm btn-primary" %>
-                <%= link_to "Deduct Balance", new_users_client_orders_deduct_path(client), class: "btn btn-sm btn-primary" %>
-                <%= link_to "Bonus Balance", new_users_client_orders_bonu_path(client), class: "btn btn-sm btn-primary" %>
+                <%= link_to "Balance Operate", new_users_client_orders_increase_path(client), class: "btn btn-sm btn-primary" %>
               </td>
             </tr>
           <% end %>
