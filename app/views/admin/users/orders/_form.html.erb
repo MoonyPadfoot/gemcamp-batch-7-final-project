@@ -4,16 +4,7 @@
       <span class="input-group-text" id="basic-addon1">Coins</span>
       <%= f.number_field :coin, class: "form-control", aria: { label: "Coins", describedby: "basic-addon1" } %>
     </div>
-    <%= f.hidden_field :genre,
-                       value: if request.path.include?('/increase')
-                                Order.genres.key(1)
-                              elsif request.path.include?('/deduct')
-                                Order.genres.key(2)
-                              elsif request.path.include?('/bonus')
-                                Order.genres.key(3)
-                              elsif request.path.include?('/member_level')
-                                Order.genres.key(5)
-                              end %>
+
     <div class="input-group mb-3">
       <span class="input-group-text" id="basic-addon2">Genre</span>
       <%= f.text_field :genre, class: "form-control", value: if request.path.include?('/increase')
