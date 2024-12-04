@@ -1,7 +1,6 @@
 class Admin::TicketsController < AdminsController
   require 'csv'
 
-  before_action :authenticate_admin!, only: :index
   before_action :set_ticket, only: :cancel
 
   def index

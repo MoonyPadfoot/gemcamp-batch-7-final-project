@@ -2,10 +2,11 @@ class Admin::SessionsController < Devise::SessionsController
   def create
     user = User.admin.find_by(email: params[:admin][:email])
     if user && user.valid_password?(params[:admin][:password])
+      set_flash_message!(:notice, :signed_in)
       sign_in(resource_name, user)
-      redirect_to admin_root_path
+      respond_with resource, location: after_sign_in_path_for(user)
     else
-      flash[:alert] = "You are not allowed to access this part of the site"
+      flash[:alert] = t("devise.failure.invalid", authentication_keys: 'email')
       redirect_to new_admin_session_path
     end
   end

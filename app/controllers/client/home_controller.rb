@@ -1,5 +1,5 @@
 class Client::HomeController < ClientsController
-
+  before_action :authenticate_client!, except: :index
   def index
     @banners = Banner.filter_by_status
     @banners = @banners.filter_by_online_at
