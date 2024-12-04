@@ -8,12 +8,12 @@
 
       <div class="form-floating field mb-3">
         <%= f.text_field :promoter_name, value: cookies[:promoter], :readonly => true, class: "form-control",
-                         autofocus: true, autocomplete: "promoter_name", placeholder: "Promoter Name" %>
+                         autocomplete: "promoter_name", placeholder: "Promoter Name" %>
         <%= f.label "Promoter Name", class: "form-label" unless resource.errors[:promoter_name].present? %>
       </div>
 
       <div class="form-floating field mb-3">
-        <%= f.email_field :email, class: "form-control", autocomplete: "email", placeholder: "Email" %>
+        <%= f.email_field :email, class: "form-control", autofocus: true, autocomplete: "email", placeholder: "Email" %>
         <%= f.label :email, class: "form-label" unless resource.errors[:email].present? %>
         <% resource.errors.full_messages_for(:email).each do |message| %>
           <div class="text-danger"><%= message %></div>
