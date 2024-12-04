@@ -1,20 +1,22 @@
-<nav class="navbar navbar-light bg-dark d-flex justify-content-end p-0">
-  <div class="btn-group">
-    <button class="btn btn-secondary rounded-0 dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-      <%= t('choose_language') %>
-    </button>
-    <ul class="dropdown-menu dropdown-menu-end">
-      <%= link_to 'English', params.permit!.merge(locale: 'en'), class: "btn btn-danger dropdown-item" %>
-      <%= link_to 'Tagalog', params.permit!.merge(locale: 'tl'), class: "btn btn-danger dropdown-item" %>
-    </ul>
-  </div>
-  <div class="btn-group">
-    <button class="btn btn-secondary rounded-0 dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-      <%= current_admin.username %>
-    </button>
-    <ul class="dropdown-menu dropdown-menu-end">
-      <li><a class="dropdown-item" href="#">Profile</a></li>
-      <li><%= button_to 'Logout', destroy_admin_session_path, method: :delete, form: { data: { turbo_confirm: 'Are you sure?' } }, class: "btn btn-danger dropdown-item" %></li>
-    </ul>
-  </div>
+<nav class="navbar bg-dark navbar-expand-lg bg-body-tertiary p-0" data-bs-theme="dark">
+  <div class="navbar-nav ms-auto">
+      <div class="btn-group">
+        <button class="btn dropdown-toggle nav-link" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <%= t('choose_language') %>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end">
+          <%= link_to 'English', params.permit!.merge(locale: 'en'), class: "btn btn-danger dropdown-item" %>
+          <%= link_to 'Tagalog', params.permit!.merge(locale: 'tl'), class: "btn btn-danger dropdown-item" %>
+        </ul>
+      </div>
+      <div class="btn-group">
+        <button class="btn dropdown-toggle nav-link" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <%= current_admin.username %>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end">
+          <li><a class="dropdown-item" href="#">Profile</a></li>
+          <li><%= button_to 'Logout', destroy_admin_session_path, method: :delete, form: { data: { turbo_confirm: 'Are you sure?' } }, class: "btn btn-danger dropdown-item" %></li>
+        </ul>
+      </div>
+    </div>
 </nav>

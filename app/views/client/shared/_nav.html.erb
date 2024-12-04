@@ -11,8 +11,8 @@
           <%= t('choose_language') %>
         </button>
         <ul class="dropdown-menu dropdown-menu-end">
-          <%= link_to 'English', params.permit!.merge(locale: 'en'), class: "btn btn-danger dropdown-item" %>
-          <%= link_to 'Tagalog', params.permit!.merge(locale: 'tl'), class: "btn btn-danger dropdown-item" %>
+          <%= link_to 'English', params.permit!.merge(locale: 'en'), class: "btn dropdown-item" %>
+          <%= link_to 'Tagalog', params.permit!.merge(locale: 'tl'), class: "btn dropdown-item" %>
         </ul>
       </div>
       <button class="navbar-toggler d-block" data-bs-toggle="offcanvas" data-bs-target="#offcanvas" role="button">

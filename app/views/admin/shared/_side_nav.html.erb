@@ -6,83 +6,101 @@
     <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
       <li class="nav-item">
         <%= link_to admin_root_path, class: "nav-link align-middle px-0 text-decoration-none" do %>
-          <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline">Homepage</span>
+          <i class="fs-4 bi-house-fill"></i> <span class="ms-1 d-none d-sm-inline">Homepage</span>
         <% end %>
       </li>
       <li>
-        <a href="#submenu2" data-bs-toggle="collapse" class="nav-link px-0 align-middle ">
-          <i class="fs-4 bi-bootstrap"></i> <span class="ms-1 d-none d-sm-inline">Member Management</span>
+        <a href="#member" data-bs-toggle="collapse" class="nav-link px-0 align-middle ">
+          <i class="fs-4 bi-people-fill"></i>
+          <span class="ms-1 d-none d-sm-inline">Member Management</span>
           <i class="bi bi-caret-down-fill"></i>
         </a>
-        <ul class="collapse nav flex-column ms-1" id="submenu2" data-bs-parent="#menu">
+        <ul class="collapse nav flex-column ms-1" id="member" data-bs-parent="#menu">
           <li>
             <%= link_to admin_root_path, class: "nav-link px-0 text-decoration-none" do %>
-              <span class="d-none d-sm-inline">User List</span>
-            <% end %>
-          </li>
-          <li class="w-100">
-            <%= link_to items_path, class: "nav-link px-0 text-decoration-none" do %>
-              <span class="d-none d-sm-inline">Item List</span>
-            <% end %>
-          </li>
-          <li class="w-100">
-            <%= link_to categories_path, class: "nav-link px-0 text-decoration-none" do %>
-              <span class="d-none d-sm-inline">Category List</span>
-            <% end %>
-          </li>
-          <li class="w-100">
-            <%= link_to tickets_path, class: "nav-link px-0 text-decoration-none" do %>
-              <span class="d-none d-sm-inline">Ticket List</span>
-            <% end %>
-          </li>
-          <li class="w-100">
-            <%= link_to winners_path, class: "nav-link px-0 text-decoration-none" do %>
-              <span class="d-none d-sm-inline">Winner List</span>
-            <% end %>
-          </li>
-          <li class="w-100">
-            <%= link_to offers_path, class: "nav-link px-0 text-decoration-none" do %>
-              <span class="d-none d-sm-inline">Offer List</span>
-            <% end %>
-          </li>
-          <li class="w-100">
-            <%= link_to orders_path, class: "nav-link px-0 text-decoration-none" do %>
-              <span class="d-none d-sm-inline">Order List</span>
+              <i class="bi bi-person-fill"></i> <span class="d-none d-sm-inline">User List</span>
             <% end %>
           </li>
           <li class="w-100">
             <%= link_to invites_path, class: "nav-link px-0 text-decoration-none" do %>
-              <span class="d-none d-sm-inline">Invite List</span>
-            <% end %>
-          </li>
-          <li class="w-100">
-            <%= link_to news_tickers_path, class: "nav-link px-0 text-decoration-none" do %>
-              <span class="d-none d-sm-inline">News Tickers List</span>
-            <% end %>
-          </li>
-          <li class="w-100">
-            <%= link_to banners_path, class: "nav-link px-0 text-decoration-none" do %>
-              <span class="d-none d-sm-inline">Banners List</span>
+              <i class="bi bi-send-fill"></i> <span class="d-none d-sm-inline">Invite List</span>
             <% end %>
           </li>
           <li class="w-100">
             <%= link_to member_levels_path, class: "nav-link px-0 text-decoration-none" do %>
-              <span class="d-none d-sm-inline">Member Levels List</span>
+              <i class="bi bi-person-fill-up"></i> <span class="d-none d-sm-inline">Member Levels List</span>
             <% end %>
           </li>
         </ul>
       </li>
       <li>
-        <a href="#submenu3" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
-          <i class="fs-4 bi-grid"></i> <span class="ms-1 d-none d-sm-inline">Example 2 Management</span>
+        <a href="#item" data-bs-toggle="collapse" class="nav-link px-0 align-middle ">
+          <i class="fs-4 bi-grid-fill"></i>
+          <span class="ms-1 d-none d-sm-inline">Item Management</span>
           <i class="bi bi-caret-down-fill"></i>
         </a>
-        <ul class="collapse nav flex-column ms-1" id="submenu3" data-bs-parent="#menu">
+        <ul class="collapse nav flex-column ms-1" id="item" data-bs-parent="#menu">
           <li class="w-100">
-            <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Example</span> 1</a>
+            <%= link_to items_path, class: "nav-link px-0 text-decoration-none" do %>
+              <i class="bi bi-box2-fill"></i>
+              <span class="d-none d-sm-inline">Item List</span>
+            <% end %>
           </li>
-          <li>
-            <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Example</span> 2</a>
+          <li class="w-100">
+            <%= link_to categories_path, class: "nav-link px-0 text-decoration-none" do %>
+              <i class="bi bi-ui-checks-grid"></i>
+              <span class="d-none d-sm-inline">Category List</span>
+            <% end %>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a href="#raffle" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
+          <i class="fs-4 bi-dice-6-fill"> </i><span class="ms-1 d-none d-sm-inline">Raffle Management</span>
+          <i class="bi bi-caret-down-fill"></i>
+        </a>
+        <ul class="collapse nav flex-column ms-1" id="raffle" data-bs-parent="#menu">
+          <li class="w-100">
+            <%= link_to tickets_path, class: "nav-link px-0 text-decoration-none" do %>
+              <i class="bi bi-ticket-perforated-fill"></i>
+              <span class="d-none d-sm-inline">Ticket List</span>
+            <% end %>
+          </li>
+          <li class="w-100">
+            <%= link_to winners_path, class: "nav-link px-0 text-decoration-none" do %>
+              <i class="bi bi-trophy-fill"></i>
+              <span class="d-none d-sm-inline">Winner List</span>
+            <% end %>
+          </li>
+          <li class="w-100">
+            <%= link_to offers_path, class: "nav-link px-0 text-decoration-none" do %>
+              <i class="bi bi-shop-window"></i>
+              <span class="d-none d-sm-inline">Offer List</span>
+            <% end %>
+          </li>
+          <li class="w-100">
+            <%= link_to orders_path, class: "nav-link px-0 text-decoration-none" do %>
+              <i class="bi bi-cart-fill"></i>
+              <span class="d-none d-sm-inline">Order List</span>
+            <% end %>
+          </li>
+        </ul>
+        <a href="#announcement" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
+          <i class="fs-4 bi-tv"></i> <span class="ms-1 d-none d-sm-inline">Announcement Management</span>
+          <i class="bi bi-caret-down-fill"></i>
+        </a>
+        <ul class="collapse nav flex-column ms-1" id="announcement" data-bs-parent="#menu">
+          <li class="w-100">
+            <%= link_to news_tickers_path, class: "nav-link px-0 text-decoration-none" do %>
+              <i class="bi bi-newspaper"></i>
+              <span class="d-none d-sm-inline">News Tickers List</span>
+            <% end %>
+          </li>
+          <li class="w-100">
+            <%= link_to banners_path, class: "nav-link px-0 text-decoration-none" do %>
+              <i class="bi bi-image-fill"></i>
+              <span class="d-none d-sm-inline">Banners List</span>
+            <% end %>
           </li>
         </ul>
       </li>
