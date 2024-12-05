@@ -17,7 +17,6 @@ class Admin::Users::Orders::DeductController < AdminsController
 
     ActiveRecord::Base.transaction do
       if @order.valid?(:balance_operate) && @order.save
-        order_submit
         order_pay
         flash[:notice] = "Coin for #{@order.user.email} deducted!"
         redirect_to admin_root_path
@@ -30,16 +29,6 @@ class Admin::Users::Orders::DeductController < AdminsController
   end
 
   private
-
-  def order_submit
-    if @order.may_submit?
-      @order.submit!
-    else
-      flash[:alert] = "Coin failed to deduct: #{ @order.errors.full_messages.to_sentence }"
-      render template: "admin/users/orders/new", status: :unprocessable_entity
-      raise ActiveRecord::Rollback
-    end
-  end
 
   def order_pay
     if @order.may_pay?

@@ -13,7 +13,6 @@ class Admin::Users::Orders::MemberLevelController < AdminsController
 
     ActiveRecord::Base.transaction do
       if @order.save
-        order_submit
         order_pay
         flash[:notice] = "Coin for #{@order.user.email} added!"
         redirect_to admin_root_path
@@ -26,16 +25,6 @@ class Admin::Users::Orders::MemberLevelController < AdminsController
   end
 
   private
-
-  def order_submit
-    if @order.may_submit?
-      @order.submit!
-    else
-      flash[:alert] = "Coin failed to add: #{ @order.errors.full_messages.to_sentence }"
-      render template: "admin/users/orders/new", status: :unprocessable_entity
-      raise ActiveRecord::Rollback
-    end
-  end
 
   def order_pay
     if @order.may_pay?

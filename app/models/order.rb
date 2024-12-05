@@ -29,7 +29,7 @@ class Order < ApplicationRecord
     end
 
     event :pay do
-      transitions from: :submitted, to: :paid, success: [:adjust_coin_paid, :add_deposit]
+      transitions from: [:submitted, :pending], to: :paid, success: [:adjust_coin_paid, :add_deposit]
     end
 
     event :cancel do
