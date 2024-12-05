@@ -18,18 +18,22 @@
   <div class="alert alert-success mb-0" role="alert"><%= notice %></div>
 <% end %>
 
-<div class="container-fluid">
-  <div class="row flex-nowrap">
-    <%= render 'admin/shared/side_nav' %>
+<% if current_page?(new_admin_session_path) %>
+  <%= yield %>
+<% else %>
+  <div class="container-fluid">
+    <div class="row flex-nowrap">
+      <%= render 'admin/shared/side_nav' %>
 
-    <div class="col p-0">
-      <%= render 'admin/shared/nav' %>
+      <div class="col p-0">
+        <%= render 'admin/shared/nav' %>
 
-      <%= yield %>
+        <%= yield %>
 
+      </div>
     </div>
   </div>
-</div>
+<% end %>
 
 </body>
 </html>

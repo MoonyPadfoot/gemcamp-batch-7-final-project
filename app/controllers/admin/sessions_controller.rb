@@ -1,4 +1,6 @@
 class Admin::SessionsController < Devise::SessionsController
+  layout 'admin'
+
   def create
     user = User.admin.find_by(email: params[:admin][:email])
     if user && user.valid_password?(params[:admin][:password])
