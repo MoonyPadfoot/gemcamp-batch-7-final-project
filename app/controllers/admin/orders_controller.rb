@@ -13,6 +13,9 @@ class Admin::OrdersController < AdminsController
     @orders = @orders.filter_by_state(params[:state]) if params[:state].present?
     @orders = @orders.page(params[:page]).per(10)
 
+    @total_amount = Order.sum(:amount)
+    @total_coins = Order.where.not(genre: :deduct).sum(:coin)
+
     respond_to do |format|
       format.html
       format.csv {
