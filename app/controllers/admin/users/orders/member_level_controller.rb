@@ -2,14 +2,14 @@ class Admin::Users::Orders::MemberLevelController < AdminsController
   before_action :set_member_level, only: [:edit, :update, :destroy]
 
   def new
-    @user = User.find(params[:client_id])
+    @user = User.client.find(params[:client_id])
     @order = Order.new
     render :template => "admin/users/orders/new"
   end
 
   def create
     @order = Order.new(params.require(:order).permit(:coin, :genre))
-    @order.user = User.find(params[:client_id])
+    @order.user = User.client.find(params[:client_id])
 
     ActiveRecord::Base.transaction do
       if @order.save

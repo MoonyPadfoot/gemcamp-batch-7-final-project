@@ -2,7 +2,7 @@ class Admin::HomeController < AdminsController
   require 'csv'
 
   def index
-    @clients = User.includes(:tickets).where(role: :client)
+    @clients = User.client.includes(:tickets)
     @clients = @clients.order(created_at: :desc)
     @clients = @clients.page(params[:page]).per(10)
 

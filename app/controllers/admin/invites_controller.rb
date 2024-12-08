@@ -1,7 +1,8 @@
 class Admin::InvitesController < AdminsController
   require 'csv'
+
   def index
-    @clients = User.includes(:parent).where(role: :client)
+    @clients = User.client.includes(:parent)
     @clients = @clients.where.not(parent: { id: nil })
     @clients = @clients.where(parent: { email: params[:email] }) if params[:email].present?
     @clients = @clients.order(created_at: :desc)

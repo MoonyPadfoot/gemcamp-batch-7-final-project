@@ -4,13 +4,13 @@ class Users::RegistrationsController < Devise::RegistrationsController
   before_action :configure_permitted_parameters, only: [:create, :update]
 
   def new
-    cookies[:promoter] ||= params[:promoter] if User.exists?(email: params[:promoter])
+    cookies[:promoter] ||= params[:promoter] if User.client.exists?(email: params[:promoter])
     super
   end
 
   def create
-    if User.exists?(email: cookies[:promoter])
-      @promoter = User.find_by(email: cookies[:promoter])
+    if User.client.exists?(email: cookies[:promoter])
+      @promoter = User.client.find_by(email: cookies[:promoter])
       build_resource(sign_up_params)
       resource.parent = @promoter
       resource.member_level = MemberLevel.first

@@ -32,7 +32,7 @@ class User < ApplicationRecord
   after_create :upgrade_next_level
 
   def upgrade_next_level
-    user = User.find_by(id: parent)
+    user = User.client.find_by(id: parent)
     next_level = MemberLevel.where("id > ?", user.member_level).first
 
     if User.where(parent: parent).count == next_level.required_members

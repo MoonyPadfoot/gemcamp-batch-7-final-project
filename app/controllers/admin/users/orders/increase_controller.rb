@@ -1,13 +1,13 @@
 class Admin::Users::Orders::IncreaseController < AdminsController
   def new
-    @user = User.find(params[:client_id])
+    @user = User.client.find(params[:client_id])
     @order = Order.new
     render :template => "admin/users/orders/new"
   end
 
   def create
     @order = Order.new(params.require(:order).permit(:coin, :genre, :remarks))
-    @order.user = User.find(params[:client_id])
+    @order.user = User.client.find(params[:client_id])
 
     ActiveRecord::Base.transaction do
       if @order.valid?(:balance_operate) && @order.save

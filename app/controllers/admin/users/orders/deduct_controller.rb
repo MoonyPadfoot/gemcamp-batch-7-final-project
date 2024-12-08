@@ -1,13 +1,13 @@
 class Admin::Users::Orders::DeductController < AdminsController
   def new
-    @user = User.find(params[:client_id])
+    @user = User.client.find(params[:client_id])
     @order = Order.new
     render :template => "admin/users/orders/new"
   end
 
   def create
     @order = Order.new(params.require(:order).permit(:coin, :genre, :remarks))
-    @order.user = User.find(params[:client_id])
+    @order.user = User.client.find(params[:client_id])
 
     if @order.user.coins == 0
       flash[:alert] = "Coin insufficient and can't be deducted"
