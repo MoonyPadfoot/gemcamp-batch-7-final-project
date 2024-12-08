@@ -24,7 +24,7 @@ class Client::ShopsController < ClientsController
     @order = Order.new(order_params)
     @order.user = current_client
 
-    if @order.valid?(:shop_purchase) && @order.save
+    if @order.save
       @order.submit! if @order.may_submit?
       flash[:notice] = 'Offer purchased successfully!'
     else

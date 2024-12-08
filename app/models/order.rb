@@ -11,7 +11,7 @@ class Order < ApplicationRecord
   validates :amount, presence: true, numericality: { only_numeric: true, greater_than_or_equal_to: 0 }
   validates :coin, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   validates :remarks, presence: true, on: :balance_operate
-  validate :one_time_purchase, :weekly_purchase, :monthly_purchase, if: -> { offer.present? }
+  validate :check_purchase_limit, if: -> { offer.present? }
 
   scope :filter_by_serial_number, ->(serial_number) { where(serial_number: serial_number) }
   scope :filter_by_email, ->(email) { joins(:user).where(users: { email: email }) }
@@ -82,30 +82,49 @@ class Order < ApplicationRecord
     end
   end
 
-  def one_time_purchase
-    if Order.includes(:user).includes(:offer).where(user: user, offer: offer).exists?
-      errors.add(:base, "offer can only be purchased once per user") && offer.one_time?
+  def check_purchase_limit
+    if offer.one_time?
+      validate_one_time_offer
+    elsif offer.monthly?
+      validate_monthly_offer
+    elsif offer.weekly?
+      validate_weekly_offer
+    elsif offer.daily?
+      validate_daily_offer
     end
   end
 
-  def weekly_purchase
-    last_purchase = Order.includes(:user).includes(:offer).where(user: user, offer: offer).order("orders.created_at").last.created_at
-    if last_purchase.between?(Time.current.beginning_of_week, Time.current.end_of_week) && offer.weekly?
-      errors.add(:base, "offer can only be purchased once a week")
+  def validate_one_time_offer
+    if Order.includes(:user, :offer)
+            .exists?(user: user, offer: offer)
+      errors.add(:base, "You have already purchased this one-time offer.")
     end
   end
 
-  def monthly_purchase
-    last_purchase = Order.includes(:user).includes(:offer).where(user: user, offer: offer).order("orders.created_at").last.created_at
-    if last_purchase.between?(Time.current.beginning_of_month, Time.current.end_of_month) && offer.monthly?
-      errors.add(:base, "offer can only be purchased once a month")
+  def validate_monthly_offer
+    if Order.includes(:user, :offer)
+            .where(user: user, offer: offer)
+            .where("EXTRACT(MONTH FROM created_at) = ?", Time.current.month)
+            .exists?
+      errors.add(:base, "You can only purchase this monthly offer once per month.")
     end
   end
 
-  def daily_purchase
-    last_purchase = Order.includes(:user).includes(:offer).where(user: user, offer: offer).order("orders.created_at").last.created_at
-    if last_purchase.between?(Time.current.beginning_of_day, Time.current.end_of_day) && offer.daily?
-      errors.add(:base, "offer can only be purchased once a day")
+  def validate_weekly_offer
+    if Order.includes(:user, :offer)
+            .where(user: user, offer: offer)
+            .where("EXTRACT(WEEK FROM created_at) = ?", Time.current.strftime("%U"))
+            .exists?
+      errors.add(:base, "You can only purchase this weekly offer once per week.")
+    end
+  end
+
+  def validate_daily_offer
+    if Order.includes(:user, :offer)
+            .where(user: user, offer: offer)
+            .where("DATE(created_at) = ?", Date.today)
+            .exists?
+      errors.add(:base, "You can only purchase this daily offer once per day.")
     end
   end
 end
