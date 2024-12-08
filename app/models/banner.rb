@@ -8,9 +8,8 @@ class Banner < ApplicationRecord
   validates :offline_at, presence: true, comparison: { greater_than: :online_at }
   validates :sort, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
 
-  scope :filter_by_status, -> { where(status: :active) }
-  scope :filter_by_online_at, -> { where("online_at <= ?", Time.current) }
-  scope :filter_by_offline_at, -> { where("offline_at > ?", Time.current) }
+  scope :online_at, ->(time) { where("online_at <= ?", time) }
+  scope :offline_at, ->(time) { where("offline_at > ?", time) }
 
   default_scope { where(deleted_at: nil) }
 

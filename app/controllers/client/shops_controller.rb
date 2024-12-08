@@ -3,17 +3,16 @@ class Client::ShopsController < ClientsController
   before_action :set_offer, only: :show
 
   def index
-    @offers = Offer.all
-    @offers = @offers.filter_by_status(:active)
+    @offers = Offer.active
     @offers = @offers.filter_by_genre(params[:genre]) if params[:genre].present?
     @offers = @offers.page(params[:page]).per(6)
 
-    @banners = Banner.filter_by_status
-    @banners = @banners.filter_by_online_at
-    @banners = @banners.filter_by_offline_at
+    @banners = Banner.active
+    @banners = @banners.online_at(Time.current)
+    @banners = @banners.online_at(Time.current)
     @banners = @banners.order(sort: :asc)
 
-    @news_tickers = NewsTicker.filter_by_status.limit(5)
+    @news_tickers = NewsTicker.active.limit(5)
   end
 
   def show
@@ -24,7 +23,7 @@ class Client::ShopsController < ClientsController
     @order = Order.new(order_params)
     @order.user = current_client
 
-    if @order.save
+    if @order.valid?(:shop_purchase) && @order.save
       @order.submit! if @order.may_submit?
       flash[:notice] = 'Offer purchased successfully!'
     else

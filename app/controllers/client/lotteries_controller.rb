@@ -6,17 +6,17 @@ class Client::LotteriesController < ClientsController
   def index
     @categories = Category.all
 
-    @items = Item.filter_by_status
+    @items = Item.active
     @items = @items.filter_by_category(params[:category])
-    @items = @items.filter_by_state
+    @items = @items.starting
     @items = @items.page(params[:page]).per(4)
 
-    @banners = Banner.filter_by_status
-    @banners = @banners.filter_by_online_at
-    @banners = @banners.filter_by_offline_at
+    @banners = Banner.active
+    @banners = @banners.online_at(Time.current)
+    @banners = @banners.offline_at(Time.current)
     @banners = @banners.order(sort: :asc)
 
-    @news_tickers = NewsTicker.filter_by_status.limit(5)
+    @news_tickers = NewsTicker.active.limit(5)
   end
 
   def show

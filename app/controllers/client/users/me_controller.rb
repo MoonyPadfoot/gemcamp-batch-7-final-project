@@ -5,14 +5,14 @@ class Client::Users::MeController < ClientsController
     @order_histories = Order.includes(:user)
     @order_histories = @order_histories.where(users: { id: current_client.id })
     @order_histories = @order_histories.order(created_at: :desc)
-    @order_histories = @order_histories.page(params[:page]).per(5)
+    @order_histories = @order_histories.page(params[:page]).per(10)
   end
 
   def lottery_history
     @lottery_histories = Ticket.includes(:user)
     @lottery_histories = @lottery_histories.where(users: { id: current_client.id })
     @lottery_histories = @lottery_histories.order(created_at: :desc)
-    @lottery_histories = @lottery_histories.page(params[:page]).per(5)
+    @lottery_histories = @lottery_histories.page(params[:page]).per(10)
   end
 
   def winning_history
@@ -21,10 +21,10 @@ class Client::Users::MeController < ClientsController
   end
 
   def invitation_history
-    @invitation_histories = User.includes(:children)
+    @invitation_histories = User.client.includes(:children)
     @invitation_histories = @invitation_histories.where(parent_id: current_client.id)
     @invitation_histories = @invitation_histories.order(created_at: :desc)
-    @invitation_histories = @invitation_histories.page(params[:page]).per(5)
+    @invitation_histories = @invitation_histories.page(params[:page]).per(10)
   end
 
   def claim_prize
@@ -72,7 +72,7 @@ class Client::Users::MeController < ClientsController
     @winning_histories = @winning_histories.includes(:ticket)
     @winning_histories = @winning_histories.where(users: { id: current_client.id }, tickets: { state: :won })
     @winning_histories = @winning_histories.order(created_at: :desc)
-    @winning_histories = @winning_histories.page(params[:page]).per(5)
+    @winning_histories = @winning_histories.page(params[:page]).per(10)
   end
 
 end
