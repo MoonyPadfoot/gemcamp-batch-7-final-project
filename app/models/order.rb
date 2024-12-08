@@ -3,7 +3,7 @@ class Order < ApplicationRecord
   enum genre: { deposit: 0, increase: 1, deduct: 2, bonus: 3, share: 4, member_level: 5 }
 
   after_create :assign_serial_number
-  before_save :allow_nil_or_zero_unless_deposit, :offer_required_if_deposit
+  # before_save :allow_nil_or_zero_unless_deposit, :offer_required_if_deposit
 
   belongs_to :offer, optional: true
   belongs_to :user
@@ -11,7 +11,7 @@ class Order < ApplicationRecord
   validates :amount, presence: true, numericality: { only_numeric: true, greater_than_or_equal_to: 0 }
   validates :coin, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   validates :remarks, presence: true, on: :balance_operate
-  validate :check_purchase_limit, if: -> { offer.present? }
+  validate :check_purchase_limit, if: -> { offer.present? }, on: :shop_purchase
 
   scope :filter_by_serial_number, ->(serial_number) { where(serial_number: serial_number) }
   scope :filter_by_email, ->(email) { joins(:user).where(users: { email: email }) }
@@ -95,34 +95,30 @@ class Order < ApplicationRecord
   end
 
   def validate_one_time_offer
-    if Order.includes(:user, :offer)
-            .exists?(user: user, offer: offer)
+    if Order.exists?(user: user, offer: offer)
       errors.add(:base, "You have already purchased this one-time offer.")
     end
   end
 
   def validate_monthly_offer
-    if Order.includes(:user, :offer)
-            .where(user: user, offer: offer)
-            .where("EXTRACT(MONTH FROM created_at) = ?", Time.current.month)
+    if Order.where(user: user, offer: offer)
+            .where(created_at: Time.now.beginning_of_month..Time.now.end_of_month)
             .exists?
       errors.add(:base, "You can only purchase this monthly offer once per month.")
     end
   end
 
   def validate_weekly_offer
-    if Order.includes(:user, :offer)
-            .where(user: user, offer: offer)
-            .where("EXTRACT(WEEK FROM created_at) = ?", Time.current.strftime("%U"))
+    if Order.where(user: user, offer: offer)
+            .where(created_at: Time.now.beginning_of_week..Time.now.end_of_week)
             .exists?
       errors.add(:base, "You can only purchase this weekly offer once per week.")
     end
   end
 
   def validate_daily_offer
-    if Order.includes(:user, :offer)
-            .where(user: user, offer: offer)
-            .where("DATE(created_at) = ?", Date.today)
+    if Order.where(user: user, offer: offer)
+            .where(created_at: Time.now.beginning_of_day..Time.now.end_of_day)
             .exists?
       errors.add(:base, "You can only purchase this daily offer once per day.")
     end
