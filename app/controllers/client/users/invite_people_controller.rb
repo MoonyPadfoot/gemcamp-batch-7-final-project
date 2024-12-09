@@ -15,6 +15,6 @@ class Client::Users::InvitePeopleController < ClientsController
     @invite_members = User.client.where(parent: current_client)
                           .page(params[:page]).per(10)
 
-    @level = MemberLevel.includes(:users).where(users: { id: current_client }).first
+    @level = MemberLevel.where("id > ?", current_client.member_level).first
   end
 end

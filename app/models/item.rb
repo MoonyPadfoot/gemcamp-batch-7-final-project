@@ -86,7 +86,7 @@ class Item < ApplicationRecord
     @ticket_winner.win!
 
     @ticket_losers = tickets_for_item.where.not(id: @ticket_winner.id)
-    @ticket_losers.each { |ticket| ticket.lose! }
+    @ticket_losers.each { |ticket| ticket.lose! if ticket.may_lose? }
 
     @winner = Winner.create!(item: @ticket_winner.item, user: @ticket_winner.user, ticket: @ticket_winner, item_batch_count: @ticket_winner.batch_count)
   end

@@ -18,6 +18,6 @@ class MemberLevel < ApplicationRecord
   end
 
   def set_level
-    self.level = (MemberLevel.count(:level) || 0) + 1
+    self.level = MemberLevel.count(:level)
   end
 end

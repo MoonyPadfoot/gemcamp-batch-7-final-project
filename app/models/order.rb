@@ -2,16 +2,15 @@ class Order < ApplicationRecord
   include AASM
   enum genre: { deposit: 0, increase: 1, deduct: 2, bonus: 3, share: 4, member_level: 5 }
 
-  after_create :assign_serial_number
-  # before_save :allow_nil_or_zero_unless_deposit, :offer_required_if_deposit
-
   belongs_to :offer, optional: true
   belongs_to :user
 
-  validates :amount, presence: true, numericality: { only_numeric: true, greater_than_or_equal_to: 0 }
-  validates :coin, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+  validates :amount, presence: true, numericality: { only_numeric: true, greater_than: 0 }
+  validates :coin, presence: true, numericality: { only_integer: true, greater_than: 0 }
   validates :remarks, presence: true, on: :balance_operate
   validate :check_purchase_limit, if: -> { offer.present? }, on: :shop_purchase
+
+  after_create :assign_serial_number
 
   scope :filter_by_serial_number, ->(serial_number) { where(serial_number: serial_number) }
   scope :filter_by_email, ->(email) { joins(:user).where(users: { email: email }) }
@@ -29,17 +28,26 @@ class Order < ApplicationRecord
     end
 
     event :pay do
-      transitions from: [:submitted, :pending], to: :paid, success: [:adjust_coin_paid, :add_deposit]
+      transitions from: :submitted, to: :paid, success: [:adjust_coin_paid, :add_deposit]
+      transitions from: :pending, to: :paid, guard: !deposit?
     end
 
     event :cancel do
       transitions from: [:pending, :submitted], to: :cancelled
-      transitions from: :paid, to: :cancelled, success: [:adjust_coin_cancelled, :deduct_deposit]
+      transitions from: :paid, to: :cancelled, guard: :balance_enough?, success: [:adjust_coin_cancelled, :deduct_deposit]
     end
   end
 
   def adjust_coin_paid
-    if !deduct?
+    if deduct?
+      user.update(coins: user.coins - coin)
+    else
+      user.update(coins: user.coins + coin)
+    end
+  end
+
+  def adjust_coin_cancelled
+    if deduct?
       user.update(coins: user.coins + coin)
     else
       user.update(coins: user.coins - coin)
@@ -54,12 +62,8 @@ class Order < ApplicationRecord
     user.update(total_deposit: user.total_deposit - amount) if deposit?
   end
 
-  def adjust_coin_cancelled
-    if !deduct?
-      user.update(coins: user.coins - coin)
-    else
-      user.update(coins: user.coins + coin)
-    end
+  def balance_enough?
+    user.coins >= coin
   end
 
   private
@@ -68,18 +72,6 @@ class Order < ApplicationRecord
     number_count = Order.includes(:user).where(users: { id: user.id }).count
     self.serial_number = "#{Time.current.strftime("%Y%m%d")}-#{id}-#{user.id}-#{number_count.to_s.rjust(4, '0')}"
     save
-  end
-
-  def offer_required_if_deposit
-    if deposit?
-      errors.add(:offer, "only deposited orders allowed")
-    end
-  end
-
-  def allow_nil_or_zero_unless_deposit
-    if deposit?
-      errors.add(:amount, "nil or zero not allowed")
-    end
   end
 
   def check_purchase_limit
@@ -112,7 +104,7 @@ class Order < ApplicationRecord
     if Order.where(user: user, offer: offer)
             .where(created_at: Time.now.beginning_of_week..Time.now.end_of_week)
             .exists?
-      errors.add(:base, "You can only purchase this weekly offer once per week.")
+      errors.add(:base, message: "You can only purchase this weekly offer once per week.")
     end
   end
 

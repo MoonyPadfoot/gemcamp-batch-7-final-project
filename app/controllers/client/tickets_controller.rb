@@ -5,9 +5,11 @@ class Client::TicketsController < ClientsController
     item_id = params[:ticket][:item_id]
     ticket_count = params[:ticket][:ticket_count].to_i
 
-    if current_client.coins < ticket_count
-      flash[:alert] = "Ticket(s) purchased failed. Coins insufficient."
-      redirect_to shops_path and return
+    current_client.ticket_count = ticket_count
+
+    unless current_client.valid?(:purchase)
+      flash[:alert] = "Ticket(s) purchase failed. Coins insufficient."
+      redirect_to lotteries_path and return
     end
 
     tickets = []

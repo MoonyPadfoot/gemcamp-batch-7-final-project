@@ -1,11 +1,11 @@
 class Ticket < ApplicationRecord
   include AASM
 
-  after_create :assign_serial_number, :deduct_user_coin
-
   belongs_to :user
   belongs_to :item
   has_many :winners
+
+  after_create :assign_serial_number, :deduct_user_coin
 
   scope :filter_by_serial_number, ->(serial_number) { where(serial_number: serial_number) }
   scope :filter_by_item_name, ->(item_name) { joins(:item).where('items.name LIKE ?', "%#{item_name}%") }

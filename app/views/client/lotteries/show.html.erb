@@ -36,7 +36,7 @@
       <%= form_with model: @ticket, url: tickets_path do |f| %>
         <%= f.hidden_field :item_id, value: @item.id %>
         <%= f.hidden_field :batch_count, value: @item.batch_count %>
-        <%= f.hidden_field :ticket_count, value: "1" %>
+        <%= f.hidden_field :ticket_count, value: "10" %>
 
         <div class="col-12 actions text-center my-2">
           <%= f.submit "10", class: 'btn btn-md btn-success w-100' %>
@@ -47,7 +47,7 @@
       <%= form_with model: @ticket, url: tickets_path do |f| %>
         <%= f.hidden_field :item_id, value: @item.id %>
         <%= f.hidden_field :batch_count, value: @item.batch_count %>
-        <%= f.hidden_field :ticket_count, value: "1" %>
+        <%= f.hidden_field :ticket_count, value: "20" %>
 
         <div class="col-12 actions text-center my-2">
           <%= f.submit "20", class: 'btn btn-md btn-success w-100' %>
@@ -77,7 +77,7 @@
     </div>
     <ul class="list-group list-group-flush">
       <% @user_tickets.each do |user_ticket| %>
-        <li class="list-group-item"><%= user_ticket.serial_number %></li>
+        <li class="list-group-item"><%= user_ticket.serial_number %><% if user_ticket.cancelled? %><span class="badge bg-danger ms-3">cancelled</span><% end %></li>
       <% end %>
     </ul>
   </div>
