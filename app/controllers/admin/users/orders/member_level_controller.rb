@@ -8,6 +8,7 @@ class Admin::Users::Orders::MemberLevelController < AdminsController
   end
 
   def create
+    @user = User.client.find(params[:client_id])
     @order = Order.new(params.require(:order).permit(:coin, :genre))
     @order.user = User.client.find(params[:client_id])
 
