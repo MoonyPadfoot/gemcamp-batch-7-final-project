@@ -99,6 +99,8 @@ class Admin::ItemsController < AdminsController
 
   def end
     if @item.may_end?
+      @item.admin_id = current_admin
+      
       @item.end!
       flash[:notice] = "Item ended!"
     else
