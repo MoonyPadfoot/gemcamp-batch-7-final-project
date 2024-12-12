@@ -30,7 +30,9 @@ class Admin::TicketsController < AdminsController
             ]
           end
         end
-        render plain: csv_string
+        filename = "tickets_report_#{Time.current.strftime('%Y%m%d%H%M%S')}.csv"
+
+        send_data csv_string, filename: filename, type: 'text/csv', disposition: 'attachment'
       }
     end
   end

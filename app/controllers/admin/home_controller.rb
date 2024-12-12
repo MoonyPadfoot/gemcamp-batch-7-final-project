@@ -28,7 +28,9 @@ class Admin::HomeController < AdminsController
             ]
           end
         end
-        render plain: csv_string
+        filename = "clients_report_#{Time.current.strftime('%Y%m%d%H%M%S')}.csv"
+
+        send_data csv_string, filename: filename, type: 'text/csv', disposition: 'attachment'
       }
     end
   end

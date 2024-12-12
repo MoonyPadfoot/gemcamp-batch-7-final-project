@@ -15,7 +15,8 @@ class Admin::OrdersController < AdminsController
 
     @total_amount = Order.sum(:amount)
     @subtotal_amount = @orders.map(&:amount).sum
-    @total_coins = Order.where.not(genre: :deduct).sum(:coin)
+    @total_coins = Order.sum(:coin)
+    @subtotal_coins = @orders.map(&:coin).sum
 
     respond_to do |format|
       format.html
@@ -39,7 +40,9 @@ class Admin::OrdersController < AdminsController
             ]
           end
         end
-        render plain: csv_string
+        filename = "orders_report_#{Time.current.strftime('%Y%m%d%H%M%S')}.csv"
+
+        send_data csv_string, filename: filename, type: 'text/csv', disposition: 'attachment'
       }
     end
   end
