@@ -9,7 +9,7 @@ class Client::TicketsController < ClientsController
 
     unless current_client.valid?(:purchase)
       flash[:alert] = "Ticket(s) purchase failed. Coins insufficient."
-      redirect_to lotteries_path and return
+      redirect_to shops_path and return
     end
 
     tickets = []
