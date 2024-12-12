@@ -5,7 +5,7 @@ class Order < ApplicationRecord
   belongs_to :offer, optional: true
   belongs_to :user
 
-  validates :amount, presence: true, numericality: { only_numeric: true, greater_than: 0 }
+  validates :amount, presence: true, numericality: { only_numeric: true, greater_than: 0 }, on: :shop_purchase
   validates :coin, presence: true, numericality: { only_integer: true, greater_than: 0 }
   validates :remarks, presence: true, on: :balance_operate
   validate :check_purchase_limit, if: -> { offer.present? }, on: :shop_purchase
@@ -29,7 +29,7 @@ class Order < ApplicationRecord
 
     event :pay do
       transitions from: :submitted, to: :paid, success: [:adjust_coin_paid, :add_deposit]
-      transitions from: :pending, to: :paid, guard: !deposit?
+      transitions from: :pending, to: :paid, guard: :is_not_deposit?, success: :adjust_coin_paid
     end
 
     event :cancel do
@@ -39,19 +39,15 @@ class Order < ApplicationRecord
   end
 
   def adjust_coin_paid
-    if deduct?
-      user.update(coins: user.coins - coin)
-    else
-      user.update(coins: user.coins + coin)
-    end
+    adjusted_coins = deduct? ? user.coins - coin : user.coins + coin
+
+    user.update(coins: adjusted_coins)
   end
 
   def adjust_coin_cancelled
-    if deduct?
-      user.update(coins: user.coins + coin)
-    else
-      user.update(coins: user.coins - coin)
-    end
+    adjusted_coins = deduct? ? user.coins + coin : user.coins - coin
+
+    user.update(coins: adjusted_coins)
   end
 
   def add_deposit
@@ -63,7 +59,13 @@ class Order < ApplicationRecord
   end
 
   def balance_enough?
+    return true if deduct?
+
     user.coins >= coin
+  end
+
+  def is_not_deposit?
+    !deposit?
   end
 
   private
