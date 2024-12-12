@@ -15,9 +15,9 @@
     <tbody>
     <% @member_levels.each do |member_level| %>
       <tr>
-        <td class="text-nowrap"><%= member_level.level %></td>
-        <td class="text-nowrap"><%= member_level.required_members %></td>
-        <td class="text-nowrap"><%= member_level.coins %></td>
+        <td class="text-nowrap text-center"><%= member_level.level %></td>
+        <td class="text-nowrap text-center"><%= member_level.required_members %></td>
+        <td class="text-nowrap text-center"><%= member_level.coins %></td>
         <td class="text-nowrap p-2">
           <div class="d-flex justify-content-start">
             <%= link_to "Edit", edit_member_level_path(member_level), class: "btn btn-sm btn-warning me-2" %>

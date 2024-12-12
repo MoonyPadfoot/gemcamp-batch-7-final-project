@@ -40,16 +40,18 @@ class User < ApplicationRecord
       errors.add(:coins, 'are insufficient for the purchase.')
     end
   end
-
+  
   def upgrade_next_level
     user = User.client.find_by(id: parent)
-    user.member_level ||= MemberLevel.first
     next_level = MemberLevel.where("id > ?", user.member_level).first
 
     if next_level && User.where(parent: parent).count == next_level.required_members
       user.coins = user.coins + next_level.coins
       user.member_level = next_level
       user.save
+
+      order = Order.create!(coin: next_level.coins, genre: :member_level, user: user)
+      order.pay! if order.may_pay?
     end
   end
 end

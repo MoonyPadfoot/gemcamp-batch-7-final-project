@@ -11,8 +11,9 @@
       <td>Member Total Deposits</td>
       <td>Coins</td>
       <td>Total Used Coins</td>
-      <td>Children Members</td>
       <td>Phone Number</td>
+      <td>Member Level</td>
+      <td>Children Members</td>
       <td>Actions</td>
     </tr>
     </thead>
@@ -25,8 +26,9 @@
         <td class="text-nowrap text-end"><%= client.children.sum(:total_deposit) %></td>
         <td class="text-nowrap text-center"><%= client.coins %></td>
         <td class="text-nowrap text-center"><%= Ticket.includes(:user).where(users: { id: client }).sum(:coins) %></td>
-        <td class="text-nowrap"><%= client.children_members %></td>
         <td class="text-nowrap"><%= client.phone_number || 'N/A' %></td>
+        <td class="text-nowrap text-center"><%= client.member_level.level %></td>
+        <td class="text-nowrap text-center"><%= client.children_members %></td>
         <td class="text-nowrap">
           <%= link_to "Balance Operate", new_users_client_orders_increase_path(client), class: "btn btn-sm btn-primary" %>
         </td>
