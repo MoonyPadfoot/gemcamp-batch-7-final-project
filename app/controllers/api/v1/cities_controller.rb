@@ -1,7 +1,7 @@
 class Api::V1::CitiesController < ApplicationController
 
   def index
-    province = Address::Province.find_by_id(params[:province_id])
+    province = Address::Province.find(params[:province_id])
     cities = if province
                province.cities
              else

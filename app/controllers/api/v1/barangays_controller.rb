@@ -1,7 +1,7 @@
 class Api::V1::BarangaysController < ApplicationController
 
   def index
-    city = Address::City.find_by_id(params[:city_id])
+    city = Address::City.find(params[:city_id])
     barangays = if city
                   city.barangays
                 else

@@ -1,7 +1,7 @@
 class Api::V1::ProvincesController < ApplicationController
 
   def index
-    region = Address::Region.find_by_id(params[:region_id])
+    region = Address::Region.find(params[:region_id])
     provinces = if region
                   region.provinces
                 else
@@ -12,7 +12,7 @@ class Api::V1::ProvincesController < ApplicationController
   end
 
   def show
-    province = Address::Province.find_by_id(params[:id])
+    province = Address::Province.find(params[:id])
     render json: province
   end
 end
