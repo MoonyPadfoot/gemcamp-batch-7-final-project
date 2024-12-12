@@ -29,12 +29,12 @@ class Order < ApplicationRecord
 
     event :pay do
       transitions from: :submitted, to: :paid, success: [:adjust_coin_paid, :add_deposit]
-      transitions from: :pending, to: :paid, guard: :is_not_deposit?, success: :adjust_coin_paid
+      transitions from: :pending, to: :paid, guard: [:is_not_deposit?, :deduct_balance_enough?], success: :adjust_coin_paid
     end
 
     event :cancel do
       transitions from: [:pending, :submitted], to: :cancelled
-      transitions from: :paid, to: :cancelled, guard: :balance_enough?, success: [:adjust_coin_cancelled, :deduct_deposit]
+      transitions from: :paid, to: :cancelled, guard: :cancel_balance_enough?, success: [:adjust_coin_cancelled, :deduct_deposit]
     end
   end
 
@@ -58,10 +58,16 @@ class Order < ApplicationRecord
     user.update(total_deposit: user.total_deposit - amount) if deposit?
   end
 
-  def balance_enough?
+  def cancel_balance_enough?
     return true if deduct?
 
     user.coins >= coin
+  end
+
+  def deduct_balance_enough?
+    return true unless deduct?
+
+    user.coins > coin
   end
 
   def is_not_deposit?
@@ -89,7 +95,8 @@ class Order < ApplicationRecord
   end
 
   def validate_one_time_offer
-    if Order.exists?(user: user, offer: offer)
+    if Order.where.not(state: :cancelled)
+            .exists?(user: user, offer: offer)
       errors.add(:base, "You have already purchased this one-time offer.")
     end
   end
@@ -97,6 +104,7 @@ class Order < ApplicationRecord
   def validate_monthly_offer
     if Order.where(user: user, offer: offer)
             .where(created_at: Time.now.beginning_of_month..Time.now.end_of_month)
+            .where.not(state: :cancelled)
             .exists?
       errors.add(:base, "You can only purchase this monthly offer once per month.")
     end
@@ -105,6 +113,7 @@ class Order < ApplicationRecord
   def validate_weekly_offer
     if Order.where(user: user, offer: offer)
             .where(created_at: Time.now.beginning_of_week..Time.now.end_of_week)
+            .where.not(state: :cancelled)
             .exists?
       errors.add(:base, message: "You can only purchase this weekly offer once per week.")
     end
@@ -113,6 +122,7 @@ class Order < ApplicationRecord
   def validate_daily_offer
     if Order.where(user: user, offer: offer)
             .where(created_at: Time.now.beginning_of_day..Time.now.end_of_day)
+            .where.not(state: :cancelled)
             .exists?
       errors.add(:base, "You can only purchase this daily offer once per day.")
     end

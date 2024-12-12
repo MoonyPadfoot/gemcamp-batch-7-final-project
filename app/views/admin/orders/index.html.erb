@@ -23,7 +23,7 @@
         <td class="text-nowrap"><%= order.serial_number %></td>
         <td class="text-nowrap"><%= order.user.email %></td>
         <td class="text-nowrap"><%= order.offer&.name %></td>
-        <td class="text-nowrap"><%= order.amount %></td>
+        <td class="text-nowrap text-end"><%= order.amount %></td>
         <td class="text-nowrap text-center"><%= order.coin %></td>
         <td class="text-nowrap"><span class="badge <%=
           case order.genre
@@ -57,10 +57,11 @@
 
   <%= paginate @orders %>
 
-  <div class="ms-auto w-25 d-flex justify-content-end gap-5">
+  <div class="ms-auto w-25 d-flex justify-content-end gap-5 text-nowrap">
     <div>Amount Subtotal <h3 class="fw-bold text-end"><%= @subtotal_amount %></h3></div>
     <div>Amount Total <h3 class="fw-bold text-end"><%= @total_amount %></h3></div>
-    <div>Coins Subtotal <h3 class="fw-bold text-end"><%= @total_coins %></h3></div>
+    <div>Coins Subtotal <h3 class="fw-bold text-end"><%= @subtotal_coins %></h3></div>
+    <div>Coins Total <h3 class="fw-bold text-end"><%= @total_coins %></h3></div>
     <div>Convenience Fee <h3 class="fw-bold text-end">0</h3></div>
   </div>
 </div>
