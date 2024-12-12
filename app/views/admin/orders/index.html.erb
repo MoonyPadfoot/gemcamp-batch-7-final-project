@@ -46,8 +46,8 @@
         <td class="text-nowrap"><%= order.created_at.strftime("%Y/%m/%d %I:%M %p") %></td>
         <td class="text-nowrap p-2">
           <div class="d-flex justify-content-start">
-            <%= button_to "Pay", order_pay_path(order), method: :put, class: "btn btn-sm btn-success me-1", disabled: !order.may_pay? %>
-            <%= button_to "Cancel", order_cancel_path(order), method: :put, class: "btn btn-sm btn-danger me-1", disabled: !order.may_cancel? %>
+            <%= button_to "Pay", order_pay_path(order), method: :put, class: "btn btn-sm btn-success me-1" if order.may_pay? %>
+            <%= button_to "Cancel", order_cancel_path(order), method: :put, class: "btn btn-sm btn-danger me-1" if order.may_cancel? %>
           </div>
         </td>
       </tr>
@@ -58,7 +58,8 @@
   <%= paginate @orders %>
 
   <div class="ms-auto w-25 d-flex justify-content-end gap-5">
-    <div>Amount Subtotal <h3 class="fw-bold text-end"><%= @total_amount %></h3></div>
+    <div>Amount Subtotal <h3 class="fw-bold text-end"><%= @subtotal_amount %></h3></div>
+    <div>Amount Total <h3 class="fw-bold text-end"><%= @total_amount %></h3></div>
     <div>Coins Subtotal <h3 class="fw-bold text-end"><%= @total_coins %></h3></div>
     <div>Convenience Fee <h3 class="fw-bold text-end">0</h3></div>
   </div>

@@ -14,6 +14,7 @@ class Admin::OrdersController < AdminsController
     @orders = @orders.page(params[:page]).per(10)
 
     @total_amount = Order.sum(:amount)
+    @subtotal_amount = @orders.map(&:amount).sum
     @total_coins = Order.where.not(genre: :deduct).sum(:coin)
 
     respond_to do |format|
