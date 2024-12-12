@@ -16,7 +16,7 @@
       <%= image_tag(current_client&.image_url || "https://loremflickr.com/50/50", style: 'width: 50px; height: 50px;', class: 'w-25') %>
       <div>Username: <span class="fw-bold"><%= current_client&.username %></span></div>
       <div>Email: <span class="fw-bold"><%= current_client&.email %></span></div>
-      <div>Coins: <span class="fw-bold"><%= current_client&.coins %></span></div>
+      <div> <%= 'Coin'.pluralize(@current_client&.coins) %>: <span class="fw-bold"><%= current_client&.coins %></span></div>
       <%= link_to "Cash In Now", shops_path, class: "btn btn-primary w-100 mt-2" %>
     </div>
 
