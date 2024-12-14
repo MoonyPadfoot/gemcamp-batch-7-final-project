@@ -1,85 +1,84 @@
-<div class="container mb-3 pb-5 px-5">
-  <div class="card shadow mt-5">
-    <%= image_tag(@item&.image_url || "https://loremflickr.com/300/300", class: "card-img-top w-100", style: "height: 35rem;") %>
-    <div class="card-body px-5 py-4">
-      <h5 class="card-title"><%= @item.name %></h5>
-      <div class="progress" role="progressbar" aria-label="Example with label" aria-valuenow="<%= @ticket_percentage %>" aria-valuemin="0" aria-valuemax="100">
-        <div class="progress-bar" style="width: <%= "#{ @ticket_percentage }%" %>"><%= @ticket_percentage %>%</div>
+<div class="card shadow mt-5">
+  <%= image_tag(@item.image_url, class: "card-img-top w-100", style: "height: 35rem;") if @item.image.present? %>
+  <div class="card-body px-5 py-4">
+    <h5 class="card-title"><%= @item.name %></h5>
+    <div class="progress" role="progressbar" aria-label="Example with label" aria-valuenow="<%= @ticket_percentage %>" aria-valuemin="0" aria-valuemax="100">
+      <div class="progress-bar" style="width: <%= "#{ @ticket_percentage }%" %>"><%= @ticket_percentage %>%</div>
+    </div>
+  </div>
+</div>
+
+<div class="row row-cols-4">
+  <div class="col">
+    <%= form_with model: @ticket, url: tickets_path do |f| %>
+      <%= f.hidden_field :item_id, value: @item.id %>
+      <%= f.hidden_field :batch_count, value: @item.batch_count %>
+      <%= f.hidden_field :ticket_count, value: "1" %>
+
+      <div class="col-12 actions text-center my-2">
+        <%= f.submit "1", class: 'btn btn-md btn-success w-100' %>
       </div>
-    </div>
+    <% end %>
+  </div>
+  <div class="col">
+    <%= form_with model: @ticket, url: tickets_path do |f| %>
+      <%= f.hidden_field :item_id, value: @item.id %>
+      <%= f.hidden_field :batch_count, value: @item.batch_count %>
+      <%= f.hidden_field :ticket_count, value: "5" %>
+
+      <div class="col-12 actions text-center my-2">
+        <%= f.submit "5", class: 'btn btn-md btn-success w-100' %>
+      </div>
+    <% end %>
+  </div>
+  <div class="col">
+    <%= form_with model: @ticket, url: tickets_path do |f| %>
+      <%= f.hidden_field :item_id, value: @item.id %>
+      <%= f.hidden_field :batch_count, value: @item.batch_count %>
+      <%= f.hidden_field :ticket_count, value: "10" %>
+
+      <div class="col-12 actions text-center my-2">
+        <%= f.submit "10", class: 'btn btn-md btn-success w-100' %>
+      </div>
+    <% end %>
+  </div>
+  <div class="col">
+    <%= form_with model: @ticket, url: tickets_path do |f| %>
+      <%= f.hidden_field :item_id, value: @item.id %>
+      <%= f.hidden_field :batch_count, value: @item.batch_count %>
+      <%= f.hidden_field :ticket_count, value: "20" %>
+
+      <div class="col-12 actions text-center my-2">
+        <%= f.submit "20", class: 'btn btn-md btn-success w-100' %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<%= form_with model: @ticket, url: tickets_path do |f| %>
+  <%= f.hidden_field :item_id, value: @item.id %>
+  <%= f.hidden_field :batch_count, value: @item.batch_count %>
+
+  <div class="input-group my-2">
+    <button class="btn btn-primary" type="button" id="button-decrement">−</button>
+    <%= f.number_field :ticket_count, class: "form-control text-center", value: "0", min: "1" %>
+    <button class="btn btn-primary" type="button" id="button-increment">+</button>
   </div>
 
-  <div class="row row-cols-4">
-    <div class="col">
-      <%= form_with model: @ticket, url: tickets_path do |f| %>
-        <%= f.hidden_field :item_id, value: @item.id %>
-        <%= f.hidden_field :batch_count, value: @item.batch_count %>
-        <%= f.hidden_field :ticket_count, value: "1" %>
-
-        <div class="col-12 actions text-center my-2">
-          <%= f.submit "1", class: 'btn btn-md btn-success w-100' %>
-        </div>
-      <% end %>
-    </div>
-    <div class="col">
-      <%= form_with model: @ticket, url: tickets_path do |f| %>
-        <%= f.hidden_field :item_id, value: @item.id %>
-        <%= f.hidden_field :batch_count, value: @item.batch_count %>
-        <%= f.hidden_field :ticket_count, value: "5" %>
-
-        <div class="col-12 actions text-center my-2">
-          <%= f.submit "5", class: 'btn btn-md btn-success w-100' %>
-        </div>
-      <% end %>
-    </div>
-    <div class="col">
-      <%= form_with model: @ticket, url: tickets_path do |f| %>
-        <%= f.hidden_field :item_id, value: @item.id %>
-        <%= f.hidden_field :batch_count, value: @item.batch_count %>
-        <%= f.hidden_field :ticket_count, value: "10" %>
-
-        <div class="col-12 actions text-center my-2">
-          <%= f.submit "10", class: 'btn btn-md btn-success w-100' %>
-        </div>
-      <% end %>
-    </div>
-    <div class="col">
-      <%= form_with model: @ticket, url: tickets_path do |f| %>
-        <%= f.hidden_field :item_id, value: @item.id %>
-        <%= f.hidden_field :batch_count, value: @item.batch_count %>
-        <%= f.hidden_field :ticket_count, value: "20" %>
-
-        <div class="col-12 actions text-center my-2">
-          <%= f.submit "20", class: 'btn btn-md btn-success w-100' %>
-        </div>
-      <% end %>
-    </div>
+  <div class="col-12 actions text-center my-2">
+    <%= f.submit "Submit", class: 'btn btn-md btn-success w-100' %>
   </div>
+<% end %>
 
-  <%= form_with model: @ticket, url: tickets_path do |f| %>
-    <%= f.hidden_field :item_id, value: @item.id %>
-    <%= f.hidden_field :batch_count, value: @item.batch_count %>
-
-    <div class="input-group my-2">
-      <button class="btn btn-primary" type="button" id="button-decrement">−</button>
-      <%= f.number_field :ticket_count, class: "form-control text-center", value: "0", min: "1" %>
-      <button class="btn btn-primary" type="button" id="button-increment">+</button>
-    </div>
-
-    <div class="col-12 actions text-center my-2">
-      <%= f.submit "Submit", class: 'btn btn-md btn-success w-100' %>
-    </div>
-  <% end %>
-
-  <div class="card shadow">
-    <div class="card-header">
-      <h4>Serial Number</h4>
-    </div>
-    <ul class="list-group list-group-flush">
-      <% @user_tickets.each do |user_ticket| %>
-        <li class="list-group-item"><%= user_ticket.serial_number %><% if user_ticket.cancelled? %><span class="badge bg-danger ms-3">cancelled</span><% end %></li>
-      <% end %>
-    </ul>
+<div class="card shadow">
+  <div class="card-header">
+    <h4>Serial Number</h4>
   </div>
-
+  <ul class="list-group list-group-flush">
+    <% @user_tickets.each do |user_ticket| %>
+      <li class="list-group-item"><%= user_ticket.serial_number %>
+        <% if user_ticket.cancelled? %><span class="badge bg-danger ms-3">cancelled</span>
+        <% end %></li>
+    <% end %>
+  </ul>
 </div>

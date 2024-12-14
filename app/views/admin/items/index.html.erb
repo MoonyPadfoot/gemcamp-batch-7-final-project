@@ -27,7 +27,7 @@
     <% @items.each do |item| %>
       <tr>
         <td class="text-nowrap"><%= item.name %></td>
-        <td class="text-nowrap"><%= image_tag(item.image_url || "https://loremflickr.com/50/50", style: 'width: 50px; height: 50px;') %></td>
+        <td class="text-nowrap"><%= image_tag(item.image_url, style: 'width: 50px; height: 50px;') if item.image_url.present? %></td>
         <td class="text-nowrap">
           <span class="<%= "badge #{item.status == 'active' ? 'bg-primary' : 'bg-danger' }" %>"><%= item.status %></span>
         </td>
@@ -44,10 +44,10 @@
         </td>
         <td>
           <div class="d-flex justify-content-start">
-            <%= button_to "Start", item_start_path(item), method: :put, class: "btn btn-sm btn-success me-1", disabled: !item.may_start? %>
-            <%= button_to "Pause", item_pause_path(item), method: :put, class: "btn btn-sm btn-secondary me-1", disabled: !item.may_pause? %>
-            <%= button_to "Cancel", item_cancel_path(item), method: :put, class: "btn btn-sm btn-warning me-1", disabled: !item.may_cancel? %>
-            <%= button_to "End", item_end_path(item), method: :put, class: "btn btn-sm btn-danger me-1", disabled: !item.may_end? %>
+            <%= button_to "Start", item_start_path(item), method: :put, class: "btn btn-sm btn-success me-1" if item.may_start? %>
+            <%= button_to "Pause", item_pause_path(item), method: :put, class: "btn btn-sm btn-secondary me-1" if item.may_pause? %>
+            <%= button_to "Cancel", item_cancel_path(item), method: :put, class: "btn btn-sm btn-warning me-1" if item.may_cancel? %>
+            <%= button_to "End", item_end_path(item), method: :put, class: "btn btn-sm btn-danger me-1" if item.may_end? %>
           </div>
         </td>
         <td class="text-nowrap">

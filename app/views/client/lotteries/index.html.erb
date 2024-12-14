@@ -1,31 +1,28 @@
-<div class="container mb-2 pb-5">
-  <%= render 'client/shared/banner' %>
-  <%= render 'client/shared/announcement' %>
+<%= render 'client/shared/banner' %>
+<%= render 'client/shared/announcement' %>
 
-  <div class="d-flex mt-3">
-    <%= button_to "All", lotteries_path, method: :get, class: "btn rounded-circle me-2 #{ params[:category].present? ? 'btn-info' : 'btn-primary' }" %>
-    <% @categories.each do |category| %>
-      <%= button_to category.name, lotteries_path,
-                    method: :get, params: { category: category.name },
-                    class: "btn me-2 #{ params[:category] == category.name ? 'btn-primary' : 'btn-info' }" %>
-    <% end %>
-  </div>
-
-  <div class="row row-cols-2 g-5 mt-3">
-    <% @items.each do |item| %>
-      <div class="col my-2">
-        <%= link_to lottery_path(item), class: "text-decoration-none" do %>
-          <div class="card shadow h-100">
-            <%= image_tag(item&.image_url || "https://loremflickr.com/300/300", class: "card-img-top w-100", style: "height: 30rem;") %>
-            <div class="card-body">
-              <h5 class="card-title text-center"><%= item.name %></h5>
-            </div>
-          </div>
-        <% end %>
-      </div>
-    <% end %>
-  </div>
-
-  <%= paginate @items %>
-
+<div class="d-flex mt-3">
+  <%= button_to "All", lotteries_path, method: :get, class: "btn rounded-circle me-2 #{ params[:category].present? ? 'btn-info' : 'btn-primary' }" %>
+  <% @categories.each do |category| %>
+    <%= button_to category.name, lotteries_path,
+                  method: :get, params: { category: category.name },
+                  class: "btn me-2 #{ params[:category] == category.name ? 'btn-primary' : 'btn-info' }" %>
+  <% end %>
 </div>
+
+<div class="row row-cols-2 g-5 mt-3">
+  <% @items.each do |item| %>
+    <div class="col my-2">
+      <%= link_to lottery_path(item), class: "text-decoration-none" do %>
+        <div class="card shadow h-100">
+          <%= image_tag(item.image_url, class: "card-img-top w-100", style: "height: 30rem;") if item.image.present? %>
+          <div class="card-body">
+            <h5 class="card-title text-center"><%= item.name %></h5>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>
+
+<%= paginate @items %>

@@ -34,11 +34,9 @@
       </div>
 
       <div class="col-12 field my-2">
-        <%= f.label :batch_count, "Batch Count:", class: "form-label" %>
-        <%= f.number_field :batch_count, class: "form-control w-25" %>
-        <% @item.errors.full_messages_for(:batch_count).uniq.each do |message| %>
-          <div class="text-danger"><%= message %></div>
-        <% end %>
+        <%= f.label :category_ids, "Categories:", class: "form-label me-2" %>
+        <%= f.select :category_ids, Category.all.map { |category| [category.name, category.id] }, {},
+                     data: { placeholder: 'Please select categories' }, multiple: true, class: 'select2 w-100' %>
       </div>
     </div>
 
@@ -75,12 +73,6 @@
             <%= f.label :status, status.humanize, value: status %>
           <% end %>
         </div>
-      </div>
-
-      <div class="col-12 field my-2">
-        <%= f.label :category_ids, "Categories:", class: "form-label me-2" %>
-        <%= f.select :category_ids, Category.all.map { |category| [category.name, category.id] }, {},
-                     data: { placeholder: 'Please select categories' }, multiple: true, class: 'select2 w-100' %>
       </div>
     </div>
 

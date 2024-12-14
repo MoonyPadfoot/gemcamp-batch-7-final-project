@@ -1,18 +1,16 @@
-<div class="container mb-2 pb-5">
-  <%= render 'client/shared/banner' %>
-  <%= render 'client/shared/announcement' %>
+<%= render 'client/shared/banner' %>
+<%= render 'client/shared/announcement' %>
 
-  <% @shares.each do |share| %>
-    <div class="card shadow h-100 mt-3">
-      <div class="row row-cols-2">
-        <div class="col-5">
-          <%= image_tag(share&.picture_url || "https://loremflickr.com/300/300", class: "card-img-top w-100", style: "height: 30rem;") %>
-        </div>
-        <div class="col-7">
-          <div class="fw-bold"><%= share.user.email %></div>
-          <div><%= share.comment %></div>
-        </div>
+<% @shares.each do |share| %>
+  <div class="card shadow h-100 mt-3">
+    <div class="row row-cols-2">
+      <div class="col-5">
+        <%= image_tag(share.picture_url, class: "card-img-top w-100", style: "height: 30rem;") if share.picture.present? %>
+      </div>
+      <div class="col-7">
+        <div class="fw-bold"><%= share.user.email %></div>
+        <div><%= share.comment %></div>
       </div>
     </div>
-  <% end %>
-</div>
+  </div>
+<% end %>

@@ -2,6 +2,10 @@
 @import 'bootstrap-icons/font/bootstrap-icons';
 @import 'select2/dist/css/select2';
 
+.banner {
+  height: 65vh;
+}
+
 .marquee {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   border: 1px solid rgba(0, 0, 0, 0.15);
@@ -11,6 +15,8 @@
   height: 50px;
   width: 100%; /* Full width of its parent */
   white-space: nowrap;
+  border-bottom-right-radius: 5px;
+  border-top-right-radius: 5px;
 }
 
 .marquee p {

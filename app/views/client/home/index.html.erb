@@ -1,37 +1,38 @@
-<div class="container mb-2">
-  <%= render 'client/shared/banner' %>
-  <%= render 'client/shared/announcement' %>
+<%= render 'client/shared/banner' %>
+<%= render 'client/shared/announcement' %>
 
-  <div class="mt-2">
-    <h3><span class="badge text-bg-secondary"><%= t('winners_feedback') %></span></h3>
-    <div class="row row-cols-5 gap-2 mx-1">
-      <% @shares.each do |share| %>
-        <div class="card p-4 w-30 col">
-          <%= image_tag(share&.picture_url, class: "d-block w-100", style: "height: 300px; weight: 300px;") %>
+<div class="mt-2">
+  <h3><span class="badge text-bg-primary"><%= t('winners_feedback') %></span></h3>
+  <div class="row row-cols-lg-5 row-cols-1 gap-2">
+    <% @shares.each do |share| %>
+      <div class="col">
+        <div class="card w-30">
+          <%= image_tag(share.picture_url, class: "img-fluid") if share.image.present? %>
         </div>
-      <% end %>
-      <%= link_to shares_path, class: "col text-decoration-none" do %>
-        <div class="card p-4 w-30 h-100 d-flex justify-content-center align-items-center">
-          <span><%= t('more') %></span>
-        </div>
-      <% end %>
-    </div>
+      </div>
+    <% end %>
 
-    <h3><span class="badge text-bg-secondary mt-2"><%= t('coming_soon') %></span></h3>
-    <div class="row cols-5 gap-2 mx-1">
-      <% @items.each do |item| %>
-        <%= link_to lottery_path(item), class: "col text-decoration-none" do %>
-          <div class="card p-4 w-30 col">
-            <%= image_tag(item&.image_url, class: "d-block w-100", style: "height: 300px; weight: 300px;") %>
-          </div>
-        <% end %>
-      <% end %>
-      <%= link_to lotteries_path, class: "col text-decoration-none" do %>
-        <div class="card p-4 w-30 h-100 d-flex justify-content-center align-items-center">
-          <span><%= t('more') %></span>
-        </div>
-      <% end %>
-    </div>
+    <%= link_to shares_path, class: "col text-decoration-none" do %>
+      <div class="card p-4 w-30 h-100 d-flex justify-content-center align-items-center">
+        <span><%= t('more') %></span>
+      </div>
+    <% end %>
   </div>
 
+  <h3><span class="badge text-bg-primary mt-2"><%= t('coming_soon') %></span></h3>
+  <div class="row row-cols-lg-5 row-cols-1 gap-2">
+    <% @items.each do |item| %>
+      <%= link_to lottery_path(item), class: "col text-decoration-none" do %>
+        <div class="card w-30">
+          <%= image_tag(item&.image_url, class: "img-fluid") %>
+        </div>
+      <% end %>
+    <% end %>
+
+    <%= link_to lotteries_path, class: "col text-decoration-none" do %>
+      <div class="card p-4 w-30 h-100 d-flex justify-content-center align-items-center">
+        <span><%= t('more') %></span>
+      </div>
+    <% end %>
+  </div>
 </div>
