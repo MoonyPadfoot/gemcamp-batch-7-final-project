@@ -21,10 +21,10 @@ class Admin::HomeController < AdminsController
             User.human_attribute_name(:phone_number),
           ]
 
-          @clients.each do |client|
+          User.client.includes(:tickets).each do |client|
             csv << [
               client.parent&.email, client.email, client.total_deposit, client.children.sum(:total_deposit), client.coins,
-              Ticket.includes(:user).where(users: { id: client }).sum(:coins), client.children_members, client.phone_number
+              client.tickets.sum(:coins), client.children_members, client.phone_number
             ]
           end
         end

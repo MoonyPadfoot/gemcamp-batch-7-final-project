@@ -33,7 +33,7 @@ class Admin::OrdersController < AdminsController
             Order.human_attribute_name(:created_at),
           ]
 
-          @orders.each do |order|
+          Order.all.each do |order|
             csv << [
               order.serial_number, order.user.email, order.offer&.name, order.amount, order.coin, order.genre,
               order.state, order.created_at.strftime("%Y/%m/%d %I:%M %p")

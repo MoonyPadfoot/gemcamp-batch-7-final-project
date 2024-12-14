@@ -29,7 +29,7 @@ class Admin::WinnersController < AdminsController
             Winner.human_attribute_name(:created_at),
           ]
 
-          @winners.each do |winner|
+          Winner.all.each do |winner|
             csv << [
               winner.ticket.serial_number, winner.user.email,
               winner.address.nil? ? 'Address not available' :

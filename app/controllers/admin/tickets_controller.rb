@@ -24,7 +24,7 @@ class Admin::TicketsController < AdminsController
             Ticket.human_attribute_name(:created_at),
           ]
 
-          @tickets.each do |ticket|
+          Ticket.all.each do |ticket|
             csv << [
               ticket.item.name, ticket.serial_number, ticket.user.email, ticket.state, ticket.created_at.strftime("%Y/%m/%d %I:%M %p")
             ]

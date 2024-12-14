@@ -23,10 +23,10 @@ class Admin::InvitesController < AdminsController
             User.human_attribute_name(:created_at),
           ]
 
-          @clients.each do |client|
+          User.client.includes(:parent).where.not(parent: { id: nil }).each do |client|
             csv << [
               client.parent&.email, client.email, client.total_deposit, client.children.sum(:total_deposit), client.coins,
-              Ticket.includes(:user).where(users: { id: client }).sum(:coins), client.children_members, client.created_at.strftime("%Y/%m/%d %I:%M %p")
+              client.tickets.sum(:coins), client.children_members, client.created_at.strftime("%Y/%m/%d %I:%M %p")
             ]
           end
         end

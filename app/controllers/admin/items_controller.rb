@@ -25,7 +25,7 @@ class Admin::ItemsController < AdminsController
             "Categories",
           ]
 
-          @items.each do |item|
+          Item.includes(:categories).each do |item|
             csv << [
               item.name, item.image_url, item.status, item.quantity, item.minimum_tickets, item.batch_count,
               item.online_at.strftime("%Y/%m/%d %I:%M %p"), item.offline_at.strftime("%Y/%m/%d %I:%M %p"),
