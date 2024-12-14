@@ -6,13 +6,13 @@
     <% @invitation_histories.each do |invitation_history| %>
       <div class="card shadow p-4 my-2">
         <div>Username:
-          <span class="ms-2 fw-semibold"><%= invitation_history.username %></span>
+          <span class="ms-2 fw-semibold"><%= invitation_history.username || 'N/A' %></span>
         </div>
         <div>Email:
           <span class="ms-2 fw-semibold"><%= invitation_history.email %></span>
         </div>
         <div>Phone Number:
-          <span class="ms-2 fw-semibold"><%= invitation_history.phone_number %></span>
+          <span class="ms-2 fw-semibold"><%= invitation_history.phone_number || 'N/A' %></span>
         </div>
         <div>Joined At:
           <span class="ms-2 fw-semibold"><%= invitation_history.created_at.strftime("%Y/%m/%d %I:%M %p") %></span>

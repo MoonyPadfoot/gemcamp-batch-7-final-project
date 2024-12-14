@@ -15,7 +15,7 @@
     <div class="col my-2">
       <%= link_to lottery_path(item), class: "text-decoration-none" do %>
         <div class="card shadow h-100">
-          <%= image_tag(item.image_url, class: "card-img-top w-100", style: "height: 30rem;") if item.image.present? %>
+          <%= image_tag(item.image_url, class: "card-img-top img-fluid") if item.image.present? %>
           <div class="card-body">
             <h5 class="card-title text-center"><%= item.name %></h5>
           </div>

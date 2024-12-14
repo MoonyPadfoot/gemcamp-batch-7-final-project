@@ -3,11 +3,25 @@
 
 <div class="mt-2">
   <h3><span class="badge text-bg-primary"><%= t('winners_feedback') %></span></h3>
-  <div class="row row-cols-lg-5 row-cols-1 gap-2">
+  <div class="row row-cols-lg-2 row-cols-1">
     <% @shares.each do |share| %>
       <div class="col">
-        <div class="card w-30">
-          <%= image_tag(share.picture_url, class: "img-fluid") if share.picture.present? %>
+        <div class="card">
+          <div class="row g-0">
+            <div class="col-md-4">
+              <%= image_tag(share.picture_url, class: "img-fluid") if share.picture.present? %>
+            </div>
+            <div class="col-md-8 p-4">
+              <div class="d-flex align-items-start gap-3 w-100">
+                <%= image_tag(current_client.image_url, class: "rounded-circle img-fluid profile-img") if current_client.image.present? %>
+                <div class="d-flex flex-column gap-2">
+                  <div>Username: <span class="fw-bold"><%= share.user&.username %></span></div>
+                  <div>Email: <span class="fw-bold"><%= share.user&.email %></span></div>
+                  <div>Comment: <span class="fw-bold"><%= share.comment %></span></div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     <% end %>

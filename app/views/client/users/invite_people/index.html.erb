@@ -6,25 +6,24 @@
   <p><a href="<%= @invite_url %>"><%= @invite_url %></a></p>
 
   <div class="card shadow p-4 mb-2">
-    <h3>Invited Members</h3>
-    <div class="row row-cols-2 mt-2">
+    <h3 class="mb-4">Invited Members</h3>
+
+    <ul class="list-group list-group-horizontal">
       <% @invite_members.each do |invite_member| %>
-        <div class="col">
-          <p><%= invite_member.email %></p>
-        </div>
+        <li class="list-group-item"><%= invite_member.email %></li>
       <% end %>
-    </div>
+    </ul>
   </div>
 
   <%= paginate @invite_members %>
 
   <div class="card shadow p-4">
     <% if @level %>
-      <p>You are currently level <span class="fw-bold"><%= @current_level.level %>!</span> Share
+      <p class="mb-0">You are currently level <span class="fw-bold"><%= @current_level.level %>!</span> Share
         to <span class="fw-bold"><%= pluralize(@level&.required_members, 'friend') %></span> and
         get <span class="fw-bold"><%= pluralize(@level&.coins, 'coin') %></span></p>
     <% else %>
-      <p>You've reached maximum level!</p>
+      <p class="mb-0">You've reached maximum level!</p>
     <% end %>
   </div>
 </div>

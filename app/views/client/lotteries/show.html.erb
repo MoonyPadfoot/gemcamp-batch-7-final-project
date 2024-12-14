@@ -1,7 +1,7 @@
-<div class="card shadow mt-5">
-  <%= image_tag(@item.image_url, class: "card-img-top w-100", style: "height: 35rem;") if @item.image.present? %>
+<div class="card shadow text-center mt-5">
+  <%= image_tag(@item.image_url, class: "card-img-top img_fluid") if @item.image.present? %>
   <div class="card-body px-5 py-4">
-    <h5 class="card-title"><%= @item.name %></h5>
+    <h4 class="card-title"><%= @item.name %></h4>
     <div class="progress" role="progressbar" aria-label="Example with label" aria-valuenow="<%= @ticket_percentage %>" aria-valuemin="0" aria-valuemax="100">
       <div class="progress-bar" style="width: <%= "#{ @ticket_percentage }%" %>"><%= @ticket_percentage %>%</div>
     </div>
@@ -70,15 +70,17 @@
   </div>
 <% end %>
 
-<div class="card shadow">
-  <div class="card-header">
-    <h4>Serial Number</h4>
+<% if @user_tickets.present? %>
+  <div class="card shadow">
+    <div class="card-header">
+      <h4>Serial Number</h4>
+    </div>
+    <ul class="list-group list-group-flush">
+      <% @user_tickets.each do |user_ticket| %>
+        <li class="list-group-item"><%= user_ticket.serial_number %>
+          <% if user_ticket.cancelled? %><span class="badge bg-danger ms-3">cancelled</span>
+          <% end %></li>
+      <% end %>
+    </ul>
   </div>
-  <ul class="list-group list-group-flush">
-    <% @user_tickets.each do |user_ticket| %>
-      <li class="list-group-item"><%= user_ticket.serial_number %>
-        <% if user_ticket.cancelled? %><span class="badge bg-danger ms-3">cancelled</span>
-        <% end %></li>
-    <% end %>
-  </ul>
-</div>
+<% end %>

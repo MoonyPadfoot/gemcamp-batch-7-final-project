@@ -1,5 +1,5 @@
 <% if @banners.present? %>
-  <div id="carouselExample" class="carousel slide w-100">
+  <div id="carousel" class="carousel slide w-100" data-bs-ride="carousel">
     <div class="carousel-inner">
       <% @banners.each_with_index do |banner, index| %>
         <div class="carousel-item <%= 'active' if index == 0 %>">
@@ -7,11 +7,11 @@
         </div>
       <% end %>
     </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+    <button class="carousel-control-prev" type="button" data-bs-target="#carousel" data-bs-slide="prev">
       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Previous</span>
     </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+    <button class="carousel-control-next" type="button" data-bs-target="#carousel" data-bs-slide="next">
       <span class="carousel-control-next-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Next</span>
     </button>
