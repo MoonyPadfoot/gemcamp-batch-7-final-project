@@ -16,7 +16,7 @@ class Client::HomeController < ClientsController
 
     @items = Item.active
     @items = @items.starting
-    @items = @items.limit(8)
+    @items = @items.limit(5)
     @items = @items.order(created_at: :desc)
   end
 end
