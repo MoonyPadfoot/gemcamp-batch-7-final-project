@@ -55,6 +55,8 @@ gem 'faker'
 
 gem 'kaminari'
 
+gem 'normalize-scss', '~> 7.0'
+
 gem 'phonelib'
 
 gem 'rest-client'
