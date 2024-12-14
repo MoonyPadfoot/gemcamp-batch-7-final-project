@@ -34,7 +34,8 @@ class Admin::MemberLevelsController < AdminsController
   end
 
   def destroy
-    if @member_level.destroy
+    if !@member_level.users.exists?
+      @member_level.destroy
       flash[:notice] = 'Member level deleted successfully!'
     else
       flash[:alert] = "Member level in use and can't be deleted"
