@@ -15,6 +15,7 @@ class Client::Users::InvitePeopleController < ClientsController
     @invite_members = User.client.where(parent: current_client)
                           .page(params[:page]).per(10)
 
+    @current_level = current_client.member_level
     @level = MemberLevel.where("id > ?", current_client.member_level).first
   end
 end
