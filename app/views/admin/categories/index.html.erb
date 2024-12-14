@@ -1,30 +1,28 @@
-<div class="container-fluid mt-4">
-  <div class="d-flex justify-content-between">
-    <h1><%= t('activerecord.models.category.other') %></h1>
-    <%= link_to t('buttons.create', model: t('activerecord.models.category.one')), new_category_path, class: "btn btn-success h-100" %>
-  </div>
-  <table class="table table-bordered mt-2">
-    <thead>
-    <tr>
-      <td><%= Category.human_attribute_name(:name) %></td>
-      <td><%= Category.human_attribute_name(:sort) %></td>
-      <td><%= t('actions') %></td>
-    </tr>
-    </thead>
-    <tbody>
-    <% @categories.each do |category| %>
-      <tr>
-        <td class="text-nowrap"><%= category.name %></td>
-        <td class="text-center"><%= category.sort %></td>
-        <td class="text-nowrap p-2">
-          <div class="d-flex justify-content-start">
-            <%= link_to t('buttons.edit'), edit_category_path(category), class: "btn btn-sm btn-warning me-2" %>
-            <%= button_to t('buttons.delete'), category_path(category), method: :delete, class: "btn btn-sm btn-danger" %>
-          </div>
-        </td>
-      </tr>
-    <% end %>
-    </tbody>
-  </table>
-  <%= paginate @categories %>
+<div class="d-flex justify-content-between">
+  <h1><%= t('activerecord.models.category.other') %></h1>
+  <%= link_to t('buttons.create', model: t('activerecord.models.category.one')), new_category_path, class: "btn btn-success h-100" %>
 </div>
+<table class="table table-bordered mt-2">
+  <thead>
+  <tr>
+    <td><%= Category.human_attribute_name(:name) %></td>
+    <td><%= Category.human_attribute_name(:sort) %></td>
+    <td><%= t('actions') %></td>
+  </tr>
+  </thead>
+  <tbody>
+  <% @categories.each do |category| %>
+    <tr>
+      <td class="text-nowrap"><%= category.name %></td>
+      <td class="text-center"><%= category.sort %></td>
+      <td class="text-nowrap p-2">
+        <div class="d-flex justify-content-start">
+          <%= link_to t('buttons.edit'), edit_category_path(category), class: "btn btn-sm btn-warning me-2" %>
+          <%= button_to t('buttons.delete'), category_path(category), method: :delete, class: "btn btn-sm btn-danger" %>
+        </div>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+<%= paginate @categories %>

@@ -15,7 +15,7 @@
     <div class="col my-2">
       <%= link_to shop_path(offer), class: "text-decoration-none" do %>
         <div class="card shadow h-100">
-          <%= image_tag(offer.image_url, class: "card-img-top w-100", style: "height: 30rem;") if offer.image.present? %>
+          <%= image_tag(offer.image_url || "https://via.placeholder.com/150", class: "card-img-top w-100", style: "height: 30rem;") %>
           <div class="card-body text-center">
             <h5 class="card-title"><%= offer.name %></h5>
             <h1 class="fw-bold"><%= offer.coin %> coin(s)</h1>

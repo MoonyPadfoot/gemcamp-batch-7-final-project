@@ -1,6 +1,6 @@
 <div class="card shadow px-4 pt-5 pb-4">
   <div class="d-flex align-items-start gap-3 mb-4">
-    <%= image_tag(current_client.image_url, class: "rounded-circle img-fluid profile-img") if current_client.image.present? %>
+    <%= image_tag(current_client&.image_url || "https://via.placeholder.com/150", class: "rounded-circle img-fluid profile-img") %>
     <div class="d-flex flex-column gap-2">
       <div>Username: <span class="fw-bold"><%= current_client&.username %></span></div>
       <div>Email: <span class="fw-bold"><%= current_client&.email %></span></div>

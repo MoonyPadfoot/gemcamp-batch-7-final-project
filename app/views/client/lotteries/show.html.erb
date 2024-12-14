@@ -1,5 +1,5 @@
 <div class="card shadow text-center mt-5">
-  <%= image_tag(@item.image_url, class: "card-img-top img_fluid") if @item.image.present? %>
+  <%= image_tag(@item.image_url || "https://via.placeholder.com/150", class: "card-img-top img_fluid") %>
   <div class="card-body px-5 py-4">
     <h4 class="card-title"><%= @item.name %></h4>
     <div class="progress" role="progressbar" aria-label="Example with label" aria-valuenow="<%= @ticket_percentage %>" aria-valuemin="0" aria-valuemax="100">

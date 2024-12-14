@@ -9,11 +9,11 @@
         <div class="card">
           <div class="row g-0">
             <div class="col-md-4">
-              <%= image_tag(share.picture_url, class: "img-fluid") if share.picture.present? %>
+              <%= image_tag(share.picture_url || "https://via.placeholder.com/150", class: "img-fluid") %>
             </div>
             <div class="col-md-8 p-4">
               <div class="d-flex align-items-start gap-3 w-100">
-                <%= image_tag(current_client.image_url, class: "rounded-circle img-fluid profile-img") if current_client.image.present? %>
+                <%= image_tag(current_client&.image_url || "https://via.placeholder.com/150", class: "rounded-circle img-fluid profile-img") %>
                 <div class="d-flex flex-column gap-2">
                   <div>Username: <span class="fw-bold"><%= share.user&.username %></span></div>
                   <div>Email: <span class="fw-bold"><%= share.user&.email %></span></div>
@@ -38,7 +38,7 @@
     <% @items.each do |item| %>
       <%= link_to lottery_path(item), class: "col text-decoration-none" do %>
         <div class="card w-30">
-          <%= image_tag(item.image_url, class: "img-fluid") if item.image.present? %>
+          <%= image_tag(item.image_url || "https://via.placeholder.com/150", class: "img-fluid") %>
         </div>
       <% end %>
     <% end %>

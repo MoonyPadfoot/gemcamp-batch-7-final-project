@@ -3,7 +3,7 @@
     <div class="carousel-inner">
       <% @banners.each_with_index do |banner, index| %>
         <div class="carousel-item <%= 'active' if index == 0 %>">
-          <%= image_tag(banner.preview_url, class: "d-block w-100 img-fluid banner") %>
+          <%= image_tag(banner.preview_url || "https://via.placeholder.com/150", class: "d-block w-100 img-fluid banner") %>
         </div>
       <% end %>
     </div>

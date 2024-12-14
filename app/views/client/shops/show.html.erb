@@ -1,5 +1,5 @@
 <div class="card shadow mt-5">
-  <%= image_tag(@offer.image_url, class: "card-img-top w-100", style: "height: 35rem;") if @offer.image.present? %>
+  <%= image_tag(@offer.image_url || "https://via.placeholder.com/150", class: "card-img-top w-100", style: "height: 35rem;") %>
   <div class="card-body px-5 py-4 text-center">
     <h5 class="card-title"><%= @offer.name %></h5>
     <h1 class="fw-bolder"><%= @offer.coin %> Coin(s)</h1>
