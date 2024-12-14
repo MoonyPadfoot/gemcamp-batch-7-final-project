@@ -23,8 +23,8 @@
       <tr>
         <td class="text-nowrap"><%= client.parent&.email || 'N/A' %></td>
         <td class="text-nowrap"><%= client.email %></td>
-        <td class="text-nowrap text-end"><%= client.total_deposit %></td>
-        <td class="text-nowrap text-end"><%= client.children.sum(:total_deposit) %></td>
+        <td class="text-nowrap text-end"><%= number_to_currency(client.total_deposit, :unit => "P ", :separator => ".", :delimiter => ",") %></td>
+        <td class="text-nowrap text-end"><%= number_to_currency(client.children.sum(:total_deposit), :unit => "P ", :separator => ".", :delimiter => ",") %></td>
         <td class="text-nowrap text-center"><%= client.coins %></td>
         <td class="text-nowrap text-center"><%= Ticket.includes(:user).where(users: { id: client }).sum(:coins) %></td>
         <td class="text-nowrap text-center"><%= client.member_level.level %></td>

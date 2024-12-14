@@ -9,7 +9,7 @@
           <span class="ms-2 fw-semibold"><%= order_history.serial_number %></span>
         </div>
         <div>Amount:
-          <span class="ms-2 fw-semibold"><%= order_history.amount %></span>
+          <span class="ms-2 fw-semibold"><%= number_to_currency(order_history.amount, :unit => "P ", :separator => ".", :delimiter => ",") %></span>
         </div>
         <div>Coins:
           <span class="ms-2 fw-semibold"><%= order_history.coin %></span>

@@ -51,10 +51,10 @@
             when 'remove_published' then 'bg-danger'
             end
           %>"><%= winner.state %></span></td>
-          <td class="text-nowrap text-end"><%= winner.price %></td>
+          <td class="text-nowrap text-end"><%= number_to_currency(winner.price, :unit => "P ", :separator => ".", :delimiter => ",") %></td>
           <td class="text-nowrap"><%= winner.paid_at&.strftime("%Y/%m/%d %I:%M %p") %></td>
           <td class="text-nowrap"><%= winner.admin&.email %></td>
-          <td><%= image_tag(winner.picture_url, style: "width: 50px; height: 50px;") if winner.picture_url.present? %></td>
+          <td><%= image_tag(winner.picture_url, style: "width: 50px; height: 50px;") if winner.picture.present? %></td>
           <td><%= winner.comment %></td>
           <td class="text-nowrap">
             <div class="d-flex justify-content-start">

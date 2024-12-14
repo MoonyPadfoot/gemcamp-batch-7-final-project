@@ -19,7 +19,7 @@
           <div class="card-body text-center">
             <h5 class="card-title"><%= offer.name %></h5>
             <h1 class="fw-bold"><%= offer.coin %> coin(s)</h1>
-            <span class="fw-bold"><%= offer.amount %></span>
+            <span class="fw-bold"><%= number_to_currency(offer.amount, :unit => "P ", :separator => ".", :delimiter => ",") %></span>
           </div>
         </div>
       <% end %>

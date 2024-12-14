@@ -23,7 +23,7 @@
         <td class="text-nowrap"><%= order.serial_number %></td>
         <td class="text-nowrap"><%= order.user.email %></td>
         <td class="text-nowrap"><%= order.offer&.name %></td>
-        <td class="text-nowrap text-end"><%= order.amount %></td>
+        <td class="text-nowrap text-end"><%= number_to_currency(order.amount, :unit => "P ", :separator => ".", :delimiter => ",") %></td>
         <td class="text-nowrap text-center"><%= order.coin %></td>
         <td class="text-nowrap"><span class="badge <%=
           case order.genre

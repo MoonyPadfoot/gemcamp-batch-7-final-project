@@ -7,7 +7,7 @@
     <% @shares.each do |share| %>
       <div class="col">
         <div class="card w-30">
-          <%= image_tag(share.picture_url, class: "img-fluid") if share.image.present? %>
+          <%= image_tag(share.picture_url, class: "img-fluid") if share.picture.present? %>
         </div>
       </div>
     <% end %>
@@ -24,7 +24,7 @@
     <% @items.each do |item| %>
       <%= link_to lottery_path(item), class: "col text-decoration-none" do %>
         <div class="card w-30">
-          <%= image_tag(item&.image_url, class: "img-fluid") %>
+          <%= image_tag(item.image_url, class: "img-fluid") if item.image.present? %>
         </div>
       <% end %>
     <% end %>

@@ -22,12 +22,12 @@
     <% @offers.each do |offer| %>
       <tr>
         <td class="text-nowrap"><%= offer.name %></td>
-        <td class="text-nowrap text-center"><%= image_tag(offer.image_url, style: 'width: 50px; height: 50px;') if offer.image_url.present? %></td>
+        <td class="text-nowrap text-center"><%= image_tag(offer.image_url, style: 'width: 50px; height: 50px;') if offer.image.present? %></td>
         <td class="text-center"><span class="badge bg-primary"><%= offer.genre %></span></td>
         <td class="text-nowrap text-center">
           <span class="<%= "badge #{offer.status == 'active' ? 'bg-primary' : 'bg-danger' }" %>"><%= offer.status %></span>
         </td>
-        <td class="text-nowrap text-end"><%= offer.amount %></td>
+        <td class="text-nowrap text-end"><%= number_to_currency(offer.amount, :unit => "P ", :separator => ".", :delimiter => ",") %></td>
         <td class="text-nowrap text-center"><%= offer.coin %></td>
         <td class="text-nowrap p-2">
           <div class="d-flex justify-content-start">
