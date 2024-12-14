@@ -11,6 +11,6 @@ class NewsTicker < ApplicationRecord
   scope :filter_by_status, -> { where(status: :active) }
 
   def destroy
-    update(deleted_at: Time.now)
+    update(deleted_at: Time.current)
   end
 end

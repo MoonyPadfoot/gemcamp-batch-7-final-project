@@ -91,7 +91,7 @@ class Item < ApplicationRecord
     @ticket_losers.each { |ticket| ticket.lose! if ticket.may_lose? }
 
     @winner = Winner.create!(item: @ticket_winner.item, user: @ticket_winner.user, ticket: @ticket_winner,
-                             admin: admin_id, item_batch_count: @ticket_winner.batch_count, paid_at: Time.now)
+                             admin: admin_id, item_batch_count: @ticket_winner.batch_count, paid_at: Time.current)
   end
 
   private

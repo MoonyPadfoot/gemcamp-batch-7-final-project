@@ -3,14 +3,14 @@ class Client::Users::MeController < ClientsController
 
   def order_history
     @order_histories = Order.includes(:user)
-    @order_histories = @order_histories.where(users: { id: current_client.id })
+    @order_histories = @order_histories.where(users: current_client)
     @order_histories = @order_histories.order(created_at: :desc)
     @order_histories = @order_histories.page(params[:page]).per(10)
   end
 
   def lottery_history
     @lottery_histories = Ticket.includes(:user)
-    @lottery_histories = @lottery_histories.where(users: { id: current_client.id })
+    @lottery_histories = @lottery_histories.where(users: current_client)
     @lottery_histories = @lottery_histories.order(created_at: :desc)
     @lottery_histories = @lottery_histories.page(params[:page]).per(10)
   end
@@ -22,7 +22,7 @@ class Client::Users::MeController < ClientsController
 
   def invitation_history
     @invitation_histories = User.client.includes(:children)
-    @invitation_histories = @invitation_histories.where(parent_id: current_client.id)
+    @invitation_histories = @invitation_histories.where(parent: current_client)
     @invitation_histories = @invitation_histories.order(created_at: :desc)
     @invitation_histories = @invitation_histories.page(params[:page]).per(10)
   end
@@ -63,14 +63,13 @@ class Client::Users::MeController < ClientsController
 
   def get_addresses
     @addresses = Client::Address.includes(:user)
-    @addresses = @addresses.where(users: { id: current_client.id })
+    @addresses = @addresses.where(users: current_client)
     @addresses = @addresses.order(is_default: :desc)
   end
 
   def get_winning_histories
     @winning_histories = Winner.includes(:user)
-    @winning_histories = @winning_histories.includes(:ticket)
-    @winning_histories = @winning_histories.where(users: { id: current_client.id }, tickets: { state: :won })
+    @winning_histories = @winning_histories.where(users: current_client)
     @winning_histories = @winning_histories.order(created_at: :desc)
     @winning_histories = @winning_histories.page(params[:page]).per(10)
   end

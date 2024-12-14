@@ -37,7 +37,7 @@ class Ticket < ApplicationRecord
   private
 
   def assign_serial_number
-    number_count = Ticket.includes(:item).where(batch_count: batch_count, items: { id: item.id }).count
+    number_count = Ticket.includes(:item).where(batch_count: batch_count, items: item).count
     self.serial_number = "#{Time.current.strftime("%Y%m%d")}-#{item.id}-#{item.batch_count}-#{number_count.to_s.rjust(4, '0')}"
     save
   end

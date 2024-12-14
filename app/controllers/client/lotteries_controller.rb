@@ -22,9 +22,9 @@ class Client::LotteriesController < ClientsController
   def show
     @ticket = Ticket.new
 
-    ticket_count = Ticket.includes(:item).where(batch_count: @item.batch_count, items: { id: @item.id }).count
+    ticket_count = Ticket.includes(:item).where(batch_count: @item.batch_count, items: @item).count
     @ticket_percentage = ticket_count.to_f / @item.minimum_tickets * 100
-    @user_tickets = Ticket.includes(:item).where(user: current_client, batch_count: @item.batch_count, items: { id: @item.id })
+    @user_tickets = Ticket.includes(:item).where(user: current_client, batch_count: @item.batch_count, items: @item)
   end
 
   private

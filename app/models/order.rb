@@ -77,7 +77,7 @@ class Order < ApplicationRecord
   private
 
   def assign_serial_number
-    number_count = Order.includes(:user).where(users: { id: user.id }).count
+    number_count = Order.includes(:user).where(users: user).count
     self.serial_number = "#{Time.current.strftime("%Y%m%d")}-#{id}-#{user.id}-#{number_count.to_s.rjust(4, '0')}"
     save
   end
@@ -103,7 +103,7 @@ class Order < ApplicationRecord
 
   def validate_monthly_offer
     if Order.where(user: user, offer: offer)
-            .where(created_at: Time.now.beginning_of_month..Time.now.end_of_month)
+            .where(created_at: Time.current.beginning_of_month..Time.current.end_of_month)
             .where.not(state: :cancelled)
             .exists?
       errors.add(:base, "You can only purchase this monthly offer once per month.")
@@ -112,7 +112,7 @@ class Order < ApplicationRecord
 
   def validate_weekly_offer
     if Order.where(user: user, offer: offer)
-            .where(created_at: Time.now.beginning_of_week..Time.now.end_of_week)
+            .where(created_at: Time.current.beginning_of_week..Time.current.end_of_week)
             .where.not(state: :cancelled)
             .exists?
       errors.add(:base, message: "You can only purchase this weekly offer once per week.")
@@ -121,7 +121,7 @@ class Order < ApplicationRecord
 
   def validate_daily_offer
     if Order.where(user: user, offer: offer)
-            .where(created_at: Time.now.beginning_of_day..Time.now.end_of_day)
+            .where(created_at: Time.current.beginning_of_day..Time.current.end_of_day)
             .where.not(state: :cancelled)
             .exists?
       errors.add(:base, "You can only purchase this daily offer once per day.")
