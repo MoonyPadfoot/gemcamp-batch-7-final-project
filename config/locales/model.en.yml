@@ -1,6 +1,7 @@
 en:
   choose_language: Choose Language
   coins: Coins
+  Coins: Coins
   claim: Claim
   announcement: "Announcement:"
   winners_feedback: Winner's Feedback
@@ -15,6 +16,9 @@ en:
     save: "Save %{model}"
     edit: Edit
     delete: Delete
+    cash_in_now: Cash In Now
+    profile: My Profile
+    logout: Logout
   activerecord:
     models:
       category:
@@ -38,3 +42,14 @@ en:
       category:
         name: Name
         sort: Sort
+  flash:
+    categories:
+      create:
+        success: "Category created successfully!"
+        failure: "Category creation failed. Please try again."
+      update:
+        success: "Category updated successfully!"
+        failure: "Category update failed."
+      destroy:
+        success: "Category deleted successfully!"
+        failure: "Category in use and can't be deleted"

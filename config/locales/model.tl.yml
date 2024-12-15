@@ -1,6 +1,7 @@
 tl:
   choose_language: Pumili ng Wika
   coins: Barya
+  Coins: Barya
   claim: Kunin
   announcement: "Anunsyo:"
   winners_feedback: Puna ng mga Nanalo
@@ -15,6 +16,9 @@ tl:
     save: "I-save ang %{model}"
     edit: Palitan
     delete: Burahin
+    cash_in_now: Mag Cash In Ngayon
+    profile: Aking Profayl
+    logout: Mag Logout
   activerecord:
     models:
       category:
@@ -38,9 +42,24 @@ tl:
       category:
         name: Pangalan
         sort: Uri
+  flash:
+    categories:
+      create:
+        success: "Matagumpay na nalikha ang kategorya!"
+        failure: "Nabigo ang paggawa ng kategorya. Pakisubukang muli."
+      update:
+        success: "Matagumpay na na-update ang kategorya!"
+        failure: "Nabigo ang pag-update ng kategorya."
+      destroy:
+        success: "Matagumpay na natanggal ang kategorya!"
+        failure: "Kategorya ay ginagamit at hindi matatanggal."
   errors:
     messages:
       blank: "ay hindi maaring maging blanko"
+  devise:
+    sessions:
+      signed_out: "Matagumpay na nag-sign out."
+      signed_in: "Matagumpay na nag-sign in."
   views:
     pagination:
       first: "&laquo; Una"

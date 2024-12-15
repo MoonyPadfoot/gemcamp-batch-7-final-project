@@ -14,10 +14,10 @@ class Admin::CategoriesController < AdminsController
     @category = Category.new(category_params)
 
     if @category.save
-      flash[:notice] = 'Category created successfully!'
+      flash[:notice] = t('flash.categories.create.success')
       redirect_to categories_path
     else
-      flash.now[:alert] = 'Category creation failed'
+      flash.now[:alert] = t('flash.categories.create.failure')
       render :new, status: :unprocessable_entity
     end
   end
@@ -26,10 +26,10 @@ class Admin::CategoriesController < AdminsController
 
   def update
     if @category.update(category_params)
-      flash[:notice] = 'Category updated successfully!'
+      flash[:notice] = t('flash.categories.update.success')
       redirect_to categories_path
     else
-      flash.now[:alert] = 'Category update failed'
+      flash.now[:alert] = t('flash.categories.update.failure')
       render :new, status: :unprocessable_entity
     end
   end
@@ -37,9 +37,9 @@ class Admin::CategoriesController < AdminsController
   def destroy
     if !@category.items.exists?
       @category.destroy
-      flash[:notice] = 'Category deleted successfully!'
+      flash[:notice] = t('flash.categories.destroy.success')
     else
-      flash[:alert] = "Category in use and can't be deleted"
+      flash[:alert] = t('flash.categories.destroy.failure')
     end
     redirect_to categories_path
   end

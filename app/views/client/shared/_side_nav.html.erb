@@ -18,14 +18,14 @@
         <div class="d-flex flex-column gap-2 w-100">
           <div>Username: <span class="fw-bold"><%= current_client&.username %></span></div>
           <div>Email: <span class="fw-bold"><%= current_client&.email %></span></div>
-          <div> <%= 'Coin'.pluralize(@current_client&.coins) %>: <span class="fw-bold"><%= current_client&.coins %></span>
+          <div> <%= t('Coin'.pluralize(@current_client&.coins)) %>: <span class="fw-bold"><%= current_client&.coins %></span>
           </div>
         </div>
       </div>
       <div class="d-flex flex-column w-100 gap-2">
-        <%= link_to "Cash In Now", shops_path, class: "btn btn-primary" %>
-        <%= link_to "My Profile", me_index_path, class: "btn btn-primary" %>
-        <%= button_to 'Logout', destroy_client_session_path, method: :delete, form: { data: { turbo_confirm: 'Are you sure?' } }, class: "btn btn-danger w-100" %>
+        <%= link_to t('buttons.cash_in_now'), shops_path, class: "btn btn-primary" %>
+        <%= link_to t('buttons.profile'), me_index_path, class: "btn btn-primary" %>
+        <%= button_to t('buttons.logout'), destroy_client_session_path, method: :delete, form: { data: { turbo_confirm: 'Are you sure?' } }, class: "btn btn-danger w-100" %>
       </div>
     </div>
   <% end %>
