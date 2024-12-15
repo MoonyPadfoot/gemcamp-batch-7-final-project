@@ -11,6 +11,15 @@
   width: 100px;
 }
 
+.input-group {
+  .input-group-text {
+    display: inline-block;
+  }
+  .field_with_errors {
+    flex-grow: 1
+  }
+}
+
 .marquee {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   border: 1px solid rgba(0, 0, 0, 0.15);
