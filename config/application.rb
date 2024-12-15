@@ -27,7 +27,7 @@ module App
     #
     # These settings can be overridden in specific environments using the files
     # in config/environments, which are processed later.
-    #
+    Time::DATE_FORMATS.merge!(default: '%Y/%m/%d %I:%M %p', ymd: '%Y/%m/%d', file: '%Y%m%d%H%M%S')
     # config.time_zone = "Central Time (US & Canada)"
     config.time_zone = 'Singapore'
     # config.eager_load_paths << Rails.root.join("extras")

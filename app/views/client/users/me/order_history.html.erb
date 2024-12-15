@@ -9,22 +9,17 @@
           <span class="ms-2 fw-semibold"><%= order_history.serial_number %></span>
         </div>
         <div>Amount:
-          <span class="ms-2 fw-semibold"><%= number_to_currency(order_history.amount, :unit => "P ", :separator => ".", :delimiter => ",") %></span>
+          <span class="ms-2 fw-semibold"><%= format_to_currency(order_history.amount) %></span>
         </div>
         <div>Coins:
           <span class="ms-2 fw-semibold"><%= order_history.coin %></span>
         </div>
         <div>Created At:
-          <span class="ms-2 fw-semibold"><%= order_history.created_at.strftime("%Y/%m/%d %I:%M %p") %></span>
+          <span class="ms-2 fw-semibold"><%= order_history.created_at.to_fs %></span>
         </div>
         <div>State:
           <span class="badge <%=
-            case order_history.state
-            when 'pending' then 'bg-primary'
-            when 'submitted' then 'bg-info'
-            when 'cancelled' then 'bg-secondary'
-            when 'paid' then 'bg-success'
-            end
+            badge_class_for_order_history(order_history.state)
           %> ms-2 fw-semibold"><%= order_history.state %></span>
         </div>
 

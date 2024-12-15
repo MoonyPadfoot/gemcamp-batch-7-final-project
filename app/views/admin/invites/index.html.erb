@@ -22,13 +22,13 @@
     <tr>
       <td class="text-nowrap"><%= client.parent&.email || 'N/A' %></td>
       <td class="text-nowrap"><%= client.email %></td>
-      <td class="text-nowrap text-end"><%= number_to_currency(client.total_deposit, :unit => "P ", :separator => ".", :delimiter => ",") %></td>
-      <td class="text-nowrap text-end"><%= number_to_currency(client.children.sum(:total_deposit), :unit => "P ", :separator => ".", :delimiter => ",") %></td>
+      <td class="text-nowrap text-end"><%= format_to_currency(client.total_deposit) %></td>
+      <td class="text-nowrap text-end"><%= format_to_currency(client.children.sum(:total_deposit)) %></td>
       <td class="text-nowrap text-center"><%= client.coins %></td>
       <td class="text-nowrap text-center"><%= client.tickets.sum(:coins) %></td>
       <td class="text-nowrap text-center"><%= client.member_level.level %></td>
       <td class="text-nowrap text-center"><%= client.children_members %></td>
-      <td class="text-nowrap"><%= client.created_at.strftime("%Y/%m/%d %I:%M %p") %></td>
+      <td class="text-nowrap"><%= client.created_at.to_fs %></td>
     </tr>
   <% end %>
   </tbody>

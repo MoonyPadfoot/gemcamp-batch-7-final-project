@@ -20,8 +20,8 @@
       <td class="text-nowrap">
         <span class="<%= "badge #{banner.status == 'active' ? 'bg-primary' : 'bg-danger' }" %>"><%= banner.status %></span>
       </td>
-      <td class="text-nowrap"><%= banner.online_at.strftime("%Y/%m/%d %I:%M %p") %></td>
-      <td class="text-nowrap"><%= banner.offline_at.strftime("%Y/%m/%d %I:%M %p") %></td>
+      <td class="text-nowrap"><%= banner.online_at.to_fs %></td>
+      <td class="text-nowrap"><%= banner.offline_at.to_fs %></td>
       <td class="text-center"><%= banner.sort %></td>
       <td class="text-nowrap p-2">
         <div class="d-flex justify-content-start">

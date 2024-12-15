@@ -12,16 +12,11 @@
           <span class="ms-2 fw-semibold"><%= lottery_history.serial_number %></span>
         </div>
         <div>Created At:
-          <span class="ms-2 fw-semibold"><%= lottery_history.created_at.strftime("%Y/%m/%d %I:%M %p") %></span>
+          <span class="ms-2 fw-semibold"><%= lottery_history.created_at.to_fs %></span>
         </div>
         <div>State:
           <span class="badge <%=
-            case lottery_history.state
-            when 'won' then 'bg-success'
-            when 'lost' then 'bg-danger'
-            when 'cancelled' then 'bg-secondary'
-            else 'bg-primary'
-            end
+            badge_class_for_lottery_history(lottery_history.state)
           %> ms-2 fw-semibold"><%= lottery_history.state %></span>
         </div>
       </div>

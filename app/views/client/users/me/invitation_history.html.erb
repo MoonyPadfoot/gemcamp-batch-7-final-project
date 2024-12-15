@@ -15,7 +15,7 @@
           <span class="ms-2 fw-semibold"><%= invitation_history.phone_number || 'N/A' %></span>
         </div>
         <div>Joined At:
-          <span class="ms-2 fw-semibold"><%= invitation_history.created_at.strftime("%Y/%m/%d %I:%M %p") %></span>
+          <span class="ms-2 fw-semibold"><%= invitation_history.created_at.to_fs %></span>
         </div>
       </div>
     <% end %>

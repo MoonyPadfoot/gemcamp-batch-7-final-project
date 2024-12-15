@@ -37,21 +37,10 @@
           <% end %>
         </td>
         <td class="text-nowrap text-center"><%= winner.item_batch_count %></td>
-        <td class="text-nowrap text-center"><span class="badge <%=
-          case winner.state
-          when 'won' then 'bg-success'
-          when 'claimed' then 'bg-success'
-          when 'paid' then 'bg-primary'
-          when 'shipped' then 'bg-warning'
-          when 'submitted' then 'bg-primary'
-          when 'delivered' then 'bg-info'
-          when 'published' then 'bg-secondary'
-          when 'shared' then 'bg-dark'
-          when 'remove_published' then 'bg-danger'
-          end
+        <td class="text-nowrap text-center"><span class="badge <%= badge_class_for_winners_state(winner.state)
         %>"><%= winner.state %></span></td>
-        <td class="text-nowrap text-end"><%= number_to_currency(winner.price, :unit => "P ", :separator => ".", :delimiter => ",") %></td>
-        <td class="text-nowrap"><%= winner.paid_at&.strftime("%Y/%m/%d %I:%M %p") %></td>
+        <td class="text-nowrap text-end"><%= format_to_currency(winner.price) %></td>
+        <td class="text-nowrap"><%= winner.paid_at&.to_fs %></td>
         <td class="text-nowrap"><%= winner.admin&.email %></td>
         <td><%= image_tag(winner.picture_url || "https://via.placeholder.com/150", style: "width: 50px; height: 50px;") %></td>
         <td><%= winner.comment %></td>

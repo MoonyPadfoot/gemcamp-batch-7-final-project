@@ -33,9 +33,9 @@
       <td class=" text-nowrap"><%= item.quantity %></td>
       <td class="text-nowrap text-center"><%= item.minimum_tickets %></td>
       <td class="text-nowrap text-center"><%= item.batch_count %></td>
-      <td class="text-nowrap"><%= item.online_at.strftime("%Y/%m/%d %I:%M %p") %></td>
-      <td class="text-nowrap"><%= item.offline_at.strftime("%Y/%m/%d %I:%M %p") %></td>
-      <td class="text-nowrap"><%= item.start_at.strftime("%Y/%m/%d %I:%M %p") %></td>
+      <td class="text-nowrap"><%= item.online_at.to_fs %></td>
+      <td class="text-nowrap"><%= item.offline_at.to_fs %></td>
+      <td class="text-nowrap"><%= item.start_at.to_fs %></td>
       <td>
         <% item.categories.each do |category| %>
           <span class="badge bg-primary"><%= category.name %></span>

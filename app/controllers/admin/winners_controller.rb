@@ -1,5 +1,6 @@
 class Admin::WinnersController < AdminsController
   require 'csv'
+  helper :winners
 
   before_action :set_winner, only: [:submit, :pay, :ship, :deliver, :publish, :remove_publish]
 
@@ -34,12 +35,12 @@ class Admin::WinnersController < AdminsController
               winner.ticket.serial_number, winner.user.email,
               winner.address.nil? ? 'Address not available' :
                 "#{winner.address.street_address}, #{winner.address.barangay.name}, #{winner.address.city.name} City, #{winner.address.province.name}",
-              winner.item_batch_count, winner.state, winner.price, winner.paid_at&.strftime("%Y/%m/%d %I:%M %p"),
-              winner.admin&.email, winner&.picture_url, winner.comment, winner.created_at.strftime("%Y/%m/%d %I:%M %p")
+              winner.item_batch_count, winner.state, winner.price, winner.paid_at&.to_fs,
+              winner.admin&.email, winner&.picture_url, winner.comment, winner.created_at.to_fs
             ]
           end
         end
-        filename = "winners_report_#{Time.current.strftime('%Y%m%d%H%M%S')}.csv"
+        filename = "winners_report_#{Time.current.to_fs(:file)}.csv"
 
         send_data csv_string, filename: filename, type: 'text/csv', disposition: 'attachment'
       }

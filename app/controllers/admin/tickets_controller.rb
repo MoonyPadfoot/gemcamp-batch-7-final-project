@@ -1,5 +1,6 @@
 class Admin::TicketsController < AdminsController
   require 'csv'
+  helper :tickets
 
   before_action :set_ticket, only: :cancel
 
@@ -26,11 +27,11 @@ class Admin::TicketsController < AdminsController
 
           Ticket.all.each do |ticket|
             csv << [
-              ticket.item.name, ticket.serial_number, ticket.user.email, ticket.state, ticket.created_at.strftime("%Y/%m/%d %I:%M %p")
+              ticket.item.name, ticket.serial_number, ticket.user.email, ticket.state, ticket.created_at.to_fs
             ]
           end
         end
-        filename = "tickets_report_#{Time.current.strftime('%Y%m%d%H%M%S')}.csv"
+        filename = "tickets_report_#{Time.current.to_fs(:file)}.csv"
 
         send_data csv_string, filename: filename, type: 'text/csv', disposition: 'attachment'
       }

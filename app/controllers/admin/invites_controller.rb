@@ -26,11 +26,11 @@ class Admin::InvitesController < AdminsController
           User.client.includes(:parent).where.not(parent: { id: nil }).each do |client|
             csv << [
               client.parent&.email, client.email, client.total_deposit, client.children.sum(:total_deposit), client.coins,
-              client.tickets.sum(:coins), client.children_members, client.created_at.strftime("%Y/%m/%d %I:%M %p")
+              client.tickets.sum(:coins), client.children_members, client.created_at.to_fs
             ]
           end
         end
-        filename = "invites_report_#{Time.current.strftime('%Y%m%d%H%M%S')}.csv"
+        filename = "invites_report_#{Time.current.to_fs(:file)}.csv"
 
         send_data csv_string, filename: filename, type: 'text/csv', disposition: 'attachment'
       }

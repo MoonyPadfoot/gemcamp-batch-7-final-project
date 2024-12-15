@@ -1,4 +1,5 @@
 class Client::Users::MeController < ClientsController
+  helper :me
   def index; end
 
   def order_history

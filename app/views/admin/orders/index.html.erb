@@ -22,25 +22,13 @@
       <td class="text-nowrap"><%= order.serial_number %></td>
       <td class="text-nowrap"><%= order.user.email %></td>
       <td class="text-nowrap"><%= order.offer&.name %></td>
-      <td class="text-nowrap text-end"><%= number_to_currency(order.amount, :unit => "P ", :separator => ".", :delimiter => ",") %></td>
+      <td class="text-nowrap text-end"><%= format_to_currency(order.amount) %></td>
       <td class="text-nowrap text-center"><%= order.coin %></td>
       <td class="text-nowrap"><span class="badge <%=
-        case order.genre
-        when 'deposit' then 'bg-primary'
-        when 'increase' then 'bg-success'
-        when 'deduct' then 'bg-danger'
-        when 'bonus' then 'bg-info'
-        when 'member_level' then 'bg-dark'
-        when 'share' then 'bg-warning'
-        end
+        badge_class_for_orders_genre(order.genre)
       %>"><%= order.genre %></span></td>
       <td class="text-nowrap"><span class="badge <%=
-        case order.state
-        when 'pending' then 'bg-primary'
-        when 'submitted' then 'bg-info'
-        when 'cancelled' then 'bg-secondary'
-        when 'paid' then 'bg-success'
-        end
+        badge_class_for_orders_state(order.state)
       %>"><%= order.state %></span></td>
       <td class="text-nowrap"><%= order.created_at.strftime("%Y/%m/%d %I:%M %p") %></td>
       <td class="text-nowrap p-2">
@@ -57,9 +45,9 @@
 <%= paginate @orders %>
 
 <div class="ms-auto w-25 d-flex justify-content-end gap-5 text-nowrap">
-  <div>Amount Subtotal <h3 class="fw-bold text-end"><%= @subtotal_amount %></h3></div>
-  <div>Amount Total <h3 class="fw-bold text-end"><%= @total_amount %></h3></div>
-  <div>Coins Subtotal <h3 class="fw-bold text-end"><%= @subtotal_coins %></h3></div>
-  <div>Coins Total <h3 class="fw-bold text-end"><%= @total_coins %></h3></div>
-  <div>Convenience Fee <h3 class="fw-bold text-end">0</h3></div>
+  <div>Amount Subtotal <h3 class="fw-bold text-end"><%= format_to_currency(@subtotal_amount) %></h3></div>
+  <div>Amount Total <h3 class="fw-bold text-end"><%= format_to_currency(@total_amount) %></h3></div>
+  <div>Coins Subtotal <h3 class="fw-bold text-end"><%= format_to_currency(@subtotal_coins) %></h3></div>
+  <div>Coins Total <h3 class="fw-bold text-end"><%= format_to_currency(@total_coins) %></h3></div>
+  <div>Convenience Fee <h3 class="fw-bold text-end"><%= format_to_currency %></h3></div>
 </div>

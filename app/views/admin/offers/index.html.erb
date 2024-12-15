@@ -26,7 +26,7 @@
       <td class="text-nowrap text-center">
         <span class="<%= "badge #{offer.status == 'active' ? 'bg-primary' : 'bg-danger' }" %>"><%= offer.status %></span>
       </td>
-      <td class="text-nowrap text-end"><%= number_to_currency(offer.amount, :unit => "P ", :separator => ".", :delimiter => ",") %></td>
+      <td class="text-nowrap text-end"><%= format_to_currency(offer.amount) %></td>
       <td class="text-nowrap text-center"><%= offer.coin %></td>
       <td class="text-nowrap p-2">
         <div class="d-flex justify-content-start">

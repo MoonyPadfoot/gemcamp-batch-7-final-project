@@ -1,5 +1,6 @@
 class Admin::OrdersController < AdminsController
   require 'csv'
+  helper :orders
 
   before_action :set_order, only: [:pay, :cancel]
 
@@ -36,11 +37,11 @@ class Admin::OrdersController < AdminsController
           Order.all.each do |order|
             csv << [
               order.serial_number, order.user.email, order.offer&.name, order.amount, order.coin, order.genre,
-              order.state, order.created_at.strftime("%Y/%m/%d %I:%M %p")
+              order.state, order.created_at.to_fs
             ]
           end
         end
-        filename = "orders_report_#{Time.current.strftime('%Y%m%d%H%M%S')}.csv"
+        filename = "orders_report_#{Time.current.to_fs(:file)}.csv"
 
         send_data csv_string, filename: filename, type: 'text/csv', disposition: 'attachment'
       }

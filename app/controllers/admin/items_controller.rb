@@ -28,12 +28,12 @@ class Admin::ItemsController < AdminsController
           Item.includes(:categories).each do |item|
             csv << [
               item.name, item.image_url, item.status, item.quantity, item.minimum_tickets, item.batch_count,
-              item.online_at.strftime("%Y/%m/%d %I:%M %p"), item.offline_at.strftime("%Y/%m/%d %I:%M %p"),
-              item.start_at.strftime("%Y/%m/%d %I:%M %p"), item.categories.pluck(:name).join(', ')
+              item.online_at.to_fs, item.offline_at.to_fs,
+              item.start_at.to_fs, item.categories.pluck(:name).join(', ')
             ]
           end
         end
-        filename = "items_report_#{Time.current.strftime('%Y%m%d%H%M%S')}.csv"
+        filename = "items_report_#{Time.current.to_fs(:file)}.csv"
 
         send_data csv_string, filename: filename, type: 'text/csv', disposition: 'attachment'
       }

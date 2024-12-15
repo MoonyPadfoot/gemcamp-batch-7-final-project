@@ -3,7 +3,7 @@
   <div class="card-body px-5 py-4 text-center">
     <h5 class="card-title"><%= @offer.name %></h5>
     <h1 class="fw-bolder"><%= @offer.coin %> Coin(s)</h1>
-    <span class="fw-bold"><%= number_to_currency(@offer.amount, :unit => "P ", :separator => ".", :delimiter => ",") %></span>
+    <span class="fw-bold"><%= format_to_currency(@offer.amount) %></span>
 
     <%= form_with model: @order, url: shops_path do |f| %>
       <%= f.hidden_field :offer_id, value: @offer.id %>
