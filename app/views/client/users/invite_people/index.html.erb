@@ -3,7 +3,12 @@
     <%= @svg.html_safe %>
   </div>
 
-  <p><a href="<%= @invite_url %>"><%= @invite_url %></a></p>
+  <div class="card shadow mb-2 w-50 mx-auto bg-dark" data-controller="clipboard">
+    <div class="d-flex align-items-center p-2">
+      <div class="flex-grow-1 text-white" data-clipboard-target="inviteUrlId"><%= @invite_url %></div>
+      <button class="btn btn-primary" data-action="click->clipboard#copy"><i class="bi bi-clipboard"></i></button>
+    </div>
+  </div>
 
   <div class="card shadow p-4 mb-2">
     <h3 class="mb-4">Invited Members</h3>
