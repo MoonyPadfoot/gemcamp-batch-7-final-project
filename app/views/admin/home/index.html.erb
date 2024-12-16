@@ -1,4 +1,4 @@
-<h1>Hi, <%= current_admin.username %></h1>
+<h1>Hi, <%= current_admin&.username || current_admin.email %></h1>
 
 <%= link_to 'Export', admin_root_path(format: :csv, page: params[:page]), class: 'btn btn-primary' %>
 <table class="table table-striped table-bordered mt-2">
