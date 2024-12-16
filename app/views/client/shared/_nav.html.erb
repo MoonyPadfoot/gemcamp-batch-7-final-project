@@ -1,11 +1,20 @@
-<nav class="navbar bg-dark navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
-  <div class="container mx-auto d-flex">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container mx-lg-auto d-lg-flex">
     <%= link_to client_root_path, class: "text-decoration-none" do %>
-      <i class="bi bi-bootstrap"></i>
+      <i class="fs-4 bi-dice-5-fill me-2"></i>
+      <span class="fw-bold fs-5">Sugarol PH</span>
     <% end %>
     <div class="navbar-nav">
       <%= link_to t('coins'), shops_path, class: "nav-link" %>
-      <%= link_to t('claim'), me_winning_history_path, class: "nav-link" %>
+      <%= link_to me_winning_history_path, class: "nav-link position-relative" do %>
+        <%= t('claim') %>
+        <% if Winner.includes(:user).where(users: current_client, state: :won).exists? %>
+        <span class="position-absolute top-1 start-100 translate-middle badge rounded-pill bg-danger">
+          <%= Winner.includes(:user).where(users: current_client, state: :won).count %>
+        </span>
+        <% end %>
+      <% end %>
+
       <div class="btn-group">
         <button class="btn dropdown-toggle nav-link" type="button" data-bs-toggle="dropdown" aria-expanded="false">
           <%= t('choose_language') %>
