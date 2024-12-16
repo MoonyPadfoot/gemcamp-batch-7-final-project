@@ -31,7 +31,7 @@ class Admin::OffersController < AdminsController
       redirect_to offers_path
     else
       flash.now[:alert] = 'Offer update failed'
-      render :new, status: :unprocessable_entity
+      render :edit, status: :unprocessable_entity
     end
   end
 

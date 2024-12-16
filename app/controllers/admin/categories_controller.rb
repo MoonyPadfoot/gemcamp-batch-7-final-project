@@ -30,7 +30,7 @@ class Admin::CategoriesController < AdminsController
       redirect_to categories_path
     else
       flash.now[:alert] = t('flash.categories.update.failure')
-      render :new, status: :unprocessable_entity
+      render :edit, status: :unprocessable_entity
     end
   end
 

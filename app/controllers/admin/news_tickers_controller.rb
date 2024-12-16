@@ -30,7 +30,7 @@ class Admin::NewsTickersController < AdminsController
       redirect_to news_tickers_path
     else
       flash.now[:alert] = 'News update failed'
-      render :new, status: :unprocessable_entity
+      render :edit, status: :unprocessable_entity
     end
   end
 

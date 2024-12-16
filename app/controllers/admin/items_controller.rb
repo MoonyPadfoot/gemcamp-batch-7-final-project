@@ -64,7 +64,7 @@ class Admin::ItemsController < AdminsController
       redirect_to items_path
     else
       flash.now[:alert] = 'Item update failed'
-      render :new, status: :unprocessable_entity
+      render :edit, status: :unprocessable_entity
     end
   end
 

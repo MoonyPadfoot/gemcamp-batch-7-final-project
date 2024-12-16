@@ -30,7 +30,7 @@ class Admin::BannersController < AdminsController
       redirect_to banners_path
     else
       flash.now[:alert] = 'Banner update failed'
-      render :new, status: :unprocessable_entity
+      render :edit, status: :unprocessable_entity
     end
   end
 

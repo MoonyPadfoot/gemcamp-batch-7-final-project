@@ -29,7 +29,7 @@ class Admin::MemberLevelsController < AdminsController
       redirect_to member_levels_path
     else
       flash.now[:alert] = 'Member level update failed'
-      render :new, status: :unprocessable_entity
+      render :edit, status: :unprocessable_entity
     end
   end
 

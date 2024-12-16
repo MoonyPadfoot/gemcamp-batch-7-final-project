@@ -48,7 +48,7 @@ class Client::Users::AddressController < ClientsController
 
       flash.now[:alert] = "Address update failed: #{ @address.errors.full_messages.join(',') }"
 
-      render :new, status: :unprocessable_entity
+      render :edit, status: :unprocessable_entity
     end
   end
 
