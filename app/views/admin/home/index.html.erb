@@ -26,7 +26,7 @@
       <td class="text-nowrap text-center"><%= client.coins %></td>
       <td class="text-nowrap text-center"><%= client.tickets.sum(:coins) %></td>
       <td class="text-nowrap"><%= client.phone_number || 'N/A' %></td>
-      <td class="text-nowrap text-center"><%= client.member_level.level %></td>
+      <td class="text-nowrap text-center"><%= client.member_level&.level || 'N/A' %></td>
       <td class="text-nowrap text-center"><%= client.children_members %></td>
       <td class="text-nowrap">
         <%= link_to "Balance Operate", new_users_client_orders_increase_path(client), class: "btn btn-sm btn-primary" %>

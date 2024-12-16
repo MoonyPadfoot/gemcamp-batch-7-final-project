@@ -60,6 +60,8 @@ tl:
     sessions:
       signed_out: "Matagumpay na nag-sign out."
       signed_in: "Matagumpay na nag-sign in."
+    failure:
+      unauthenticated: "Kailangang mag sign in o sign up bago magpatuloy."
   views:
     pagination:
       first: "&laquo; Una"

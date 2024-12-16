@@ -4,7 +4,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   before_action :configure_permitted_parameters, only: [:create, :update]
 
   def new
-    cookies[:promoter] ||= params[:promoter] if User.client.exists?(email: params[:promoter])
+    cookies[:promoter] = params[:promoter] if User.client.exists?(email: params[:promoter])
     super
   end
 
@@ -14,19 +14,20 @@ class Users::RegistrationsController < Devise::RegistrationsController
       build_resource(sign_up_params)
       resource.parent = @promoter
       resource.member_level = MemberLevel.first
-
-      if resource.save
-        cookies.delete(:promoter)
-        set_flash_message!(:notice, :signed_up) if is_flashing_format?
-        sign_up(resource_name, resource)
-        respond_with resource, location: after_sign_up_path_for(resource)
-      else
-        clean_up_passwords resource
-        set_minimum_password_length
-        respond_with resource
-      end
     else
-      super
+      build_resource(sign_up_params)
+      resource.member_level = MemberLevel.first
+    end
+
+    if resource.save
+      cookies.delete(:promoter) if cookies[:promoter].present?
+      set_flash_message!(:notice, :signed_up) if is_flashing_format?
+      sign_up(resource_name, resource)
+      respond_with resource, location: after_sign_up_path_for(resource)
+    else
+      clean_up_passwords resource
+      set_minimum_password_length
+      respond_with resource
     end
   end
 

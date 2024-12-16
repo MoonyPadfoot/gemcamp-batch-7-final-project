@@ -97,6 +97,6 @@ class Item < ApplicationRecord
   private
 
   def tickets_for_item
-    Ticket.includes(:item).where(batch_count: batch_count, items: { id: id })
+    Ticket.includes(:item).pending.where(batch_count: batch_count, items: { id: id })
   end
 end

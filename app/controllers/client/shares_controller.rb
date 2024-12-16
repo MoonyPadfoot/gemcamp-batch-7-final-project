@@ -1,6 +1,6 @@
 class Client::SharesController < ClientsController
   def index
-    @shares = Winner.includes(:user).where(user: current_client).published
+    @shares = Winner.includes(:user).published
 
     @banners = Banner.active
     @banners = @banners.online_at(Time.current)

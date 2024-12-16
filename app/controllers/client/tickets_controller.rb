@@ -6,9 +6,10 @@ class Client::TicketsController < ClientsController
     ticket_count = params[:ticket][:ticket_count].to_i
 
     current_client.ticket_count = ticket_count
+    Rails.logger.debug "Current Client: #{current_client.ticket_count}"
 
     unless current_client.valid?(:purchase)
-      flash[:alert] = "Ticket(s) purchase failed. Coins insufficient."
+      flash[:alert] = current_client.errors.full_messages.join(", ")
       redirect_to shops_path and return
     end
 
@@ -22,9 +23,9 @@ class Client::TicketsController < ClientsController
 
     ActiveRecord::Base.transaction do
       if tickets.all?(&:save)
-        flash[:notice] = "Ticket(s) successfully purchased."
+        flash[:notice] = "#{'Ticket'.pluralize(ticket_count)} successfully purchased."
       else
-        flash[:alert] = "Ticket(s) purchased failed. Please try again later."
+        flash[:alert] = "#{'Ticket'.pluralize(ticket_count)} purchased failed. Please try again later."
         raise ActiveRecord::Rollback
       end
     end

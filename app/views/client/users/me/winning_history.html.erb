@@ -22,47 +22,51 @@
 
           <div class="collapse" id="collapse<%= winning_history.id %>">
             <div class="card card-body mt-2">
-              <%= form_with model: winning_history, url: claim_prize_me_index_path, method: :put do |f| %>
-                <%= f.hidden_field :id, value: winning_history.id %>
+              <% if @addresses.present? %>
+                <%= form_with model: winning_history, url: claim_prize_me_index_path, method: :put do |f| %>
+                  <%= f.hidden_field :id, value: winning_history.id %>
 
-                <div data-controller="address">
-                  <div class="col-12 field my-2">
-                    <%= f.label :address_id, "Choose Address:", class: "form-label me-2" %>
-                    <%= f.collection_select :address_id,
-                                            @addresses, :id, :name, { :selected => @addresses.first },
-                                            data: { address_target: "selectId", action: "change->address#updateDetails" },
-                                            class: 'form-select w-100' %>
-                  </div>
+                  <div data-controller="address">
+                    <div class="col-12 field my-2">
+                      <%= f.label :address_id, "Choose Address:", class: "form-label me-2" %>
+                      <%= f.collection_select :address_id,
+                                              @addresses, :id, :name, { :selected => @addresses.first },
+                                              data: { address_target: "selectId", action: "change->address#updateDetails" },
+                                              class: 'form-select w-100' %>
+                    </div>
 
-                  <div id="address-details" data-address-target="detailsId">
-                    <div class="d-flex justify-content-between">
-                      <div>Name:
-                        <span class="ms-2 fw-semibold"><%= @addresses.first&.name %></span>
+                    <div id="address-details" data-address-target="detailsId">
+                      <div class="d-flex justify-content-between">
+                        <div>Name:
+                          <span class="ms-2 fw-semibold"><%= @addresses.first&.name %></span>
+                        </div>
+
+                        <div>
+                          <span class="badge bg-info"><%= 'Default' if @addresses.first&.is_default %></span>
+                          <span class="badge bg-primary"><%= @addresses.first&.genre %></span>
+                        </div>
                       </div>
-
+                      <div>Phone Number:
+                        <span class="ms-2 fw-semibold"><%= @addresses.first&.phone_number %></span>
+                      </div>
+                      <div>Remark:
+                        <span class="ms-2 fw-semibold"><%= @addresses.first&.remark.blank? ? 'N/A' : @addresses.first&.remark %></span>
+                      </div>
+                      <div>Address:
+                        <span class="ms-2 fw-semibold"><%= @addresses.first&.street_address %></span>
+                      </div>
                       <div>
-                        <span class="badge bg-info"><%= 'Default' if @addresses.first&.is_default %></span>
-                        <span class="badge bg-primary"><%= @addresses.first&.genre %></span>
+                        <span class="fw-semibold"><%= "#{@addresses.first&.barangay&.name}, #{@addresses.first&.city&.name} City, #{@addresses.first&.province&.name}" %></span>
                       </div>
                     </div>
-                    <div>Phone Number:
-                      <span class="ms-2 fw-semibold"><%= @addresses.first&.phone_number %></span>
-                    </div>
-                    <div>Remark:
-                      <span class="ms-2 fw-semibold"><%= @addresses.first&.remark.blank? ? 'N/A' : @addresses.first&.remark %></span>
-                    </div>
-                    <div>Address:
-                      <span class="ms-2 fw-semibold"><%= @addresses.first&.street_address %></span>
-                    </div>
-                    <div>
-                      <span class="fw-semibold"><%= "#{@addresses.first&.barangay&.name}, #{@addresses.first&.city&.name} City, #{@addresses.first&.province&.name}" %></span>
-                    </div>
                   </div>
-                </div>
 
-                <div class="col-12 actions text-center my-2">
-                  <%= f.submit "Select Address", class: 'btn btn-md btn-success w-100' %>
-                </div>
+                  <div class="col-12 actions text-center my-2">
+                    <%= f.submit "Select Address", class: 'btn btn-md btn-success w-100' %>
+                  </div>
+                <% end %>
+              <% else %>
+                <%= link_to "Create Address", address_index_path, class: 'btn btn-md btn-primary w-100' %>
               <% end %>
             </div>
           </div>

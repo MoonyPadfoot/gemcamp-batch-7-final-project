@@ -29,9 +29,10 @@ class User < ApplicationRecord
   validates :total_deposit, presence: true
   validates :children_members, presence: true, numericality: { greater_than_or_equal_to: 0 }
   validates :image, allow_blank: true, format: { with: %r{.(gif|jpg|jpeg|png)\Z}i, message: 'must be a URL for GIF, JPG, JPEG or PNG image.' }
+  validates :ticket_count, presence: true, numericality: { only_integer: true, greater_than: 0 }, on: :purchase
   validate :coins_sufficient?, on: :purchase
 
-  after_create :upgrade_next_level
+  after_create :upgrade_next_level, if: -> { parent.present? }
 
   private
 
@@ -40,13 +41,18 @@ class User < ApplicationRecord
       errors.add(:coins, 'are insufficient for the purchase.')
     end
   end
-  
+
+  # def ticket_count_present?
+  #   unless ticket_count.blank?
+  #     errors.add(:base, "#{'Ticket'.pluralize(ticket_count)} count must be present.")
+  #   end
+  # end
+
   def upgrade_next_level
     user = User.client.find_by(id: parent)
     next_level = MemberLevel.where("id > ?", user.member_level).first
 
     if next_level && User.where(parent: parent).count == next_level.required_members
-      user.coins = user.coins + next_level.coins
       user.member_level = next_level
       user.save
 

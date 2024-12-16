@@ -27,7 +27,9 @@ class Client::Address < ApplicationRecord
   private
 
   def unset_other_defaults
-    Client::Address.includes(:user).find_by(is_default: true, users: user).update(is_default: false)
+    if Client::Address.includes(:user).find_by(is_default: true, users: user).present?
+      Client::Address.includes(:user).find_by(is_default: true, users: user).update(is_default: false)
+    end
   end
 
   def user_address_max

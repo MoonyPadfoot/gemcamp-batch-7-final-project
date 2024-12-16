@@ -1,4 +1,6 @@
 class Admin::OffersController < AdminsController
+  helper :offers
+
   before_action :set_offer, only: [:edit, :update, :destroy]
 
   def index
