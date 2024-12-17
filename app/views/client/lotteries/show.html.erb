@@ -59,10 +59,10 @@
   <%= f.hidden_field :item_id, value: @item.id %>
   <%= f.hidden_field :batch_count, value: @item.batch_count %>
 
-  <div class="input-group my-2">
-    <button class="btn btn-primary" type="button" id="button-decrement">−</button>
-    <%= f.number_field :ticket_count, class: "form-control text-center", value: "0", min: "1" %>
-    <button class="btn btn-primary" type="button" id="button-increment">+</button>
+  <div class="input-group my-2" data-controller="ticket">
+    <button class="btn btn-primary" type="button" id="button-decrement" data-action="click->ticket#decrement">−</button>
+    <%= f.number_field :ticket_count, class: "form-control text-center", value: "0", min: "1", data: { ticket_target: 'ticketCount' } %>
+    <button class="btn btn-primary" type="button" id="button-increment" data-action="click->ticket#increment">+</button>
   </div>
 
   <div class="col-12 actions text-center my-2">

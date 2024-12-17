@@ -8,10 +8,12 @@ import HelloController from "./hello_controller"
 import LocationController from "./location_controller"
 import AddressController from "./address_controller"
 import ClipboardController from "./clipboard_controller"
+import TicketController from "./ticket_controller"
 import Select2 from "./select2_controller"
 
 application.register("select2", Select2)
 application.register("location", LocationController)
 application.register("address", AddressController)
 application.register("clipboard", ClipboardController)
+application.register("ticket", TicketController)
 application.register("hello", HelloController)
