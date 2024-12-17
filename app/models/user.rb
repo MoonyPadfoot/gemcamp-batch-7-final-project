@@ -42,12 +42,6 @@ class User < ApplicationRecord
     end
   end
 
-  # def ticket_count_present?
-  #   unless ticket_count.blank?
-  #     errors.add(:base, "#{'Ticket'.pluralize(ticket_count)} count must be present.")
-  #   end
-  # end
-
   def upgrade_next_level
     user = User.client.find_by(id: parent)
     next_level = MemberLevel.where("id > ?", user.member_level).first
